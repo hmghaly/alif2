@@ -113,17 +113,24 @@ function makeGame(stage) {
         quiz.n_attempts+=1
         if (trg.id==page.item.id){
             console.log("correct!")
+            console.log("still ok")
             quiz.n_correct+=1
             trg.backgroundColor=green
+            console.log("changed color")
+
             emitter.loc(trg, null, page).spurt(100);
+            console.log("emitter works")
+
             trg.animate({
                 wait:0.2, // wait one second before starting
                 props:{scale:1.5},
                 time:.5,
                 rewind:true,
                 loop:false,
-                loopCall:()=>{next_q()} // also call, rewindCall, and more
+                call:next_q
+                //loopCall:()=>{next_q()} // also call, rewindCall, and more
             });
+            //next_q()
 
             
         }
@@ -145,6 +152,7 @@ function makeGame(stage) {
     
     function next_q(){
         //remove_el(page.main_cont)
+        console.log("deploying next question")
         quiz.i+=1;
         if (quiz.i>=quiz.questions.length){
             pages.go(after_game, "down");
