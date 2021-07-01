@@ -105,6 +105,8 @@ function makeGame(stage) {
 //        game.accuracy.text=""+quiz.accuracy+"%"
     
     function check_answer(evt){
+        if (quiz.n_attempts==null) quiz.n_attempts=0;
+        if (quiz.n_correct==null) quiz.n_correct=0;
         
         trg=evt.currentTarget
         console.log(trg.id)
@@ -156,7 +158,7 @@ function makeGame(stage) {
         quiz.i+=1;
         if (quiz.i>=quiz.questions.length){
             pages.go(after_game, "down");
-            game_ended()
+            game_ended2()
             return
         }
         cur_q_obj=quiz.questions[quiz.i]
@@ -171,12 +173,32 @@ function makeGame(stage) {
 }
 
 
-function game_ended(){
+function game_ended2(){
     after_game.completion_label.text="Completed: "+quiz.n_correct+" questions"   
     accuracy_100=Math.round(100*quiz.accuracy)
     after_game.accuracy_label.text="Accuracy: "+accuracy_100+"%"   
     score=Math.round(10*quiz.n_correct*quiz.accuracy) 
     after_game.score_label.text="Score: "+score 
+    console.log("game ended!!!!")
+    history_obj={}
+    history_obj["n_correct"]=quiz.n_correct
+    history_obj["accuracy"]=quiz.accuracy
+    history_obj["score"]=score
+    history_obj["duration"]=quiz.duration
+    history_obj["type"]=quiz.type
+    history_obj["date"]=Date()
+    
+    console.log(history_obj)
+
+    progress_history.push(history_obj)
+    set_local_strorage(storage_name,"progress_history",progress_history)
+
+    new_streak_val=update_streak(quiz.duration)
+    new_streak_val_minutes= Math.floor( new_streak_val/60 );
+    page_nav.main_menu.streak_status_label.text=""+new_streak_val_minutes+"/10"
+
+
+
     
     
 }

@@ -44,7 +44,10 @@
 <script src="pages/alphabet.js"></script>
 <script src="pages/sound_list.js"></script>
 <script src="pages/sound_tutorial.js"></script>  
-<script src="pages/write_menu.js"></script>      
+<script src="pages/write_menu.js"></script>    
+<script src="pages/main_menu.js"></script>   
+<script src="pages/settings.js"></script>     
+<script src="pages/progress.js"></script>      
 
     
 <script src="js/script.js"></script>  
@@ -52,7 +55,7 @@
 
 <script>
 var quiz={}
-quiz.duration=300;
+//quiz.duration=300;
 var game_timer;
 var user={}
 var game_data={};
@@ -85,6 +88,31 @@ session.user_key=assigned_user_key
 session.app=app_name
 session.game=game_name
 session.items=[]
+
+
+var settings={}
+var user={}
+var progress_history=get_local_strorage(storage_name,"progress_history")
+if (progress_history==null || progress_history==undefined) progress_history=[]
+
+//just to reset the progress history
+// progress_history=[]
+// set_local_strorage(storage_name,"progress_history",progress_history)
+
+var streak={}
+
+var streak=get_local_strorage(storage_name,"streak")
+if (streak==null || streak==undefined) streak={}
+
+function update_streak(val){
+	date_str=new Date().toLocaleDateString('en-GB')
+	cur_streak_val=streak[date_str]
+	if (cur_streak_val==null || cur_streak_val==undefined) cur_streak_val=0
+	streak[date_str]=cur_streak_val+val
+	set_local_strorage(storage_name,"streak",streak)
+	return streak[date_str]
+}
+
     
 // SCALING OPTIONS
 // scaling can have values as follows with full being the default
@@ -125,28 +153,42 @@ all_letter_ids=["alif", "hamzah", "alif_hamzah", "alif_hamzah_maksoorah", "alif_
     
 sound_ids_json_str='["aa","i","aa_layyenah","hamzah_2","hamzah_a","2a","2","2u","2i","2aa","2aa","b","ba","bb","bba","bi","bu","t","ta","ti","tta","tu","th","tha","thi","ththa","thu","j","ja","ji","jja","ju","7","77a","7a","7i","7u","kh","kha","khi","khkhi","khu","d","da","dd","dda","di","du","dh","dha","dhdha","dhi","dhu","r","ra","ri","rr","rra","ru","z","za","zu","zza","s","sa","si","su","sh","sha","shi","shsh","shu","ssaad_s","ssaad_ss","ssaad_sa","ssaad_si","ssaad_su","ddaad_d","ddaad_dda","ddaad_da","ddaad_di","ddaad_du","ttaa2_t","ttaa2_tta","ttaa2_ta","ttaa2_ti","dhaa2_dh","dhaa2_dhdh","dhaa2_dha","dhaa2_dhi","dhaa2_dhu","3","33a","3a","3i","3u","gh","gha","ghgha","ghi","ghu","f","fa","ffa","fi","fu","q","qa","qi","qqa","qqi","qu","k","ka","ki","kka","ku","l","la","li","ll","lla","lu","m","ma","mi","mm","mu","n","na","ni","nn","nna","nu","h","ha","hi","hu","oo","w","wa","wi","wwa","ee","y","ya","yu","yy","yya","yyi","h","waaw_2","waaw_2a","yaa2_2","yaa2_2i"]'
 all_sound_ids=JSON.parse(sound_ids_json_str)
-console.log(all_letter_ids)
-console.log(all_sound_ids)
-    
+//console.log(all_letter_ids)
+//console.log(all_sound_ids)
+ 
+
+//==================== Adding sounds to assets ===================    
 //var assets = [{text:"game_data", src:"arabic_data.json"}]
 var assets = []
-if (game_name=="alpha5"){
-    for (const let_id of all_letter_ids){ //adding letter name sounds to assets
-        letter_name_sounds_dir="audio/game/alphabet/"
-        fpath=letter_name_sounds_dir+let_id+".mp3"
-        cur_asset={id:let_id, maxNum:1, src:fpath}
-        assets.push(cur_asset)
-    }    
-}
+for (const let_id of all_letter_ids){ //adding letter name sounds to assets
+    letter_name_sounds_dir="audio/game/alphabet/"
+    fpath=letter_name_sounds_dir+let_id+".mp3"
+    cur_asset={id:let_id, maxNum:1, src:fpath}
+    assets.push(cur_asset)
+} 
+for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
+    letter_sounds_dir="audio/letter-sounds/"
+    fpath=letter_sounds_dir+snd_id+".mp3"
+    cur_asset={id:snd_id, maxNum:1, src:fpath}
+    assets.push(cur_asset)
+} 
+// if (game_name=="alpha5"){
+//     for (const let_id of all_letter_ids){ //adding letter name sounds to assets
+//         letter_name_sounds_dir="audio/game/alphabet/"
+//         fpath=letter_name_sounds_dir+let_id+".mp3"
+//         cur_asset={id:let_id, maxNum:1, src:fpath}
+//         assets.push(cur_asset)
+//     }    
+// }
 
-if (game_name=="read5"){
-    for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
-        letter_sounds_dir="audio/letter-sounds/"
-        fpath=letter_sounds_dir+snd_id+".mp3"
-        cur_asset={id:snd_id, maxNum:1, src:fpath}
-        assets.push(cur_asset)
-    }      
-}    
+// if (game_name=="read5"){
+//     for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
+//         letter_sounds_dir="audio/letter-sounds/"
+//         fpath=letter_sounds_dir+snd_id+".mp3"
+//         cur_asset={id:snd_id, maxNum:1, src:fpath}
+//         assets.push(cur_asset)
+//     }      
+// }    
   
 //for (var tut_i=1;tut_i<=10;tut_i++){ //adding tutorials audio to assets
 //    tut_audio_id="tutorial"+tut_i
@@ -155,7 +197,8 @@ if (game_name=="read5"){
 //    cur_asset={id:tut_audio_id, maxNum:1, src:fpath}
 //    assets.push(cur_asset)
 //}    
-    
+
+var page_nav={}    //global variable for navigating pages
 path=''
 var progress = new ProgressBar({foregroundColor:orange, backgroundColor:purple}).sca(2);
     
@@ -172,33 +215,43 @@ frame.on("ready", function() {
     color2=green 
     
 
-    if (game_name=="alpha5"){
-        main_title="Alpha5"
-        main_subtitle="Learn Arabic Alphabet"
-        guide_text="View All Alphabet Letters"
-        color1=orange
-        color2=green
+    main_title="ALIF LAAM"
+    main_subtitle="Arabic Learning is Fun"
+    guide_text="Read and Write in Arabic"
+        // color1=orange
+        // color2=green
+
+    // if (game_name=="alpha5"){
+    //     main_title="Alpha5"
+    //     main_subtitle="Learn Arabic Alphabet"
+    //     guide_text="View All Alphabet Letters"
+    //     color1=orange
+    //     color2=green
+    // }
+
+    // if (game_name=="read5"){
+    //     main_title="Read5"
+    //     main_subtitle="Read Arabic letters and words"
+    //     guide_text="Sounds of Arabic Letters"
+    //     color1=blue
+    //     color2=orange        
+    // }    
+
+    // if (game_name=="write5"){
+    //     main_title="Write5"
+    //     main_subtitle="Learn Handwriting in Arabic"
+    //     guide_text="View All Alphabet Letters"
+    //     color1=green
+    //     color2=blue         
+    // }    
+    
+    function deploy_game_generic(game_type){
+
     }
 
-    if (game_name=="read5"){
-        main_title="Read5"
-        main_subtitle="Read Arabic letters and words"
-        guide_text="Sounds of Arabic Letters"
-        color1=blue
-        color2=orange        
-    }    
-
-    if (game_name=="write5"){
-        main_title="Write5"
-        main_subtitle="Learn Handwriting in Arabic"
-        guide_text="View All Alphabet Letters"
-        color1=green
-        color2=blue         
-    }    
-    
-    
     //The loading page ///////////
     var loading = new Page(stageW, stageH, blue, green);
+    page_nav.loading=loading
     //new Circle(200,dark).center(splash);
     new Label({color:purple, text:"Loading", size:100,variant:true}).center(loading)
     
@@ -208,7 +261,7 @@ frame.on("ready", function() {
     //new Label("Alpha5").pos(0,100,CENTER,TOP,splash);
     new Label({color:red, text:main_title, size:60,variant:true}).pos(0,100,CENTER,TOP,splash);
     new Label({color:purple, text:main_subtitle, size:30,variant:true}).pos(0,-100,CENTER,CENTER,splash);
-    new Label({color:purple, text:"5 minutes a day!", size:30,variant:true}).pos(0,0,CENTER,CENTER,splash);
+    new Label({color:purple, text:guide_text, size:30,variant:true}).pos(0,0,CENTER,CENTER,splash);
     splash.go = new Button({width:140,height:140,backgroundColor:purple,rollBackgroundColor:orange,label:"GO",corner:70})
     .pos(0,150,CENTER,BOTTOM,splash)    
     splash.backing;
@@ -231,6 +284,7 @@ frame.on("ready", function() {
     
     //The game page ///
     var game = makeGame(stage);
+    page_nav.alpha_game=game
     
     //The hand writing page ///
     var writing_menu = makeWritingMenu(stage);
@@ -239,14 +293,23 @@ frame.on("ready", function() {
     
     //The alphabet list page ///
     var alphabet = makeAlphabet(stage);
+    page_nav.alphabet=alphabet
     //var alphabet2 =new Page(stageW, stageH, orange, blue);
     
     //The Sound list page ///
     var sound_page = makeSoundPage(stage);
  
     //The Sound list page ///
-    var sound_tutorial = makeSoundTutorial(stage);    
+    var sound_tutorial = makeSoundTutorial(stage);   
+
+    var main_menu_page = makeMainMenu(stage) 
+    page_nav.main_menu=main_menu_page
+
+    var settings_page = makeSettings(stage) 
+    page_nav.settings=settings_page
     
+    var progress_dashboard = makeProgressDashboard(stage) 
+    page_nav.progress_dashboard=progress_dashboard
     
     
     //The menu page
@@ -291,12 +354,12 @@ frame.on("ready", function() {
     .pos(0,20,CENTER,BOTTOM,after_game)   
 
     //The progress dashboard page
-    var dashboard = new Page(stageW, stageH, yellow, green);
-    //new Circle(200,dark).center(splash);
-    title_label=new Label({color:purple, text:"My Progress Dashboard\n Coming Soon", size:50, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,dashboard);
-    menu_label=new Label({color:yellow, text:"Menu", size:25, align:CENTER})
-    dashboard.go2menu = new Button({width:140,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
-    .pos(0,20,CENTER,BOTTOM,dashboard)   
+    // var dashboard = new Page(stageW, stageH, yellow, green);
+    // //new Circle(200,dark).center(splash);
+    // title_label=new Label({color:purple, text:"My Progress Dashboard\n Coming Soon", size:50, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,dashboard);
+    // menu_label=new Label({color:yellow, text:"Menu", size:25, align:CENTER})
+    // dashboard.go2menu = new Button({width:140,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
+    // .pos(0,20,CENTER,BOTTOM,dashboard)   
     
     
 
@@ -308,24 +371,25 @@ frame.on("ready", function() {
         {page:menu, swipe:[null,null,tutorial,null]},
         {page:game, swipe:[]},
         {page:after_game, swipe:[menu,null]},
-        {page:dashboard, swipe:[]}, 
+        {page:progress_dashboard, swipe:[]}, 
         {page:sound_page, swipe:[]}, 
         {page:sound_tutorial, swipe:[]},
         {page:writing_page, swipe:[]}, 
         {page:writing_menu, swipe:[]},
+        {page:main_menu_page, swipe:[]}, 
+        {page:settings_page, swipe:[]},
     ], new Emitter({num:10, height:stageW, angle:0, vertical:true, force:{min:3, max:10}}), .7, [
         [splash, tutorial, "pixelZIM"],
         [alphabet, tutorial, "pixelZIM"],
         [menu, game, "explodeZIM"],
     ]).addTo();
-    //console.log(pages)
     
+
+
     splash.go.on("mousedown", function () {
-        //pages.go(tutorial, "right"); ////// <<<<<----- for now
-        if (game_name=="alpha5" ) pages.go(tutorial, "right");
-        else if (game_name=="read5" ) pages.go(sound_tutorial, "right");
-        else if (game_name=="write5" ) pages.go(writing_menu, "right");
-        //pages.go(writing_page, "right");
+        // pages.go(tutorial, "right"); ////// <<<<<----- for now
+        console.log(main_menu_page)
+        pages.go(main_menu_page, "right");
         
     });
     tutorial.go2alphabet.on("mousedown", function () {
@@ -335,7 +399,7 @@ frame.on("ready", function() {
     });    
     
     sound_tutorial.go2menu.on("mousedown", function () {
-        pages.go(menu, "right");
+        pages.go(main_menu_page, "right");
     });      
     
     sound_tutorial.go2sound_list.on("mousedown", function () {
@@ -346,7 +410,7 @@ frame.on("ready", function() {
         pages.go(sound_tutorial, "up");
     });    
     sound_page.go2menu.on("mousedown", function () {
-        pages.go(menu, "right");
+        pages.go(main_menu_page, "right");
     });   
     
 //    writing_page.go2menu.on("mousedown", function () {
@@ -359,11 +423,11 @@ frame.on("ready", function() {
         pages.go(tutorial, "up");
     });    
     tutorial.go2menu.on("mousedown", function () {
-        pages.go(menu, "right");
+        pages.go(main_menu_page, "right");
     });    
     
     alphabet.go2menu.on("mousedown", function () {
-        pages.go(menu, "right");
+        pages.go(main_menu_page, "right");
     });    
     
     menu.go2guide.on("mousedown", function () {
@@ -382,7 +446,8 @@ frame.on("ready", function() {
 
     game.go2menu.on("mousedown", function () {
         clearInterval(game_timer)
-        pages.go(menu, "left");
+        pages.go(main_menu_page, "left");
+        //game_ended()
     });      
     
     game.go2after_game.on("mousedown", function () {
@@ -390,12 +455,10 @@ frame.on("ready", function() {
     });      
 
     after_game.go2menu.on("mousedown", function () {
-        pages.go(menu, "down");
+        pages.go(main_menu_page, "down");
     });   
     
-    dashboard.go2menu.on("mousedown", function () {
-        pages.go(menu, "up");
-    });      
+   
     
     //transition from writing menu to start
     //write_letter_shapes, write_letters, write_words,  page.prepare
@@ -404,7 +467,8 @@ frame.on("ready", function() {
 //    });     
     
     writing_page.go2menu.on("mousedown", function () {
-        pages.go(writing_menu, "up");
+        //pages.go(writing_menu, "up");
+        pages.go(main_menu_page, "up");
     });   
     
     writing_menu.write_letters.on("mousedown", function () {
@@ -425,21 +489,81 @@ frame.on("ready", function() {
         writing_page.deploy()
         pages.go(writing_page, "up");
     });      
+     
+
+    main_menu_page.go2alphabet_game.on("mousedown", function () {
+    	console.log("alphabet game")
+    	setup_quiz()
+    	gen_shape_questions()
+    	console.log("generated questions")
+    	quiz.type="alphabet"
+        quiz.i=0
+        cur_q_obj=quiz.questions[quiz.i]
+        game.deploy_q(cur_q_obj)    
+        pages.go(game, "right");	
+
+    })
+
+    main_menu_page.go2sound_game.on("mousedown", function () {
+    	console.log("sound game")
+    	setup_quiz()
+    	gen_sound_questions()
+    	quiz.type="sounds"
+        quiz.i=0
+        cur_q_obj=quiz.questions[quiz.i]
+        game.deploy_q(cur_q_obj)   
+        pages.go(game, "right");  	
+    })
+
+    main_menu_page.go2handwriting_game.on("mousedown", function () {
+    	console.log("Handwriting game")
+    	pages.go(writing_menu, "up");
+    })
+
+    main_menu_page.go2typing_game.on("mousedown", function () {
+    	console.log("Typing game")
+    })
+    main_menu_page.go2read_words_game.on("mousedown", function () {
+    	console.log("Read words game")
+    })
+
+    main_menu_page.go2listen_type_game.on("mousedown", function () {
+    	console.log("Listen and write game")
+    })
+
+    main_menu_page.go2settings.on("mousedown", function () {
+    	console.log("Go to settings")
+    	pages.go(settings_page, "up");
+    })
+
+    main_menu_page.go2progress.on("mousedown", function () {
+    	console.log("Go to Progress Dashboard")
+    	progress_dashboard.display_progress_dashboard()
+    	pages.go(progress_dashboard, "up");
+    })
+
+    settings_page.go2menu.on("mousedown", function () {
+    	console.log("Go to menu")
+    	pages.go(main_menu_page, "up");
+    })
+
+    progress_dashboard.go2menu.on("mousedown", function () {
+
+        pages.go(main_menu_page, "up");
+    });   
+
+
+
+    
+
     
     
-    
-    //transition from menu to game
-    menu.go2game.on("mousedown", function () {
-        //zog("Hello there")
-        pages.go(game, "right");
-//        if (game_name=="alpha5" ) pages.go(game, "down");
-//        else if (game_name=="read5" ) pages.go(sound_page, "right");
-//        else if (game_name=="write5" ) pages.go(alphabet, "right"); 
-        
-        //start a timer
-        //quiz.duration=60
+    function setup_quiz(){
+    	quiz={}
         game.timer.text="Timer"
         game_timer = setInterval(myTimer, 1000);
+        quiz.duration=300
+        if (settings.duration!=null) quiz.duration=settings.duration*60;
         quiz.remaining_time=quiz.duration
         function myTimer() {
             quiz.remaining_time-=1
@@ -452,7 +576,8 @@ frame.on("ready", function() {
             game.timer.text=timer_str
             if (quiz.remaining_time<=0) {
                 pages.go(after_game, "right");
-                game_ended()
+                console.log("where is this?")
+                game_ended2()
 //                accuracy_100=Math.round(100*quiz.accuracy)
 //                after_game.accuracy_label.text=""+accuracy_100+"%"
                 clearInterval(game_timer)
@@ -465,23 +590,66 @@ frame.on("ready", function() {
         quiz.n_correct=0
         accuracy_100=Math.round(100*quiz.accuracy)
         game.accuracy.text=""+accuracy_100+"%"
+
+    }
+    
+    
+    //transition from menu to game
+//     menu.go2game.on("mousedown", function () {
+//         //zog("Hello there")
+//         pages.go(game, "right");
+// //        if (game_name=="alpha5" ) pages.go(game, "down");
+// //        else if (game_name=="read5" ) pages.go(sound_page, "right");
+// //        else if (game_name=="write5" ) pages.go(alphabet, "right"); 
         
-        if (game_name=="alpha5" ) gen_shape_questions()
-        else if (game_name=="read5" ) gen_sound_questions()
-        else gen_shape_questions()
+//         //start a timer
+//         //quiz.duration=60
+//         game.timer.text="Timer"
+//         game_timer = setInterval(myTimer, 1000);
+//         quiz.remaining_time=quiz.duration
+//         function myTimer() {
+//             quiz.remaining_time-=1
+//             n_seconds=quiz.remaining_time%60
+//             n_minutes=(quiz.remaining_time-n_seconds)/60
+//             n_minutes_str=""+n_minutes
+//             n_seconds_str=""+n_seconds
+//             if (n_seconds_str.length==1) n_seconds_str="0"+n_seconds_str
+//             timer_str=n_minutes_str+":"+n_seconds_str
+//             game.timer.text=timer_str
+//             if (quiz.remaining_time<=0) {
+//                 pages.go(after_game, "right");
+//                 game_ended()
+// //                accuracy_100=Math.round(100*quiz.accuracy)
+// //                after_game.accuracy_label.text=""+accuracy_100+"%"
+//                 clearInterval(game_timer)
+//             } 
+//         }    
+        
+//         //Setup accuracy tracking
+//         quiz.accuracy=0
+//         quiz.n_attempts=0
+//         quiz.n_correct=0
+//         accuracy_100=Math.round(100*quiz.accuracy)
+//         game.accuracy.text=""+accuracy_100+"%"
+        
+//         if (game_name=="alpha5" ) gen_shape_questions()
+//         else if (game_name=="read5" ) gen_sound_questions()
+//         else if (game_name=="write5" ) gen_shape_questions()
         
         
         
-        //gen_sound_questions()
-        console.log(quiz)
-        //starting game
-        //quiz.questions=quiz.questions.slice(0,5) //till we put a timer
-        quiz.i=0
-        cur_q_obj=quiz.questions[quiz.i]
-        game.deploy_q(cur_q_obj)
+//         //gen_sound_questions()
+//         console.log(quiz)
+//         //starting game
+//         //quiz.questions=quiz.questions.slice(0,5) //till we put a timer
+//         quiz.i=0
+//         cur_q_obj=quiz.questions[quiz.i]
+//         game.deploy_q(cur_q_obj)
         
         
-    }); 
+//     }); 
+
+
     text_fname="txt/arabic_data.json"
     fetch(text_fname)
       .then(function(res){ return res.json(); })
@@ -489,12 +657,13 @@ frame.on("ready", function() {
         game_data=data
         console.log(data)
         pages.go(splash, "right");
-        gen_shape_questions()
-        console.log(quiz)   
-        alphabet.deploy_list()
-        sound_page.deploy_list()
+
+        // gen_shape_questions()
+        // console.log(quiz)   
+        // alphabet.deploy_list()
+        // sound_page.deploy_list()
         
-        gen_sound_questions()
+        // gen_sound_questions()
         //assets.json_loaded=true;
         //check_assets_loaded()
       })       

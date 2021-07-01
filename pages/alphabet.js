@@ -18,7 +18,7 @@ function makeAlphabet(stage) {
 	var win = new Window({
         width:stageW*0.8,
         height:600,
-        interactive:false,
+        interactive:true,
         padding:10,
 		corner:10,
 		scrollBarDrag:true,
