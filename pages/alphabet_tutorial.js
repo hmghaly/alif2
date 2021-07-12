@@ -1,26 +1,92 @@
-sound_tutorial_items=[
-`Arabic has 28 letters and a few diacritics Let’s learn their sounds!
+tutorial_items=[
+`Arabic has 28 letters. Let’s learn their sounds, names and shapes.
 
 Press "Next" to continue the tutorial, otherwise press "Skip to Menu"
-` ,
-`Diacritics are characters that combine with letters to change their sounds. They are mainly short vowels.
+`,    
+`Some Arabic sounds have no equivalent English letters, so we use numbers that look like the letter with this sound, as you can see below.
+2 ء 
+3 ع
+7 ح
+`,
+`Other Arabic sounds have no one letter equivalent in English, so we use letter combinations:
+kh خ
+gh غ
+dh ذ
+th ث
+sh ش
+`,
+`Some letters have a “stronger” sound. We use capital letters to show the sound difference of these letters.
+s س	S ص
+t ت T ط
+d د D ض
+dh ذ DH ظ
+`,
+`The character hamzah is a glottal stop, like the sound in the middle of “uh-oh”. It is not always considered an alphabet letter, but  it can be combined with other letters
+hamzah = ء
+hamzah 3ala nabrah = ئ
+hamzah 3ala waaw = ؤ
 
-Check the list of sounds below of combining letters and diacritics.
+Water- maa2- ماء 
+ Question - su2aal - سؤال
+Liquid - saa2il - سائل
+`,
+`The letter taa2 marbootah is a version of the letter taa2. It comes at the end of the word. It can be pronounced as either “h” or “t” depending on the context. 
+ة ـة
+ Fish - samakah - سمكة 
+`,
+`The letter alif can be combined with hamzah and maddah to change its sound
+alif = ا
+alif + hamzah = أ
+alif + hamzah maksoorah (has an “i” sound) = إ
+alif with maddah (long aa sound) = آ
+ People - naas - ناس
+ Mouse - fa2r - فأر
+ Production - intaaj - إنتاج
+ Machine -aalah - آلة
+`,
+`When the letter laam comes before alif, it forms a new character combination, called laam alif. This character combination can include the different forms of alif.
+ل + ا = لا
+لا
+لأ
+لآ
+لإ
+`,
+`When the letter alif comes at the end of the word, sometimes it is written as “alif layyenah”, a character that looks like yaa2 but without dots
+ى
+Examples:
+Hospital - mostashfaa - مستشفى
+`,
+`Letters take different shapes depending on their position within words. These shapes can be when the letter is separate, in the beginning, in the middle or at the end of a word.
+The letter kaaf
+ك كـ ـكـ ـك
+Examples
+Dog - kalb - كلب
+Fish - samakah - سمكة
+King - malik - ملك
+Thorns - shawk - شوك
 `     
 ]
 
-sound_tutorial_titles=[
+tutorial_titles=[
     "Overview",
-    "Diacritics",            
+    "Sounds - why numbers?",
+    "Sounds - letter combinations",
+    "Sounds - capital letters",
+    "Extended Letters - hamzah: ء",
+    "Extended Letters - taa2 marbootah: ة",
+    "Extended Letters - alif forms: ا",
+    "Extended Letters - laam alif: لا",
+    "Extended Letters - alif layyenah: ى",
+    "Letter Shapes"            
 ]
 var totorial_label;
 var rect0;
 
-function makeSoundTutorial(stage) {
+function makeAlphabetTutorial(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
-    var page = new Page(stageW, stageH, red,yellow);
+    var page = new Page(stageW, stageH, green,yellow);
     page.i=0;
     STYLE = {font:"reuben", size:50};
 
@@ -29,15 +95,15 @@ function makeSoundTutorial(stage) {
     .pos(0,150,CENTER,CENTER,page)   
 
     
-    new Label({color:purple, text:"Sound Tutorial", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+    new Label({color:purple, text:"Tutorial", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
     
     //new Label({color:black, text:"Click the play button below to listen to tutorial.\nClick the alphabet button for the list of all letters", size:25}).pos(0,150,CENTER,CENTER,page);
     
     page.deploy_tutorial=function(){
-        tutorial_text=multiline(sound_tutorial_items[page.i],20)
+        tutorial_text=multiline(tutorial_items[page.i],20)
         tutorial_number=page.i+1
-        tutorial_progress_str=""+tutorial_number +"/"+sound_tutorial_titles.length
-        title_str=multiline(sound_tutorial_titles[page.i],30)
+        tutorial_progress_str=""+tutorial_number +"/"+tutorial_titles.length
+        title_str=multiline(tutorial_titles[page.i],30)
         full_title_text=tutorial_progress_str+"\n"+title_str
         page.main_cont = new Container(stageW, stageH).addTo(page);
         new Label({color:purple, text:full_title_text, size:30,variant:true, align:CENTER}).pos(0,120,CENTER,TOP,page.main_cont);
@@ -103,8 +169,8 @@ function makeSoundTutorial(stage) {
     .pos(0,90,CENTER,BOTTOM,page) 
     
 
-    sound_list_label=new Label({color:yellow, text:"Sounds of Arabic Letters", size:25, align:CENTER})
-    page.go2sound_list = new Button({width:stageW*0.8,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:sound_list_label,corner:20})
+    alphabet_label=new Label({color:yellow, text:"View All Alphabet Letters", size:25, align:CENTER})
+    page.go2alphabet = new Button({width:stageW*0.8,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:alphabet_label,corner:20})
     .pos(0,20,CENTER,BOTTOM,page)   
     
     
@@ -114,7 +180,7 @@ function makeSoundTutorial(stage) {
     .pos(60,100,RIGHT,BOTTOM,page) 
     .tap(function(){
         
-        if (page.i+1<sound_tutorial_titles.length){
+        if (page.i+1<tutorial_titles.length){
             page.i+=1
             remove_el(page.main_cont)
             page.deploy_tutorial()            

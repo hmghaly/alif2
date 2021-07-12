@@ -3,7 +3,7 @@ function makeMainMenu(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
-    var page = new Page(stageW, stageH, green,yellow);
+    var page = new Page(stageW, stageH, theme.colors[2],theme.colors[2]);
     page.i=0;
     STYLE = {font:"reuben", size:50};
 
@@ -83,15 +83,36 @@ function makeMainMenu(stage) {
     page.go2progress = new Button({width:stageW*0.25,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:progress_label,corner:20})
     .pos(stageW*0.3,20,CENTER,BOTTOM,page)   
 
+    tutorials_label=new Label({color:yellow, text:"Tutorials", size:25, align:CENTER})
+    page.go2tutorials = new Button({width:stageW*0.5,height:60,backgroundColor:yellow.darken(0.6),rollBackgroundColor:orange,label:tutorials_label,corner:20})
+    .pos(0,100,CENTER,BOTTOM,page)   
+    
+    // frame.asset("youtube.png")
+    //     .sca(.6)
+    //     .alp(.8)
+    //     .centerReg()
+    //     // .animate({
+    //     //     props:{rotation:720, scale:0},
+    //     //     from:true,
+    //     //     wait:animateTime*4,
+    //     //     time:animateTime,
+    //     //     ease:"backOut"
+    //     // })
+    //     .hov(1) // will bring alpha to 1 when hovered
+    //     .tap(function () {
+    //         zgo("https://zimjs.com");
+    //     });
 
-   page.sound_toggle = new Toggle({label:"Sound", color:green.darken(.5), startToggled:true})
-       .sca(.8)
-       .pos(0,80,CENTER,BOTTOM,page)
-       .alp(0)
-       .animate({
-           props:{alpha:.1},
-           wait:3
-       });
+
+
+   // page.sound_toggle = new Toggle({label:"Sound", color:green.darken(.5), startToggled:true})
+   //     .sca(.8)
+   //     .pos(0,80,CENTER,BOTTOM,page)
+   //     .alp(0)
+   //     .animate({
+   //         props:{alpha:.1},
+   //         wait:3
+   //     });
 
     return page;
 }

@@ -15,6 +15,7 @@
 
     <title>Alpha5 - ALIF Arabic Learning Platform</title>
       <meta charset="UTF-8">
+      <meta charset="utf-8" />
       <meta name="description" content="Alif game - Arabic Learning is Fun - A web-based suite of apps to teach the foundation of Arabic reading, writing and listening. It teaches the names, shapes and sounds of the letters of the Arabic alphabet, in addition to the diacrticts (tashkeel/harakaat) and how to use Arabic keyboard and write letters and words and know the pronunciation of letters and words">
       <meta name="keywords" content="Arabic alphabet letters reading writing listening games online web mobile androin ios fun app pronunciation diacritics tashkeel harakaat pronunciation">
     
@@ -40,14 +41,27 @@
 <script src="pages/tutorial.js"></script>
 <script src="pages/zgame.js"></script>
 <script src="pages/zwrite.js"></script>  
+<script src="pages/profile_page.js"></script>  
+
     
 <script src="pages/alphabet.js"></script>
+<script src="pages/tutorials_menu.js"></script>  
 <script src="pages/sound_list.js"></script>
+
 <script src="pages/sound_tutorial.js"></script>  
+<script src="pages/alphabet_tutorial.js"></script>  
 <script src="pages/write_menu.js"></script>    
 <script src="pages/main_menu.js"></script>   
 <script src="pages/settings.js"></script>     
 <script src="pages/progress.js"></script>      
+<script src="pages/keyboard_practice.js"></script>      
+
+<script src="pages/choose_avatar.js"></script>  
+<script src="pages/choose_theme.js"></script>      
+<script src="pages/shop_page.js"></script>      
+<script src="pages/high_score.js"></script>      
+<!-- <script src="pages/choose_avatar.js"></script>           -->
+
 
     
 <script src="js/script.js"></script>  
@@ -172,6 +186,10 @@ for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
     cur_asset={id:snd_id, maxNum:1, src:fpath}
     assets.push(cur_asset)
 } 
+//cur_asset={id:"youtube.png", maxNum:1, src:"img/youtube.png"}
+cur_asset={id:"youtube.png", src:"img/youtube.png"}
+assets.push(cur_asset)
+
 // if (game_name=="alpha5"){
 //     for (const let_id of all_letter_ids){ //adding letter name sounds to assets
 //         letter_name_sounds_dir="audio/game/alphabet/"
@@ -199,6 +217,9 @@ for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
 //}    
 
 var page_nav={}    //global variable for navigating pages
+var theme ={}
+theme.colors=["#05668D","#427AA1","#EBF2FA","#679436","#A5BE00"]
+theme.font="verdana"
 path=''
 var progress = new ProgressBar({foregroundColor:orange, backgroundColor:purple}).sca(2);
     
@@ -245,25 +266,38 @@ frame.on("ready", function() {
     //     color2=blue         
     // }    
     
-    function deploy_game_generic(game_type){
+    // function deploy_game_generic(game_type){
 
-    }
+    // }
 
     //The loading page ///////////
-    var loading = new Page(stageW, stageH, blue, green);
+    //var loading = new Page(stageW, stageH, blue, green);
+    //backgroundColor=theme.colors[2]
+    var loading = new Page(stageW, stageH, theme.colors[2],theme.colors[2]);
     page_nav.loading=loading
     //new Circle(200,dark).center(splash);
-    new Label({color:purple, text:"Loading", size:100,variant:true}).center(loading)
+    new Label({color:purple, text:"Loading", font:theme.font, size:100,variant:true}).center(loading)
     
     //The splash page ///////////
-    var splash = new Page(stageW, stageH, color1, color2);
+    var splash = new Page(stageW, stageH, theme.colors[2], theme.colors[2]);
     //new Circle(200,dark).center(splash);
     //new Label("Alpha5").pos(0,100,CENTER,TOP,splash);
-    new Label({color:red, text:main_title, size:60,variant:true}).pos(0,100,CENTER,TOP,splash);
-    new Label({color:purple, text:main_subtitle, size:30,variant:true}).pos(0,-100,CENTER,CENTER,splash);
-    new Label({color:purple, text:guide_text, size:30,variant:true}).pos(0,0,CENTER,CENTER,splash);
+    new Label({color:red, text:main_title, font:theme.font, size:60,variant:true}).pos(0,100,CENTER,TOP,splash);
+    new Label({color:purple, text:main_subtitle, font:theme.font, size:30,variant:true}).pos(0,-100,CENTER,CENTER,splash);
+    new Label({color:purple, text:guide_text, font:theme.font, size:30,variant:true}).pos(0,0,CENTER,CENTER,splash);
+    //go_label=Label({color:purple, text:"guide_text", font:theme.font, size:30,variant:true})
     splash.go = new Button({width:140,height:140,backgroundColor:purple,rollBackgroundColor:orange,label:"GO",corner:70})
     .pos(0,150,CENTER,BOTTOM,splash)    
+
+
+    // img4=asset("youtube.png").clone().center(splash);
+    // img5=asset("youtube.png").clone().pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,splash);
+    // stage.update();
+       
+    // asset("youtube.png").center(splash);
+    // asset("youtube.png").clone().loc(100,100);
+    // stage.update();
+
     splash.backing;
     
     list_str_color1=[["A","red"],["L","green"],["I","blue"],["F","magenta"]]
@@ -281,6 +315,14 @@ frame.on("ready", function() {
     
     //The tutorials page /////////
     var tutorial = makeTutorial(stage);
+    var tutorials_menu = makeTutorialsMenu(stage);
+    var alphabet_tutorial = makeAlphabetTutorial(stage);
+    //The Sound list page ///
+    var sound_tutorial = makeSoundTutorial(stage);  
+
+    var profile_page=makeProfilePage(stage); 
+
+
     
     //The game page ///
     var game = makeGame(stage);
@@ -299,8 +341,6 @@ frame.on("ready", function() {
     //The Sound list page ///
     var sound_page = makeSoundPage(stage);
  
-    //The Sound list page ///
-    var sound_tutorial = makeSoundTutorial(stage);   
 
     var main_menu_page = makeMainMenu(stage) 
     page_nav.main_menu=main_menu_page
@@ -310,6 +350,20 @@ frame.on("ready", function() {
     
     var progress_dashboard = makeProgressDashboard(stage) 
     page_nav.progress_dashboard=progress_dashboard
+
+    var keyboard_practice = makeKeyboardPractice(stage)
+    page_nav.keyboard_practice=keyboard_practice
+
+    var avatar_page = makeChooseAvatar(stage)
+    page_nav.avatar_page=avatar_page
+    var theme_page = makeChooseTheme(stage)
+    page_nav.theme_page=theme_page
+
+    var shop_page = makeShopPage(stage)
+    page_nav.shop_page=shop_page
+
+    var high_score_page = makeHighScorePage(stage)
+    page_nav.high_score_page=high_score_page
     
     
     //The menu page
@@ -365,19 +419,24 @@ frame.on("ready", function() {
 
     pages = new Pages([
         {page:loading, swipe:[]},
-        {page:splash, swipe:[tutorial,null]},
-        {page:tutorial, swipe:[null,tutorial]},
-        {page:alphabet, swipe:[null,null,tutorial,null]},
-        {page:menu, swipe:[null,null,tutorial,null]},
+        {page:splash, swipe:[]},
+        {page:tutorial, swipe:[]},
+        {page:alphabet, swipe:[]},
+        {page:menu, swipe:[]},
         {page:game, swipe:[]},
-        {page:after_game, swipe:[menu,null]},
+        {page:after_game, swipe:[]},
         {page:progress_dashboard, swipe:[]}, 
         {page:sound_page, swipe:[]}, 
         {page:sound_tutorial, swipe:[]},
         {page:writing_page, swipe:[]}, 
         {page:writing_menu, swipe:[]},
         {page:main_menu_page, swipe:[]}, 
-        {page:settings_page, swipe:[]},
+        {page:settings_page, swipe:[]}, 
+        {page:keyboard_practice, swipe:[]},
+        {page:tutorials_menu, swipe:[]},
+        {page:alphabet_tutorial, swipe:[]},
+        {page:profile_page, swipe:[]},
+        
     ], new Emitter({num:10, height:stageW, angle:0, vertical:true, force:{min:3, max:10}}), .7, [
         [splash, tutorial, "pixelZIM"],
         [alphabet, tutorial, "pixelZIM"],
@@ -385,24 +444,129 @@ frame.on("ready", function() {
     ]).addTo();
     
 
-
+    //========== Navigation from splash to main menu
     splash.go.on("mousedown", function () {
         // pages.go(tutorial, "right"); ////// <<<<<----- for now
         console.log(main_menu_page)
         pages.go(main_menu_page, "right");
         
     });
-    tutorial.go2alphabet.on("mousedown", function () {
-        pages.go(alphabet, "down");
-        //pages.go(sound_page, "down"); ////////////////////////////////
+
+    //============== Main Menu Navigation ===============
+    main_menu_page.go2alphabet_game.on("mousedown", function () {
+        console.log("alphabet game")
+        setup_quiz()
+        gen_shape_questions()
+        console.log("generated questions")
+        quiz.type="alphabet"
+        quiz.i=0
+        cur_q_obj=quiz.questions[quiz.i]
+        game.deploy_q(cur_q_obj)    
+        pages.go(game, "right");    
+
+    })
+
+    main_menu_page.go2sound_game.on("mousedown", function () {
+        console.log("sound game")
+        setup_quiz()
+        gen_sound_questions()
+        quiz.type="sounds"
+        quiz.i=0
+        cur_q_obj=quiz.questions[quiz.i]
+        game.deploy_q(cur_q_obj)   
+        pages.go(game, "right");    
+    })
+
+    main_menu_page.go2handwriting_game.on("mousedown", function () {
+        console.log("Handwriting game")
+        pages.go(writing_menu, "up");
+    })
+
+    main_menu_page.go2typing_game.on("mousedown", function () {
+        console.log("Typing game")
+        pages.go(keyboard_practice, "up");
         
-    });    
+    })
+    main_menu_page.go2read_words_game.on("mousedown", function () {
+        console.log("Read words game")
+    })
+
+    main_menu_page.go2listen_type_game.on("mousedown", function () {
+        console.log("Listen and write game")
+    })
+
+    main_menu_page.go2settings.on("mousedown", function () {
+        console.log("Go to settings")
+        pages.go(settings_page, "up");
+    })
+
+    main_menu_page.go2progress.on("mousedown", function () {
+        console.log("Go to Progress Dashboard")
+        progress_dashboard.display_progress_dashboard()
+        pages.go(progress_dashboard, "up");
+    })
+
+    main_menu_page.go2tutorials.on("mousedown", function () {
+        console.log("Go to Tutorials")
+        pages.go(tutorials_menu, "up");
+    })
+
+    main_menu_page.go2profile.on("mousedown", function () {
+        console.log("Go to Profile")
+        pages.go(profile_page, "up");
+    })
     
+    //============== Profile Page Navigation ===============
+    profile_page.go2menu.on("mousedown", function () {
+        console.log("Go to Main Menu")
+        pages.go(main_menu_page, "up");
+    })
+
+
+
+    //============== Tutorials Menu Navigation ===============
+    tutorials_menu.go2menu.on("mousedown", function () {
+        console.log("Go to Main Menu")
+        pages.go(main_menu_page, "up");
+    })
+
+    tutorials_menu.go2alphabet_tutorial.on("mousedown", function () {
+        console.log("Go to Alphabet Tutorial")
+        pages.go(alphabet_tutorial, "up");
+    })
+
+    tutorials_menu.go2sound_tutorial.on("mousedown", function () {
+        console.log("Go to Sound Tutorial")
+        pages.go(sound_tutorial, "up");
+    })
+
+    //============== Alphabet Tutorials Navigation ===============
+    alphabet_tutorial.go2menu.on("mousedown", function () {
+        console.log("Go to Tutorials Menu")
+        pages.go(tutorials_menu, "up");
+    })
+    alphabet_tutorial.go2alphabet.on("mousedown", function () {
+        console.log("Go to Alphabet")
+        alphabet.deploy_list()
+        pages.go(alphabet, "up");
+    })
+
+
+    //============== Alphabet Page Navigation ===============
+    alphabet.go2tutorial.on("mousedown", function () {
+        pages.go(tutorial, "up");
+    });    
+    alphabet.go2menu.on("mousedown", function () {
+        pages.go(tutorials_menu, "right");
+    });    
+
+    //============== Sound Tutorials Navigation ===============
     sound_tutorial.go2menu.on("mousedown", function () {
-        pages.go(main_menu_page, "right");
+        pages.go(tutorials_menu, "right");
     });      
     
     sound_tutorial.go2sound_list.on("mousedown", function () {
+        sound_page.deploy_list()
         pages.go(sound_page, "down");
         //pages.go(sound_page, "down"); ////////////////////////////////
     }); 
@@ -410,8 +574,23 @@ frame.on("ready", function() {
         pages.go(sound_tutorial, "up");
     });    
     sound_page.go2menu.on("mousedown", function () {
-        pages.go(main_menu_page, "right");
+        pages.go(tutorials_menu, "right");
     });   
+
+
+    //go2menu,  go2alphabet_tutorial, go2sound_tutorial
+
+
+
+
+
+
+    tutorial.go2alphabet.on("mousedown", function () {
+        pages.go(alphabet, "down");
+        //pages.go(sound_page, "down"); ////////////////////////////////
+        
+    });    
+    
     
 //    writing_page.go2menu.on("mousedown", function () {
 //        pages.go(menu, "right");
@@ -419,16 +598,10 @@ frame.on("ready", function() {
     
     
     
-    alphabet.go2tutorial.on("mousedown", function () {
-        pages.go(tutorial, "up");
-    });    
     tutorial.go2menu.on("mousedown", function () {
         pages.go(main_menu_page, "right");
     });    
     
-    alphabet.go2menu.on("mousedown", function () {
-        pages.go(main_menu_page, "right");
-    });    
     
     menu.go2guide.on("mousedown", function () {
         if (game_name=="alpha5" ) pages.go(alphabet, "down");
@@ -450,6 +623,7 @@ frame.on("ready", function() {
         //game_ended()
     });      
     
+
     game.go2after_game.on("mousedown", function () {
         pages.go(after_game, "down");
     });      
@@ -491,56 +665,6 @@ frame.on("ready", function() {
     });      
      
 
-    main_menu_page.go2alphabet_game.on("mousedown", function () {
-    	console.log("alphabet game")
-    	setup_quiz()
-    	gen_shape_questions()
-    	console.log("generated questions")
-    	quiz.type="alphabet"
-        quiz.i=0
-        cur_q_obj=quiz.questions[quiz.i]
-        game.deploy_q(cur_q_obj)    
-        pages.go(game, "right");	
-
-    })
-
-    main_menu_page.go2sound_game.on("mousedown", function () {
-    	console.log("sound game")
-    	setup_quiz()
-    	gen_sound_questions()
-    	quiz.type="sounds"
-        quiz.i=0
-        cur_q_obj=quiz.questions[quiz.i]
-        game.deploy_q(cur_q_obj)   
-        pages.go(game, "right");  	
-    })
-
-    main_menu_page.go2handwriting_game.on("mousedown", function () {
-    	console.log("Handwriting game")
-    	pages.go(writing_menu, "up");
-    })
-
-    main_menu_page.go2typing_game.on("mousedown", function () {
-    	console.log("Typing game")
-    })
-    main_menu_page.go2read_words_game.on("mousedown", function () {
-    	console.log("Read words game")
-    })
-
-    main_menu_page.go2listen_type_game.on("mousedown", function () {
-    	console.log("Listen and write game")
-    })
-
-    main_menu_page.go2settings.on("mousedown", function () {
-    	console.log("Go to settings")
-    	pages.go(settings_page, "up");
-    })
-
-    main_menu_page.go2progress.on("mousedown", function () {
-    	console.log("Go to Progress Dashboard")
-    	progress_dashboard.display_progress_dashboard()
-    	pages.go(progress_dashboard, "up");
-    })
 
     settings_page.go2menu.on("mousedown", function () {
     	console.log("Go to menu")
@@ -552,7 +676,9 @@ frame.on("ready", function() {
         pages.go(main_menu_page, "up");
     });   
 
-
+    keyboard_practice.go2menu.on("mousedown", function () {
+        pages.go(main_menu_page, "up");
+    });   
 
     
 
@@ -677,6 +803,8 @@ frame.on("ready", function() {
 
 <body onload="init()">
 <!-- canvas with id="myCanvas" is made by zim Frame -->
+<iframe id="youtube1" width="560" height="315" src="https://www.youtube.com/embed/DddX_IdZxOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen hidden></iframe>
+
 <script src="cordova.js"></script>
 </body>
 </html>
