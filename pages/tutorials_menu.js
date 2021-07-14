@@ -3,7 +3,7 @@ function makeTutorialsMenu(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
-    var page = new Page(stageW, stageH, green,yellow);
+    var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page.i=0;
     STYLE = {font:"reuben", size:50};
 
@@ -37,23 +37,27 @@ function makeTutorialsMenu(stage) {
     image2.id="youtube_image2"
     image1.pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page).on("mousedown", function (evt) {
         console.log("Youtube")
-        console.log(evt.currentTarget.id)
-        //zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
+        //console.log(evt.currentTarget.id)
+        zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
     });  
-    console.log(image1)
+    //console.log(image1)
+
+    sound_btn_label=new Label({color:yellow, text:"Letter Sounds Tutorial", size:25, align:CENTER})
+    page.go2sound_tutorial = new Button({width:stageW*0.5,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:sound_btn_label,corner:20})
+    .pos(-stageW*0.2,-stageH*0.1,CENTER,CENTER,page)  
 
     image2.pos(stageW*0.25,-stageH*0.1,CENTER,CENTER,page).on("mousedown", function (evt) {
         console.log("Youtube2")
-        console.log(evt.currentTarget.id)
-        //zgo("https://www.youtube.com/watch?v=ycLezw26Whk")
+        //console.log(evt.currentTarget.id)
+        zgo("https://www.youtube.com/watch?v=ycLezw26Whk")
     });  
-    console.log(image2)
+    //console.log(image2)
     stage.update();
 
-    //img4=frame.asset("youtube.png").clone().center(page);
-    img4=asset("youtube.png").clone().center(page);
-    img5=asset("youtube.png").clone().pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page);
-    stage.update();
+    // //img4=frame.asset("youtube.png").clone().center(page);
+    // img4=asset("youtube.png").clone().center(page);
+    // img5=asset("youtube.png").clone().pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page);
+    // stage.update();
 
 
     //img1=createjs.Bitmap("youtube.png")
@@ -66,9 +70,7 @@ function makeTutorialsMenu(stage) {
 //     // });
 
 
-    sound_btn_label=new Label({color:yellow, text:"Letter Sounds Tutorial", size:25, align:CENTER})
-    page.go2sound_tutorial = new Button({width:stageW*0.5,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:sound_btn_label,corner:20})
-    .pos(-stageW*0.2,-stageH*0.1,CENTER,CENTER,page)  
+
 
 
 

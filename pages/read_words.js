@@ -1,5 +1,5 @@
 
-function makeChooseAvatar(stage) {
+function makeReadWords(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
@@ -12,7 +12,7 @@ function makeChooseAvatar(stage) {
     .pos(0,0,LEFT,TOP,page)
 
 
-    new Label({color:purple, text:"Choose Avatar", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+    new Label({color:purple, text:"Read Words", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);

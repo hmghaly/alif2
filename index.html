@@ -60,6 +60,7 @@
 <script src="pages/choose_theme.js"></script>      
 <script src="pages/shop_page.js"></script>      
 <script src="pages/high_score.js"></script>      
+<script src="pages/read_words.js"></script>      
 <!-- <script src="pages/choose_avatar.js"></script>           -->
 
 
@@ -174,6 +175,9 @@ all_sound_ids=JSON.parse(sound_ids_json_str)
 //==================== Adding sounds to assets ===================    
 //var assets = [{text:"game_data", src:"arabic_data.json"}]
 var assets = []
+cur_asset={id:"youtube.png", src:"img/youtube.png"}
+assets.push(cur_asset)
+
 for (const let_id of all_letter_ids){ //adding letter name sounds to assets
     letter_name_sounds_dir="audio/game/alphabet/"
     fpath=letter_name_sounds_dir+let_id+".mp3"
@@ -187,8 +191,7 @@ for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
     assets.push(cur_asset)
 } 
 //cur_asset={id:"youtube.png", maxNum:1, src:"img/youtube.png"}
-cur_asset={id:"youtube.png", src:"img/youtube.png"}
-assets.push(cur_asset)
+
 
 // if (game_name=="alpha5"){
 //     for (const let_id of all_letter_ids){ //adding letter name sounds to assets
@@ -219,6 +222,8 @@ assets.push(cur_asset)
 var page_nav={}    //global variable for navigating pages
 var theme ={}
 theme.colors=["#05668D","#427AA1","#EBF2FA","#679436","#A5BE00"]
+theme.bg1="#EBF2FA"
+theme.bg2="#EBF2FA"
 theme.font="verdana"
 path=''
 var progress = new ProgressBar({foregroundColor:orange, backgroundColor:purple}).sca(2);
@@ -273,13 +278,13 @@ frame.on("ready", function() {
     //The loading page ///////////
     //var loading = new Page(stageW, stageH, blue, green);
     //backgroundColor=theme.colors[2]
-    var loading = new Page(stageW, stageH, theme.colors[2],theme.colors[2]);
+    var loading = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page_nav.loading=loading
     //new Circle(200,dark).center(splash);
     new Label({color:purple, text:"Loading", font:theme.font, size:100,variant:true}).center(loading)
     
     //The splash page ///////////
-    var splash = new Page(stageW, stageH, theme.colors[2], theme.colors[2]);
+    var splash = new Page(stageW, stageH, theme.bg1, theme.bg2);
     //new Circle(200,dark).center(splash);
     //new Label("Alpha5").pos(0,100,CENTER,TOP,splash);
     new Label({color:red, text:main_title, font:theme.font, size:60,variant:true}).pos(0,100,CENTER,TOP,splash);
@@ -344,6 +349,8 @@ frame.on("ready", function() {
 
     var main_menu_page = makeMainMenu(stage) 
     page_nav.main_menu=main_menu_page
+
+    var read_words_page =makeReadWords(stage)
 
     var settings_page = makeSettings(stage) 
     page_nav.settings=settings_page
@@ -435,8 +442,8 @@ frame.on("ready", function() {
         {page:keyboard_practice, swipe:[]},
         {page:tutorials_menu, swipe:[]},
         {page:alphabet_tutorial, swipe:[]},
-        {page:profile_page, swipe:[]},
-        
+        {page:profile_page, swipe:[]}, 
+        {page:read_words_page, swipe:[]},
     ], new Emitter({num:10, height:stageW, angle:0, vertical:true, force:{min:3, max:10}}), .7, [
         [splash, tutorial, "pixelZIM"],
         [alphabet, tutorial, "pixelZIM"],
@@ -488,6 +495,8 @@ frame.on("ready", function() {
         
     })
     main_menu_page.go2read_words_game.on("mousedown", function () {
+    	
+    	pages.go(read_words_page, "up");
         console.log("Read words game")
     })
 

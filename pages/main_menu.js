@@ -3,7 +3,7 @@ function makeMainMenu(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
-    var page = new Page(stageW, stageH, theme.colors[2],theme.colors[2]);
+    var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page.i=0;
     STYLE = {font:"reuben", size:50};
 
@@ -20,6 +20,11 @@ function makeMainMenu(stage) {
     profile_btn_label=new Label({color:yellow, text:"Profile", size:25,variant:true})
     page.go2profile = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:profile_btn_label,corner:20})
     .pos(0,0,RIGHT,TOP,page)
+
+    feedback_btn_label=new Label({color:yellow, text:"Feedback", size:25,variant:true})
+    page.go2feedback = new Button({width:120,height:60,backgroundColor:orange.darken(0.5),rollBackgroundColor:orange,label:feedback_btn_label,corner:20})
+    .pos(0,0,LEFT,TOP,page)
+
 
     alphabet_btn_label=new Label({color:yellow, text:"Alphabet Letters", size:25, align:CENTER})
     page.go2alphabet_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:alphabet_btn_label,corner:20})
