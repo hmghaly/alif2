@@ -1,19 +1,23 @@
 
-function makeShopPage(stage) {
+function makeWriteWords(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
     var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page.i=0;
-    STYLE = {font:"reuben", size:50};
+    //STYLE = {font:"reuben", size:50};
 
     back2menu_btn_label=new Label({color:yellow, text:"Menu", size:25,variant:true})
     page.go2menu = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:back2menu_btn_label,corner:20})
     .pos(0,0,LEFT,TOP,page)
-    .on("mousedown", function () {pages.go(page_nav.main_menu, "right"); });
+    page.go2menu.on("mousedown", function () {
+      pages.go(page_nav.main_menu, "right"); 
+        console.log("back to menu")
+        //zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
+    });     
 
 
-    new Label({color:purple, text:"Item Shop", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+    new Label({color:purple, text:"Write Words", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);

@@ -5,11 +5,16 @@ function makeChooseAvatar(stage) {
     var stageH = stage.height;
     var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page.i=0;
-    STYLE = {font:"reuben", size:50};
+    //STYLE = {font:"reuben", size:50};
 
     back2menu_btn_label=new Label({color:yellow, text:"Menu", size:25,variant:true})
     page.go2menu = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:back2menu_btn_label,corner:20})
     .pos(0,0,LEFT,TOP,page)
+    page.go2menu.on("mousedown", function () {
+      pages.go(page_nav.main_menu, "right"); 
+        console.log("back to menu")
+        //zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
+    });     
 
 
     new Label({color:purple, text:"Choose Avatar", size:45,variant:true}).pos(0,70,CENTER,TOP,page);

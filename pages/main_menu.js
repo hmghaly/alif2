@@ -5,7 +5,7 @@ function makeMainMenu(stage) {
     var stageH = stage.height;
     var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page.i=0;
-    STYLE = {font:"reuben", size:50};
+    //STYLE = {font:theme.font, size:50};
 
     new Label({color:purple, text:"Main Menu", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
@@ -24,6 +24,13 @@ function makeMainMenu(stage) {
     feedback_btn_label=new Label({color:yellow, text:"Feedback", size:25,variant:true})
     page.go2feedback = new Button({width:120,height:60,backgroundColor:orange.darken(0.5),rollBackgroundColor:orange,label:feedback_btn_label,corner:20})
     .pos(0,0,LEFT,TOP,page)
+    page.go2feedback.on("mousedown", function () {
+        console.log("feedback form")
+        $('#feedback_modal').modal('show');
+        //pages.go(page_nav.alpha_game, "down");
+    });
+
+    
 
 
     alphabet_btn_label=new Label({color:yellow, text:"Alphabet Letters", size:25, align:CENTER})
@@ -40,21 +47,13 @@ function makeMainMenu(stage) {
     page.go2sound_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:sound_btn_label,corner:20})
     .pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page)   
     
-    handwriting_btn_label=new Label({color:yellow, text:"Handwriting", size:25, align:CENTER})
-    page.go2handwriting_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:handwriting_btn_label,corner:20})
-    .pos(-stageW*0.25,0,CENTER,CENTER,page)   
-    
-    typing_btn_label=new Label({color:yellow, text:"Typing", size:25, align:CENTER})
-    page.go2typing_game = new Button({width:stageW*0.4,height:60,backgroundColor:red,rollBackgroundColor:orange,label:typing_btn_label,corner:20})
-    .pos(stageW*0.25,0,CENTER,CENTER,page)       
-
     read_words_btn_label=new Label({color:yellow, text:"Read Words", size:25, align:CENTER})
-    page.go2read_words_game = new Button({width:stageW*0.4,height:60,backgroundColor:red,rollBackgroundColor:orange,label:read_words_btn_label,corner:20})
-    .pos(-stageW*0.25,stageH*0.2,CENTER,CENTER,page)   
+    page.go2read_words_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:read_words_btn_label,corner:20})
+    .pos(-stageW*0.25,stageH*0,CENTER,CENTER,page)   
     
-    listen_type_btn_label=new Label({color:yellow, text:"Listen & Type", size:25, align:CENTER})
-    page.go2listen_type_game = new Button({width:stageW*0.4,height:60,backgroundColor:red,rollBackgroundColor:orange,label:listen_type_btn_label,corner:20})
-    .pos(stageW*0.25,stageH*0.2,CENTER,CENTER,page)       
+    write_words_btn_label=new Label({color:yellow, text:"Write Words", size:25, align:CENTER})
+    page.go2write_words_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:write_words_btn_label,corner:20})
+    .pos(stageW*0.25,stageH*0,CENTER,CENTER,page)       
 
     //new Label({color:black, text:"Click the play button below to listen to tutorial.\nClick the alphabet button for the list of all letters", size:25}).pos(0,150,CENTER,CENTER,page);
 
@@ -74,23 +73,43 @@ function makeMainMenu(stage) {
     //     icon:pizzazz.makeIcon("play", white, 1.5)
     // })
     // .pos(0,90,CENTER,BOTTOM,page) 
+    handwriting_btn_label=new Label({color:yellow, text:"Handwriting \nPractice", size:25, align:CENTER})
+    page.go2handwriting_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:handwriting_btn_label,corner:20})
+    .pos(-stageW*0.25,stageH*0.2,CENTER,CENTER,page)   
     
+    typing_btn_label=new Label({color:yellow, text:"Typing \nPractice", size:25, align:CENTER})
+    page.go2typing_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:typing_btn_label,corner:20})
+    .pos(stageW*0.25,stageH*0.2,CENTER,CENTER,page)       
 
-    scores_label=new Label({color:yellow, text:"Scores", size:25, align:CENTER})
-    page.go2scores = new Button({width:stageW*0.25,height:60,backgroundColor:red,rollBackgroundColor:orange,label:scores_label,corner:20})
-    .pos(0,20,CENTER,BOTTOM,page)   
-    
-    settings_label=new Label({color:yellow, text:"Settings", size:25, align:CENTER})
-    page.go2settings = new Button({width:stageW*0.25,height:60,backgroundColor:red,rollBackgroundColor:orange,label:settings_label,corner:20})
-    .pos(-stageW*0.3,20,CENTER,BOTTOM,page)   
-
-    progress_label=new Label({color:yellow, text:"Progress", size:25, align:CENTER})
-    page.go2progress = new Button({width:stageW*0.25,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:progress_label,corner:20})
-    .pos(stageW*0.3,20,CENTER,BOTTOM,page)   
 
     tutorials_label=new Label({color:yellow, text:"Tutorials", size:25, align:CENTER})
     page.go2tutorials = new Button({width:stageW*0.5,height:60,backgroundColor:yellow.darken(0.6),rollBackgroundColor:orange,label:tutorials_label,corner:20})
     .pos(0,100,CENTER,BOTTOM,page)   
+
+
+    
+
+    shop_label=new Label({color:yellow, text:"Shop", size:25, align:CENTER})
+    page.go2shop = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:shop_label,corner:20})
+    .pos(70,20,CENTER,BOTTOM,page) 
+    .on("mousedown", function () {pages.go(page_nav.shop_page, "right"); });
+	
+
+    scores_label=new Label({color:yellow, text:"Scores", size:25, align:CENTER})
+    page.go2scores = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:scores_label,corner:20})
+    .pos(200,20,CENTER,BOTTOM,page)   
+    .on("mousedown", function () {pages.go(page_nav.high_score_page, "right"); });  
+
+    
+    settings_label=new Label({color:yellow, text:"Settings", size:25, align:CENTER})
+    page.go2settings = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:settings_label,corner:20})
+    .pos(-70,20,CENTER,BOTTOM,page)   
+
+    progress_label=new Label({color:yellow, text:"Progress", size:25, align:CENTER})
+    page.go2progress = new Button({width:stageW*0.2,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:progress_label,corner:20})
+    .pos(-200,20,CENTER,BOTTOM,page) 
+
+
     
     // frame.asset("youtube.png")
     //     .sca(.6)

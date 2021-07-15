@@ -19,6 +19,10 @@
       <meta name="description" content="Alif game - Arabic Learning is Fun - A web-based suite of apps to teach the foundation of Arabic reading, writing and listening. It teaches the names, shapes and sounds of the letters of the Arabic alphabet, in addition to the diacrticts (tashkeel/harakaat) and how to use Arabic keyboard and write letters and words and know the pronunciation of letters and words">
       <meta name="keywords" content="Arabic alphabet letters reading writing listening games online web mobile androin ios fun app pronunciation diacritics tashkeel harakaat pronunciation">
     
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Welcome to ZIM at http://zimjs.com - Code Interactive Media Pizzazz!             -->
 <!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS http://createjs.com -->
@@ -37,7 +41,7 @@
 <!--<script src="https://zimjs.org/cdn/pizzazz_03.js"></script>-->
 <!-- <script src="https://zimjs.org/cdn/pizzazz_02.js"></script>     -->
 <script src="js/pizzazz_02.js"></script>    
-<script src="js/jquery.min.js"></script>
+<!-- <script src="js/jquery.min.js"></script> -->
 <script src="pages/tutorial.js"></script>
 <script src="pages/zgame.js"></script>
 <script src="pages/zwrite.js"></script>  
@@ -60,7 +64,8 @@
 <script src="pages/choose_theme.js"></script>      
 <script src="pages/shop_page.js"></script>      
 <script src="pages/high_score.js"></script>      
-<script src="pages/read_words.js"></script>      
+<script src="pages/read_words.js"></script>     
+<script src="pages/write_words.js"></script>      
 <!-- <script src="pages/choose_avatar.js"></script>           -->
 
 
@@ -224,8 +229,10 @@ var theme ={}
 theme.colors=["#05668D","#427AA1","#EBF2FA","#679436","#A5BE00"]
 theme.bg1="#EBF2FA"
 theme.bg2="#EBF2FA"
-theme.font="verdana"
+theme.font="reuben" //"verdana"
 path=''
+STYLE = {font:theme.font, size:50};
+
 var progress = new ProgressBar({foregroundColor:orange, backgroundColor:purple}).sca(2);
     
 // as of ZIM 5.5.0 you do not need to put zim before ZIM functions and classes
@@ -325,8 +332,10 @@ frame.on("ready", function() {
     //The Sound list page ///
     var sound_tutorial = makeSoundTutorial(stage);  
 
-    var profile_page=makeProfilePage(stage); 
+    var keyboard_practice = makeKeyboardPractice(stage)
+    page_nav.keyboard_practice=keyboard_practice
 
+    
 
     
     //The game page ///
@@ -347,10 +356,16 @@ frame.on("ready", function() {
     var sound_page = makeSoundPage(stage);
  
 
+
+    var read_words_page =makeReadWords(stage)
+    var write_words_page =makeWriteWords(stage)
+    
+    //========= Menu Navigation =========
     var main_menu_page = makeMainMenu(stage) 
     page_nav.main_menu=main_menu_page
 
-    var read_words_page =makeReadWords(stage)
+    var profile_page=makeProfilePage(stage); 
+    page_nav.profile_page=profile_page
 
     var settings_page = makeSettings(stage) 
     page_nav.settings=settings_page
@@ -358,11 +373,9 @@ frame.on("ready", function() {
     var progress_dashboard = makeProgressDashboard(stage) 
     page_nav.progress_dashboard=progress_dashboard
 
-    var keyboard_practice = makeKeyboardPractice(stage)
-    page_nav.keyboard_practice=keyboard_practice
-
     var avatar_page = makeChooseAvatar(stage)
     page_nav.avatar_page=avatar_page
+
     var theme_page = makeChooseTheme(stage)
     page_nav.theme_page=theme_page
 
@@ -374,22 +387,22 @@ frame.on("ready", function() {
     
     
     //The menu page
-    var menu = new Page(stageW, stageH, orange, blue);
-    //new Circle(200,dark).center(splash);
-    title_label=new Label({color:purple, text:main_title+"\nMain Menu", size:50, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,menu);
-    go2game_label=new Label({color:yellow, text:"Start\nGame", size:60, align:CENTER})
-    menu.go2game = new Button({width:200,height:200,backgroundColor:purple,rollBackgroundColor:orange,label:go2game_label,corner:100})
-    .pos(0,0,CENTER,CENTER,menu)   
-    go2tutorial_label=new Label({color:yellow, text:"Tutorial", size:30, variant:true, align:CENTER})
-    menu.go2tutorial = new Button({width:140,height:140,backgroundColor:purple,rollBackgroundColor:orange,label:go2tutorial_label,corner:70})
-    .pos(60,150,LEFT,BOTTOM,menu)    
-    go2pogress_label=new Label({color:yellow, text:"My\nProgress", size:30, variant:true, align:CENTER})
-    menu.go2pogress = new Button({width:140,height:140,backgroundColor:purple,rollBackgroundColor:orange,label:go2pogress_label,corner:70})
-    .pos(60,150,RIGHT,BOTTOM,menu)    
+    // var menu = new Page(stageW, stageH, orange, blue);
+    // //new Circle(200,dark).center(splash);
+    // title_label=new Label({color:purple, text:main_title+"\nMain Menu", size:50, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,menu);
+    // go2game_label=new Label({color:yellow, text:"Start\nGame", size:60, align:CENTER})
+    // menu.go2game = new Button({width:200,height:200,backgroundColor:purple,rollBackgroundColor:orange,label:go2game_label,corner:100})
+    // .pos(0,0,CENTER,CENTER,menu)   
+    // go2tutorial_label=new Label({color:yellow, text:"Tutorial", size:30, variant:true, align:CENTER})
+    // menu.go2tutorial = new Button({width:140,height:140,backgroundColor:purple,rollBackgroundColor:orange,label:go2tutorial_label,corner:70})
+    // .pos(60,150,LEFT,BOTTOM,menu)    
+    // go2pogress_label=new Label({color:yellow, text:"My\nProgress", size:30, variant:true, align:CENTER})
+    // menu.go2pogress = new Button({width:140,height:140,backgroundColor:purple,rollBackgroundColor:orange,label:go2pogress_label,corner:70})
+    // .pos(60,150,RIGHT,BOTTOM,menu)    
 
-    alphabet_label=new Label({color:yellow, text:guide_text, size:25, align:CENTER})
-    menu.go2guide = new Button({width:stageW*0.8,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:alphabet_label,corner:20})
-    .pos(0,20,CENTER,BOTTOM,menu)   
+    // alphabet_label=new Label({color:yellow, text:guide_text, size:25, align:CENTER})
+    // menu.go2guide = new Button({width:stageW*0.8,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:alphabet_label,corner:20})
+    // .pos(0,20,CENTER,BOTTOM,menu)   
 
  
     //The alphabet page
@@ -429,7 +442,6 @@ frame.on("ready", function() {
         {page:splash, swipe:[]},
         {page:tutorial, swipe:[]},
         {page:alphabet, swipe:[]},
-        {page:menu, swipe:[]},
         {page:game, swipe:[]},
         {page:after_game, swipe:[]},
         {page:progress_dashboard, swipe:[]}, 
@@ -443,11 +455,13 @@ frame.on("ready", function() {
         {page:tutorials_menu, swipe:[]},
         {page:alphabet_tutorial, swipe:[]},
         {page:profile_page, swipe:[]}, 
-        {page:read_words_page, swipe:[]},
+        {page:read_words_page, swipe:[]}, 
+        {page:write_words_page, swipe:[]}, 
+        {page:high_score_page, swipe:[]}, 
+        {page:shop_page, swipe:[]},
     ], new Emitter({num:10, height:stageW, angle:0, vertical:true, force:{min:3, max:10}}), .7, [
         [splash, tutorial, "pixelZIM"],
         [alphabet, tutorial, "pixelZIM"],
-        [menu, game, "explodeZIM"],
     ]).addTo();
     
 
@@ -500,8 +514,9 @@ frame.on("ready", function() {
         console.log("Read words game")
     })
 
-    main_menu_page.go2listen_type_game.on("mousedown", function () {
-        console.log("Listen and write game")
+    main_menu_page.go2write_words_game.on("mousedown", function () {
+        console.log("Write Words game")
+        pages.go(write_words_page, "up");
     })
 
     main_menu_page.go2settings.on("mousedown", function () {
@@ -612,19 +627,19 @@ frame.on("ready", function() {
     });    
     
     
-    menu.go2guide.on("mousedown", function () {
-        if (game_name=="alpha5" ) pages.go(alphabet, "down");
-        else if (game_name=="read5" ) pages.go(sound_page, "right");
-        else if (game_name=="write5" ) pages.go(alphabet, "right");        
+    // menu.go2guide.on("mousedown", function () {
+    //     if (game_name=="alpha5" ) pages.go(alphabet, "down");
+    //     else if (game_name=="read5" ) pages.go(sound_page, "right");
+    //     else if (game_name=="write5" ) pages.go(alphabet, "right");        
         
-    });    
+    // });    
     
-    menu.go2tutorial.on("mousedown", function () {
-        pages.go(tutorial, "left");
-    });  
-    menu.go2pogress.on("mousedown", function () {
-        pages.go(dashboard, "down");
-    });      
+    // menu.go2tutorial.on("mousedown", function () {
+    //     pages.go(tutorial, "left");
+    // });  
+    // menu.go2pogress.on("mousedown", function () {
+    //     pages.go(dashboard, "down");
+    // });      
 
     game.go2menu.on("mousedown", function () {
         clearInterval(game_timer)
@@ -813,6 +828,38 @@ frame.on("ready", function() {
 <body onload="init()">
 <!-- canvas with id="myCanvas" is made by zim Frame -->
 <iframe id="youtube1" width="560" height="315" src="https://www.youtube.com/embed/DddX_IdZxOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen hidden></iframe>
+
+<!-- The Modal -->
+  <div class="modal fade" id="feedback_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Send Feedback</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Tell us any questions, suggestions, or problems.
+          <input type="text" id="feedback_name" name="feedback_name" class="form-control form-control mb-1" placeholder="your name">
+          <input type="text" id="feedback_email" name="feedback_email" class="form-control form-control mb-1" placeholder="your email">
+          <textarea class="form-control mb-1" rows="5" id="comment" placeholder="your feedback"></textarea>
+          <button type="button" class="btn btn-primary btn-block">Submit Feedback</button>
+        </div>
+        
+
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
 
 <script src="cordova.js"></script>
 </body>

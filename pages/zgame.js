@@ -2,7 +2,7 @@
 function makeGame(stage) {
     var stageW = stage.width;
     var stageH = stage.height;
-    var page = new Page(stageW, stageH, green,yellow);
+    var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     STYLE = {font:"reuben", size:50};
     
     page.timer=new Label({color:purple, text:"Game", size:48,variant:true}).pos(0,30,CENTER,TOP,page);
