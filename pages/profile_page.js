@@ -54,7 +54,7 @@ function makeProfilePage(stage) {
         spacingH:20,
         spacingV:20
       });
-      var win = new Window({
+      var profile_win = new Window({
         width:stageW*0.8,
         height:100,
         interactive:true,
@@ -168,7 +168,7 @@ function makeProfilePage(stage) {
 
       
       wrapper2.add(objects)
-      win.add(wrapper2).addTo(page.main_cont); 
+      profile_win.add(wrapper2).addTo(page.main_cont); 
 
 
 
