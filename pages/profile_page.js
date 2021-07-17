@@ -126,6 +126,7 @@ function makeProfilePage(stage) {
       
       wrapper2.add(objects)
       console.log(profile_win)
+      console.log(page.main_cont)
       profile_win.add(wrapper2)
       //profile_win.add(wrapper2).addTo(page.main_cont); 
 
