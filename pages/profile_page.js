@@ -50,7 +50,7 @@ function makeProfilePage(stage) {
         page_nav.shop_page.deploy()
       })
 
-      const wrapper = new Wrapper({
+      const wrapper2 = new Wrapper({
         spacingH:20,
         spacingV:20
       });
@@ -167,8 +167,8 @@ function makeProfilePage(stage) {
 
 
       
-      wrapper.add(objects)
-      win.add(wrapper).addTo(page.main_cont); 
+      wrapper2.add(objects)
+      win.add(wrapper2).addTo(page.main_cont); 
 
 
 
