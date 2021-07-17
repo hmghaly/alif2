@@ -14,6 +14,18 @@ function makeChooseAvatar(stage) {
 
     new Label({color:purple, text:"Choose Avatar", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
+
+	var win = new Window({
+        width:stageW*0.8,
+        height:600,
+        interactive:true,
+        padding:10,
+		corner:10,
+		scrollBarDrag:true,
+        backgroundColor:purple.darken(.5),
+        borderColor:purple
+    }).pos(0,50,CENTER,CENTER,page);
+    
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);
 

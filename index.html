@@ -69,8 +69,8 @@
 <!-- <script src="pages/choose_avatar.js"></script>           -->
 
 
-    
-<script src="js/script.js"></script>  
+<script src="js/script.js"></script>      
+<script src="js/question.js"></script>  
 <script src="js/canvas.js"></script>      
 
 <script>
@@ -110,10 +110,45 @@ session.game=game_name
 session.items=[]
 
 
-var settings={}
-var user={}
+//var settings={}
+//var user={}
+var settings=get_local_strorage(storage_name,"settings")
+if (settings==null || settings==undefined) var settings={}
+if (settings.sound_on==null || settings.sound_on==undefined) settings.sound_on=true
+if (settings.quiz_dur_min==null || settings.quiz_dur_min==undefined) settings.quiz_dur_min=5
+if (settings.streak_dur_min==null || settings.streak_dur_min==undefined) settings.streak_dur_min=10    
+
+
+var user=get_local_strorage(storage_name,"user")
+if (user==null || user==undefined) var user={}
+if (user.available_avatars==null || user.available_avatars==undefined) user.available_avatars=[]
+if (user.avatar==null || user.avatar==undefined) user.avatar="user.png"
+if (user.username==null || user.username==undefined) user.username="guest"
+if (user.email==null || user.email==undefined) user.email=""
+if (user.badges==null || user.badges==undefined) user.badges=[]
+if (user.n_hints==null || user.n_hints==undefined) user.n_hints=0    
+
+
+//user.available_avatars.push("user.png")
+
+
 var progress_history=get_local_strorage(storage_name,"progress_history")
 if (progress_history==null || progress_history==undefined) progress_history=[]
+
+var n_coins=get_local_strorage(storage_name,"n_coins")
+if (n_coins==null || n_coins==undefined) n_coins=0
+
+function update_coins(){
+    set_local_strorage(storage_name,"n_coins",n_coins)
+}
+
+function update_user(){
+    set_local_strorage(storage_name,"user",user)
+}
+
+function update_settings(){
+    set_local_strorage(storage_name,"settings",settings)
+}
 
 //just to reset the progress history
 // progress_history=[]
@@ -175,13 +210,29 @@ sound_ids_json_str='["aa","i","aa_layyenah","hamzah_2","hamzah_a","2a","2","2u",
 all_sound_ids=JSON.parse(sound_ids_json_str)
 //console.log(all_letter_ids)
 //console.log(all_sound_ids)
+
+avatars=[{fname:"001-girl-10.png",price:10},{fname:"003-boy-20.png",price:10},{fname:"002-girl-9.png",price:100},
+{fname:"010-boy-19.png",price:100},{fname:"004-girl-8.png",price:200},{fname:"012-boy-17.png",price:200},
+{fname:"008-girl-6.png",price:300},{fname:"011-boy-18.png",price:300},{fname:"004-princess.png",price:400},
+{fname:"005-prince.png",price:400},{fname:"003-queen.png",price:500},{fname:"001-king.png",price:500},
+{fname:"011-joker.png",price:600},{fname:"012-knight.png",price:700},{fname:"009-ninja.png",price:800}
+]
  
 
 //==================== Adding sounds to assets ===================    
 //var assets = [{text:"game_data", src:"arabic_data.json"}]
 var assets = []
-cur_asset={id:"youtube.png", src:"img/youtube.png"}
-assets.push(cur_asset)
+// cur_asset={id:"youtube.png", src:"img/youtube.png"}
+// cur_asset={id:"coin.png", src:"img/coin.png"}
+assets.push({id:"youtube.png", src:"img/youtube.png"})
+assets.push({id:"coin.png", src:"img/coin.png"})
+
+for (const avatar_obj of avatars){ //adding letter name sounds to assets
+    avatars_dir="img/avatars/"
+    fpath=avatars_dir+avatar_obj.fname
+    cur_asset={id:avatar_obj.fname, src:fpath}
+    assets.push(cur_asset)
+} 
 
 for (const let_id of all_letter_ids){ //adding letter name sounds to assets
     letter_name_sounds_dir="audio/game/alphabet/"
@@ -340,7 +391,7 @@ frame.on("ready", function() {
     
     //The game page ///
     var game = makeGame(stage);
-    page_nav.alpha_game=game
+    page_nav.game=game
     
     //The hand writing page ///
     var writing_menu = makeWritingMenu(stage);

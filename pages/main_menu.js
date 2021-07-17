@@ -7,14 +7,31 @@ function makeMainMenu(stage) {
     page.i=0;
     //STYLE = {font:theme.font, size:50};
 
-    new Label({color:purple, text:"Main Menu", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
-    new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
-    page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);
 
-    new_streak_val=update_streak(0)
-    new_streak_val_minutes= Math.floor( new_streak_val/60 );
-    page.streak_status_label.text=""+new_streak_val_minutes+"/10"
+    new Label({color:purple, text:"Main Menu", size:45,variant:true}).pos(0,30,CENTER,TOP,page);
+
+    page.deploy=function(q_obj){
+        remove_el(page.main_cont)
+        page.main_cont = new Container(stageW, stageH).addTo(page);
+
+        page.welcome_label= new Label({color:purple, text:"Welcome,\n"+user.username, size:25,variant:true}).pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+        page.user_avatar=frame.asset(user.avatar).clone().sca(0.1).pos(-stageW*0.4,145,CENTER,TOP,page.main_cont);
+
+        new Label({color:purple, text:"Streak Today:", size:25,variant:true}).pos(0,80,CENTER,TOP,page.main_cont);
+        page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page.main_cont);
+
+        page.days_streak= new Label({color:purple, text:"Streak:\n7 days", size:25,variant:true}).pos(stageW*0.4,80,CENTER,TOP,page.main_cont);
+
+        new_streak_val=update_streak(0)
+        new_streak_val_minutes= Math.floor( new_streak_val/60 );
+        page.streak_status_label.text=""+new_streak_val_minutes+"/10"      
+
+    }
+    page.deploy()
+
+
+
 
 
     profile_btn_label=new Label({color:yellow, text:"Profile", size:25,variant:true})
@@ -92,7 +109,10 @@ function makeMainMenu(stage) {
     shop_label=new Label({color:yellow, text:"Shop", size:25, align:CENTER})
     page.go2shop = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:shop_label,corner:20})
     .pos(70,20,CENTER,BOTTOM,page) 
-    .on("mousedown", function () {pages.go(page_nav.shop_page, "right"); });
+    .on("mousedown", function () {
+        page_nav.shop_page.deploy()
+        pages.go(page_nav.shop_page, "right"); 
+    });
 	
 
     scores_label=new Label({color:yellow, text:"Scores", size:25, align:CENTER})

@@ -1,3 +1,24 @@
+function make_img_price_container(img_price_obj,cont_w,cont_h){
+  cur_container = new Container(cont_w, cont_h)
+  img_name=img_price_obj.fname
+  img0=frame.asset(img_name).clone().sca(0.1).center(cur_container)
+  price_str=img_price_obj.price
+  price_label_color=yellow
+  //if (n_coins != null && n_coins != undefined && n_coins<img_price_obj.price) img_price_obj.above_price==true //price_label_color=red
+  if (img_price_obj.above_price==true) price_label_color=red
+    //console.log("function: check acquired",img_price_obj.acquired)
+  if (img_price_obj.acquired==true) {
+    price_label_color=green
+    //price_str="acquired"
+  } 
+  price_label=new Label({color:price_label_color, text:price_str, size:18,variant:true}).pos(0,35,CENTER,CENTER,cur_container);
+  cur_container.price=img_price_obj.price
+  cur_container.fname=img_price_obj.fname
+  cur_container.acquired=img_price_obj.acquired
+  cur_container.above_price=img_price_obj.above_price
+  return cur_container
+}
+
 
 function makeShopPage(stage) {
     
@@ -12,8 +33,123 @@ function makeShopPage(stage) {
     .pos(0,0,LEFT,TOP,page)
     .on("mousedown", function () {pages.go(page_nav.main_menu, "right"); });
 
+    new Label({color:purple, text:"Item Shop", size:45,variant:true}).pos(0,20,CENTER,TOP,page);
 
-    new Label({color:purple, text:"Item Shop", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+
+
+    page.deploy=function(q_obj){
+      remove_el(page.main_cont)
+      page.main_cont = new Container(stageW, stageH).addTo(page);
+
+      coin_container = new Container(100, 30)
+      n_coins_str=""+n_coins
+      //n_coins_str="123123"
+      page.coin_icon=frame.asset("coin.png").clone().sca(0.5).pos(-20,0,CENTER,CENTER,coin_container);
+      page.coin_count=new Label({color:purple, text:n_coins_str, size:25, align:LEFT}).pos(50,0,LEFT,TOP,coin_container);
+      coin_container.pos(0,80,CENTER,TOP,page.main_cont);
+
+
+
+      new Label({color:purple, text:"Buy Avatars", size:30,variant:true}).pos(0,110,CENTER,TOP,page.main_cont);
+      const wrapper = new Wrapper({
+        spacingH:20,
+        spacingV:20
+      });
+      var win = new Window({
+        width:stageW*0.8,
+        height:250,
+        interactive:true,
+        padding:10,
+        corner:10,
+        scrollBarDrag:true,
+        backgroundColor:purple.darken(.5),
+        borderColor:purple
+      }).pos(0,150,CENTER,TOP,page.main_cont);
+      objects=[]
+      // img0=frame.asset("youtube.png").clone()
+      // objects.push(img0);
+      for (const av of avatars){
+        img0=frame.asset(av.fname).clone().sca(0.1)
+        //console.log(img0)
+        price=av.price
+        img_price_obj=av
+        img_price_obj.acquired=false
+        if (n_coins != null && n_coins != undefined && n_coins<price) img_price_obj.above_price=true
+        if (user.available_avatars.indexOf(av.fname)>-1) img_price_obj.acquired=true
+
+        tmp_container=make_img_price_container(img_price_obj,60,60)
+
+        //console.log("acquired",av.fname, tmp_container.acquired)
+
+        tmp_container.on("mousedown", function (evt) {
+          console.log(evt.currentTarget) 
+          trg=evt.currentTarget
+          price=trg.price
+          if (trg.acquired){
+            alert("You already have this item")
+            return
+          }
+
+          if (n_coins<price){
+            alert("You need more coins!")
+            return
+          }
+          var confirmation = confirm("Are you sure you want to buy this item for "+price+" coins?");
+          if (confirmation == true) {
+            n_coins-=price
+            user.available_avatars.push(trg.fname)
+            update_coins()
+            update_user()
+            page.deploy()
+            console.log("item bought")
+          } else {
+            console.log("transaction cancelled")
+          }
+
+
+        });
+
+        objects.push(tmp_container);        
+      }
+
+
+      
+      wrapper.add(objects)
+      win.add(wrapper).addTo(page.main_cont); 
+
+      new Label({color:purple, text:"Buy Themes", size:30,variant:true}).pos(0,410,CENTER,TOP,page.main_cont);
+
+      var win = new Window({
+        width:stageW*0.8,
+        height:100,
+        interactive:true,
+        padding:10,
+        corner:10,
+        scrollBarDrag:true,
+        backgroundColor:purple.darken(.5),
+        borderColor:purple
+    }).pos(0,450,CENTER,TOP,page);
+
+      new Label({color:purple, text:"Buy Power-Ups", size:30,variant:true}).pos(0,560,CENTER,TOP,page.main_cont);
+
+
+    }
+    page.deploy()
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);
