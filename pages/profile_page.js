@@ -119,56 +119,14 @@ function makeProfilePage(stage) {
           pages.go(page_nav.main_menu, "right");
           page_nav.main_menu.deploy()
         })        
-
-
-        //console.log(img0)
-        //img0=frame.asset("youtube.png").clone()
-
-        // price=av.price
-        // img_price_obj=av
-        // img_price_obj.acquired=false
-        // if (n_coins != null && n_coins != undefined && n_coins<price) img_price_obj.above_price=true
-        // if (user.available_avatars.indexOf(av.fname)>-1) img_price_obj.acquired=true
-
-        // tmp_container=make_img_price_container(img_price_obj,60,60)
-
-        // //console.log("acquired",av.fname, tmp_container.acquired)
-
-        // tmp_container.on("mousedown", function (evt) {
-        //   console.log(evt.currentTarget) 
-        //   trg=evt.currentTarget
-        //   price=trg.price
-        //   if (trg.acquired){
-        //     alert("You already have this item")
-        //     return
-        //   }
-
-        //   if (n_coins<price){
-        //     alert("You need more coins!")
-        //     return
-        //   }
-        //   var confirmation = confirm("Are you sure you want to buy this item for "+price+" coins?");
-        //   if (confirmation == true) {
-        //     n_coins-=price
-        //     user.available_avatars.push(trg.fname)
-        //     update_coins()
-        //     update_user()
-        //     page.deploy()
-        //     console.log("item bought")
-        //   } else {
-        //     console.log("transaction cancelled")
-        //   }
-
-
-        // });
-
-        //objects.push(tmp_container);        
+     
       }
 
 
       
       wrapper2.add(objects)
-      profile_win.add(wrapper2).addTo(page.main_cont); 
+      console.log(profile_win)
+      //profile_win.add(wrapper2).addTo(page.main_cont); 
 
 
 
