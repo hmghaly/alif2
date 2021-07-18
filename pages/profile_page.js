@@ -52,10 +52,10 @@ function makeProfilePage(stage) {
 	     console.log("What??")
 		
 
-		upd_btn_label=new Label({color:yellow, text:"Update123", size:25,variant:true})
-    	page.go2upd = new Button({width:stageW*0.5,height:40,backgroundColor:blue.darken(.5),rollBackgroundColor:orange,label:upd_btn_label,corner:20})
-    	.pos(0,10,CENTER,TOP,page.main_cont)
-    	console.log("this is the button", page.go2upd)
+		upd_btn_label=new Label({color:yellow, text:"Update Profile", size:25,variant:true})
+    	page.go2upd = new Button({width:stageW*0.8,height:50,backgroundColor:blue.darken(.5),rollBackgroundColor:orange,label:upd_btn_label,corner:20})
+    	.pos(0,480,CENTER,TOP,page.main_cont)
+    	//console.log("this is the button", page.go2upd)
     	//alert("What????")
 
 
@@ -105,29 +105,29 @@ function makeProfilePage(stage) {
         	stage.update()
         })
 
-        update_btn_label=new Label({color:yellow, text:"Update Profile", size:25,variant:true})
-        page.go2update_profile = new Button({width:stageW*0.8,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:update_btn_label,corner:20})
-        .pos(0,480,CENTER,TOP,page.main_cont)
-        .on("mousedown", function (evt) {
-          username_text=page.username_textArea.text
-          useremail_text=page.email_textArea.text
-          if (username_text=="") {
-            alert("please choose a user name")
-            return
-          }
-          if (username_text.length>10){
-            alert("please choose a user name less than 10 characters")
-            return            
-          }
-          user.username=username_text
-          if (useremail_text!="" && useremail_text.indexOf("@")>0 && useremail_text.indexOf("@")>0){
-            user.email=useremail_text
-          }
-          update_user()
-          console.log(page.username_textArea.text)
-          pages.go(page_nav.main_menu, "right");
-          page_nav.main_menu.deploy()
-        })        
+        // update_btn_label=new Label({color:yellow, text:"Update Profile", size:25,variant:true})
+        // page.go2update_profile = new Button({width:stageW*0.8,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:update_btn_label,corner:20})
+        // .pos(0,480,CENTER,TOP,page.main_cont)
+        // .on("mousedown", function (evt) {
+        //   username_text=page.username_textArea.text
+        //   useremail_text=page.email_textArea.text
+        //   if (username_text=="") {
+        //     alert("please choose a user name")
+        //     return
+        //   }
+        //   if (username_text.length>10){
+        //     alert("please choose a user name less than 10 characters")
+        //     return            
+        //   }
+        //   user.username=username_text
+        //   if (useremail_text!="" && useremail_text.indexOf("@")>0 && useremail_text.indexOf("@")>0){
+        //     user.email=useremail_text
+        //   }
+        //   update_user()
+        //   console.log(page.username_textArea.text)
+        //   pages.go(page_nav.main_menu, "right");
+        //   page_nav.main_menu.deploy()
+        // })        
      
       }
 
