@@ -17,7 +17,49 @@ function makeReadWords(stage) {
     });  
 
 
-    new Label({color:purple, text:"Read Words", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+    //new Label({color:purple, text:"Read Words", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+
+    page.deploy=function(){
+        remove_el(page.main_cont)
+        page.main_cont = new Container(stageW, stageH).addTo(page);
+      page.timer=new Label({color:purple, text:"Game", size:48,variant:true}).pos(0,30,CENTER,TOP,page.main_cont);
+      page.accuracy=new Label({color:purple, text:"100%", size:48,variant:true, align:RIGHT}).pos(30,30,RIGHT,TOP,page.main_cont);
+      page.prompt=new Label({color:purple, text:"What are the letters?", size:24,variant:true, align:CENTER}).pos(0,100,CENTER,TOP,page.main_cont);
+      page.item=new Label({color:purple, text:"word", size:36, align:CENTER}).pos(0,150,CENTER,TOP,page.main_cont);
+      page.answer=new Label({color:purple, text:"answer", size:24, align:CENTER}).pos(0,200,CENTER,TOP,page.main_cont);
+      page.options_cont = new Container(stageW, stageH*0.5).pos(0,250,CENTER,TOP,page.main_cont);
+      n_coins_str=""+n_coins
+      page.coin_icon=frame.asset("coin.png").pos(-30,25,CENTER,BOTTOM,page.main_cont);
+      page.coin_count=new Label({color:purple, text:n_coins_str, size:30, align:LEFT}).pos(30,30,CENTER,BOTTOM,page.main_cont);
+      n_hints_str=""+user.n_hints
+      page.hint_icon=frame.asset("idea.png").clone().sca(0.75).pos(40,25,RIGHT,BOTTOM,page.main_cont);
+      page.hint_count=new Label({color:purple, text:n_hints_str, size:30, align:LEFT}).pos(25,30,RIGHT,BOTTOM,page.main_cont);
+      page.wrapper= new Wrapper({
+            spacingH: 20,
+            spacingV: 20
+        });
+    var options_win = new Window({
+        width: stageW * 0.8,
+        height: 200,
+        interactive: true,
+        padding: 10,
+        corner: 10,
+        scrollBarDrag: true,
+        backgroundColor: purple.darken(.5),
+        borderColor: purple
+    }).pos(0, stageH*0.5, CENTER, TOP, page.main_cont);
+    objects=[]
+    objects.push(frame.asset("idea.png").clone())
+    objects.push(frame.asset("idea.png").clone())
+    page.wrapper.add(objects)
+    options_win.add(page.wrapper)
+
+
+
+
+    }
+    page.deploy()
+
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);

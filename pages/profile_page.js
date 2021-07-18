@@ -35,13 +35,13 @@ function makeProfilePage(stage) {
      page.deploy=function(q_obj){
       	remove_el(page.main_cont)
       	page.main_cont = new Container(stageW, stageH).addTo(page);
-    	page.username_textArea = new TextArea({height:60, size:25,  placeholder:"user name"}).pos(0, 120,CENTER,TOP, page);
-    	page.email_textArea = new TextArea({height:60, size:25,  placeholder:"email"}).pos(0, 200,CENTER,TOP, page);
+    	  page.username_textArea = new TextArea({height:60, size:25,  placeholder:"user name"}).pos(0, 120,CENTER,TOP, page);
+    	  page.email_textArea = new TextArea({height:60, size:25,  placeholder:"email"}).pos(0, 200,CENTER,TOP, page);
 
-      if (user.username!="guest") page.username_textArea.text=user.username
-      if (user.email!="") page.email_textArea.text=user.email
+        if (user.username!="guest") page.username_textArea.text=user.username
+        if (user.email!="") page.email_textArea.text=user.email
 
-		new Label({color:purple, text:"Choose From Available Avatars", size:30,variant:true}).pos(0,260,CENTER,TOP,page.main_cont);
+		    new Label({color:purple, text:"Choose From Available Avatars", size:30,variant:true}).pos(0,260,CENTER,TOP,page.main_cont);
 		shop_btn_label=new Label({color:yellow, text:"Buy More", size:25,variant:true})
     	page.go2shop = new Button({width:stageW*0.5,height:40,backgroundColor:blue.darken(.5),rollBackgroundColor:orange,label:shop_btn_label,corner:20})
     	.pos(0,300,CENTER,TOP,page.main_cont)
