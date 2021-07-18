@@ -135,7 +135,7 @@ function makeGame(stage) {
                 time:.5,
                 rewind:true,
                 loop:false,
-                call:next_q
+                call:page.next_q
                 //loopCall:()=>{next_q()} // also call, rewindCall, and more
             });
             console.log(evt)
@@ -182,7 +182,7 @@ function makeGame(stage) {
         else page.accuracy.color="red"
     }    
     
-    function next_q(){
+    page.next_q=function(){
         //remove_el(page.main_cont)
         console.log("deploying next question")
         quiz.i+=1;
@@ -195,7 +195,7 @@ function makeGame(stage) {
         page.deploy_q(cur_q_obj)        
         zog("deploy next Q")
         
-    }    
+    }
 
     
     return page;
@@ -203,31 +203,7 @@ function makeGame(stage) {
 }
 
 
-function game_ended2(){
-    after_game.completion_label.text="Completed: "+quiz.n_correct+" questions"   
-    accuracy_100=Math.round(100*quiz.accuracy)
-    after_game.accuracy_label.text="Accuracy: "+accuracy_100+"%"   
-    score=Math.round(10*quiz.n_correct*quiz.accuracy) 
-    after_game.score_label.text="Score: "+score 
-    console.log("game ended!!!!")
-    history_obj={}
-    history_obj["n_correct"]=quiz.n_correct
-    history_obj["accuracy"]=quiz.accuracy
-    history_obj["score"]=score
-    history_obj["duration"]=quiz.duration
-    history_obj["type"]=quiz.type
-    history_obj["date"]=Date()
-    
-    console.log(history_obj)
 
-    progress_history.push(history_obj)
-    set_local_strorage(storage_name,"progress_history",progress_history)
-
-    new_streak_val=update_streak(quiz.duration)
-    new_streak_val_minutes= Math.floor( new_streak_val/60 );
-    page_nav.main_menu.streak_status_label.text=""+new_streak_val_minutes+"/10"
-
-}
 
 // function coin_plus(){
 //     n_coins+=1

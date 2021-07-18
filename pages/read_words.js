@@ -22,12 +22,20 @@ function makeReadWords(stage) {
     page.deploy=function(){
         remove_el(page.main_cont)
         page.main_cont = new Container(stageW, stageH).addTo(page);
-      page.timer=new Label({color:purple, text:"Game", size:48,variant:true}).pos(0,30,CENTER,TOP,page.main_cont);
+      page.timer=new Label({color:purple, text:"Timer", size:48,variant:true}).pos(0,30,CENTER,TOP,page.main_cont);
       page.accuracy=new Label({color:purple, text:"100%", size:48,variant:true, align:RIGHT}).pos(30,30,RIGHT,TOP,page.main_cont);
       page.prompt=new Label({color:purple, text:"What are the letters?", size:24,variant:true, align:CENTER}).pos(0,100,CENTER,TOP,page.main_cont);
-      page.item=new Label({color:purple, text:"word", size:36, align:CENTER}).pos(0,150,CENTER,TOP,page.main_cont);
-      page.answer=new Label({color:purple, text:"answer", size:24, align:CENTER}).pos(0,200,CENTER,TOP,page.main_cont);
-      page.options_cont = new Container(stageW, stageH*0.5).pos(0,250,CENTER,TOP,page.main_cont);
+      page.item=new Label({color:purple, text:"word", size:64, align:CENTER}).pos(0,120,CENTER,TOP,page.main_cont);
+      
+      page.image_cont = new Container(stageW*0.5, stageH*0.2).pos(0,200,CENTER,TOP,page.main_cont);
+      let rect0 = new Rectangle(stageW*0.5, stageH*0.2,green).center(page.image_cont)
+      page.question_image=frame.asset("idea.png").clone().sca(1.5).center(page.image_cont)
+
+      page.english=new Label({color:purple, text:"english", size:18, align:CENTER}).pos(0,5,CENTER,BOTTOM,page.image_cont);
+
+
+      page.answer=new Label({color:purple, text:"answer", size:48, align:CENTER}).pos(0,0,CENTER,CENTER,page.main_cont);
+      
       n_coins_str=""+n_coins
       page.coin_icon=frame.asset("coin.png").pos(-30,25,CENTER,BOTTOM,page.main_cont);
       page.coin_count=new Label({color:purple, text:n_coins_str, size:30, align:LEFT}).pos(30,30,CENTER,BOTTOM,page.main_cont);
@@ -38,6 +46,8 @@ function makeReadWords(stage) {
             spacingH: 20,
             spacingV: 20
         });
+
+      page.options_cont = new Container(stageW*0.8, stageH*0.3).pos(0, stageH*0.5, CENTER, TOP, page.main_cont);
     var options_win = new Window({
         width: stageW * 0.8,
         height: 200,
@@ -47,10 +57,10 @@ function makeReadWords(stage) {
         scrollBarDrag: true,
         backgroundColor: purple.darken(.5),
         borderColor: purple
-    }).pos(0, stageH*0.5, CENTER, TOP, page.main_cont);
+    }).pos(0, 25, CENTER, TOP, page.options_cont);
     objects=[]
     objects.push(frame.asset("idea.png").clone())
-    objects.push(frame.asset("idea.png").clone())
+    // objects.push(frame.asset("idea.png").clone())
     page.wrapper.add(objects)
     options_win.add(page.wrapper)
 
@@ -59,6 +69,68 @@ function makeReadWords(stage) {
 
     }
     page.deploy()
+
+
+
+    page.answer_is_correct=function(obj1){
+    	console.log("answer is correct")
+    	obj1.addTo(page)
+        obj1.animate({
+            wait:0, // wait one second before starting
+            props:{x:page.answer.x,y:page.answer.y},
+            time:.5,
+            rewind:false,
+            loop:false,
+            call:function(){
+                //page.coin_count.text=""+n_coins
+                page.answer.text+=obj1.value
+                remove_el(obj1)
+            }
+            //loopCall:()=>{next_q()} // also call, rewindCall, and more
+        });
+    }
+
+    page.answer_is_wrong=function(obj1){
+
+    }
+
+    page.check_answer=function(evt){
+        if (quiz.n_attempts==null) quiz.n_attempts=0;
+        if (quiz.n_correct==null) quiz.n_correct=0;
+        
+        trg=evt.currentTarget
+        console.log("target:", trg)   
+        page.answer_is_correct(trg) 	
+        //alert("why?")
+    }
+
+    page.deploy_question=function(){
+    	page.prompt.text="What are the sounds of this word?"
+    	page.item.text="kelmah"
+    	page.answer.text=""
+    	remove_el(page.question_image)
+    	page.question_image=frame.asset("coin.png").clone().sca(1.5).center(page.image_cont)
+    	page.wrapper.removeAllChildren()
+    	options=["ka","li","ma","h","g","DHDHa"]
+    	const colors = [pink, blue, green, yellow];
+
+    	options_objects=[]
+    	for (const op of options){
+    		let circle = new Circle(40, colors[0])
+    		circle.label = new Label({text:op, size:30, color:"white"}).centerReg(circle);
+    		circle.value=op
+    		circle.on("mousedown",page.check_answer) //page.check_answer
+
+    		options_objects.push(circle)
+    		console.log(circle)
+    	}
+    	page.wrapper.add(options_objects)
+    	stage.update()
+
+    }
+    page.deploy_question()
+
+
 
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
