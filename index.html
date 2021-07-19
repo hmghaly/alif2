@@ -217,7 +217,8 @@ avatars=[{fname:"001-girl-10.png",price:10},{fname:"003-boy-20.png",price:10},{f
 {fname:"005-prince.png",price:400},{fname:"003-queen.png",price:500},{fname:"001-king.png",price:500},
 {fname:"011-joker.png",price:600},{fname:"012-knight.png",price:700},{fname:"009-ninja.png",price:800}
 ]
- 
+
+animal_fnames=["animal.png", "ant.png", "bat.png", "bear.png", "bee.png", "beetle.png", "bird.png", "bull.png", "camel.png", "cat.png", "cheetah.png", "chick.png", "chicken.png", "chimpanzee.png", "cockroach.png", "cow.png", "crocodile.png", "deer.png", "dog.png", "dolphin.png", "donkey.png", "duck.png", "eagle.png", "elephant.png", "falcon.png", "fish.png", "fly.png", "fox.png", "frog.png", "giraffe.png", "goat.png", "goose.png", "gorilla.png", "grasshopper.png", "hamster.png", "hedgehog.png", "hippo.png", "horse.png", "insect.png", "kangaroo.png", "koala.png", "lion.png", "lizzard.png", "llama.png", "monkey.png", "mosquito.png", "mouse.png", "octopus.png", "owl.png", "panda.png", "parrot.png", "peacock.png", "penguin.png", "pig.png", "pigeon.png", "rabbit.png", "raccoon.png", "rhino.png", "robin.png", "rooster.png", "scorpion.png", "shark.png", "sheep.png", "skunk.png", "sloth.png", "snail.png", "snake.png", "spider.png", "squirrel.png", "tiger.png", "turkey.png", "turtle.png", "wasp.png", "whale.png", "wolf.png", "worm.png", "zebra.png"] 
 
 //==================== Adding sounds to assets ===================    
 //var assets = [{text:"game_data", src:"arabic_data.json"}]
@@ -234,6 +235,13 @@ for (const avatar_obj of avatars){ //adding letter name sounds to assets
     avatars_dir="img/avatars/"
     fpath=avatars_dir+avatar_obj.fname
     cur_asset={id:avatar_obj.fname, src:fpath}
+    assets.push(cur_asset)
+} 
+
+for (const an_fname of animal_fnames){ //adding letter name sounds to assets
+    animals_dir="img/animals/"
+    fpath=animals_dir+an_fname
+    cur_asset={id:an_fname, src:fpath}
     assets.push(cur_asset)
 } 
 
@@ -280,6 +288,10 @@ for (const snd_id of all_sound_ids){ //adding actual letter sounds to assets
 
 var page_nav={}    //global variable for navigating pages
 var theme ={}
+
+var quiz={}
+var question={}
+
 theme.colors=["#05668D","#427AA1","#EBF2FA","#679436","#A5BE00"]
 theme.bg1="#EBF2FA"
 theme.bg2="#EBF2FA"
@@ -565,6 +577,7 @@ frame.on("ready", function() {
     main_menu_page.go2read_words_game.on("mousedown", function () {
     	
     	pages.go(read_words_page, "up");
+        read_words_page.deploy()
         console.log("Read words game")
     })
 
@@ -872,6 +885,12 @@ frame.on("ready", function() {
         //check_assets_loaded()
       })       
 
+    animal_list_fname="txt/animal-list.txt"
+    fetch(animal_list_fname)
+      .then(function(res){ return res.text(); })
+      .then(function(data){
+        console.log(data.split("\r\n"))
+      }) 
     
 })
     </script>

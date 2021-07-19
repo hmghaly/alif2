@@ -186,6 +186,8 @@ function gen_sound_questions2(){
             for (op_id of options_str_list){
                 op_tmp_obj=sound_dict[op_id]
                 op_obj={}
+                op_obj.correct=false
+                if (op_id==sid) op_obj.correct=true
                 op_obj.label=op_tmp_obj.sound
                 op_obj.name=op_tmp_obj.sound
                 op_obj.id=op_id
@@ -199,6 +201,8 @@ function gen_sound_questions2(){
             for (op_id of options_str_list){
                 op_tmp_obj=sound_dict[op_id]
                 op_obj={}
+                op_obj.correct=false
+                if (op_id==sid) op_obj.correct=true                
                 op_obj.label=op_tmp_obj.arabic
                 op_obj.name=op_tmp_obj.arabic
                 op_obj.id=op_id
@@ -221,4 +225,77 @@ function gen_sound_questions2(){
         quiz.questions.push(tmp_q_obj)
     }
     quiz.n=quiz.questions.length;
+}
+
+function gen_word_questions(){
+    quiz.questions=[]
+    quiz.i=0;
+    word_dict=game_data.word_dict
+    sound_dict=game_data.sound_dict
+    sound_ids=shuffle(copy(game_data.sound_ids))
+    letter_ids=game_data.letter_ids
+    shape_dict=game_data.shape_dict
+    name_dict=game_data.name_dict   
+    chunk_sound_dict={}
+    ar_chunk_sound_dict={}
+    for (const snd of sound_ids){
+        snd_obj=sound_dict[snd]
+        chunk_sound_dict[snd_obj.sound]=snd
+        ar_chunk_sound_dict[snd_obj.arabic]=snd
+    }
+    animals_ids=shuffle(copy(game_data.animals_ids))   
+    for (const an_id of animals_ids) {
+        zog(an_id,word_dict[an_id])
+        cur_obj=word_dict[an_id]
+        tmp_q_obj={}
+        tmp_q_obj.options=[]
+        
+
+        q_types=["ar2romanized_chunks","ar2letters"]
+        q_types=["ar2romanized_chunks"]
+        cur_q_type=shuffle(q_types)[0]
+        tmp_q_obj.type=cur_q_type
+        if (cur_q_type=="ar2romanized_chunks"){
+            tmp_q_obj.prompt="What are the sounds of this word?"
+            tmp_q_obj.item={label:cur_obj.arabic, id:an_id} 
+            tmp_q_obj.english=cur_obj.english
+            tmp_q_obj.correct=cur_obj.romanized_chunks 
+            tmp_options=cur_obj.romanized_chunks 
+            random_i=Math.floor(Math.random()*sound_ids.length)
+            random_sound_ids= sound_ids.slice(random_i,random_i+2)
+            //let new_chunks = people.map(({ email }) => email);
+            const new_chunks = random_sound_ids.map(x => sound_dict[x].sound);
+            var final_chunks = cur_obj.romanized_chunks .concat(new_chunks);
+            for (const ch of final_chunks){
+                option_obj={}
+                option_obj.label=ch
+                option_obj.name=ch
+                corr_snd_id=chunk_sound_dict[ch]
+                if (corr_snd_id==null) corr_snd_id=ch
+                option_obj.id=corr_snd_id
+                tmp_q_obj.options.push(option_obj)
+
+            }
+
+
+
+            //console.log(random_sound_ids,new_chunks,final_chunks)
+            //random_sound_chunk=sound_dict[random_sound_id]
+            //tmp_options.push(random_sound_id)
+            //tmp_q_obj.options=final_chunks   
+            console.log(tmp_q_obj)  
+            quiz.questions.push(tmp_q_obj)       
+        }
+       
+        quiz.n=quiz.questions.length
+        //romanized_chunks
+        //romanized
+        //plain
+        //letters
+        //english
+        //chunks
+        //arabic
+        //word_letter_shapes
+        //word_letter_shapes_plain
+    }  
 }
