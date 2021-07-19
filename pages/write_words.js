@@ -14,10 +14,270 @@ function makeWriteWords(stage) {
       pages.go(page_nav.main_menu, "right"); 
         console.log("back to menu")
         //zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
-    });     
+    });  
 
 
-    new Label({color:purple, text:"Write Words", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+    //new Label({color:purple, text:"Read Words", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+
+    page.deploy=function(){
+        remove_el(page.main_cont)
+        page.main_cont = new Container(stageW, stageH).addTo(page);
+      page.timer=new Label({color:purple, text:"Timer", size:48,variant:true}).pos(0,30,CENTER,TOP,page.main_cont);
+      page.accuracy=new Label({color:purple, text:"100%", size:48,variant:true, align:RIGHT}).pos(30,30,RIGHT,TOP,page.main_cont);
+      page.prompt=new Label({color:purple, text:"What are the letters?", size:24,variant:true, align:CENTER}).pos(0,100,CENTER,TOP,page.main_cont);
+      page.item=new Label({color:purple, text:"word", size:64, align:CENTER}).pos(0,120,CENTER,TOP,page.main_cont);
+      
+      page.image_cont = new Container(stageW*0.5, stageH*0.2).pos(0,180,CENTER,TOP,page.main_cont);
+      //let rect0 = new Rectangle(stageW*0.5, stageH*0.2,green).center(page.image_cont)
+      page.question_image=frame.asset("idea.png").clone().sca(1.5).center(page.image_cont)
+      page.english=new Label({color:purple, text:"english", size:30, align:CENTER}).pos(0,-5,CENTER,BOTTOM,page.image_cont);
+      //page.item=new Label({color:purple, text:"word", size:64, align:CENTER})
+    //   page.question_image=frame.asset("idea.png").clone().sca(1)
+    //   page.english=new Label({color:purple, text:"english", size:24, align:CENTER})
+
+
+    //  new Tile({
+    //     obj:[page.question_image, page.english], 
+    //     rows:2,
+    //     spacingV:10, 
+    //     unique:true,
+    //     align:CENTER
+    // }).pos(0,0,CENTER,CENTER,page.main_cont);
+
+
+
+      page.answer=new Label({color:purple, text:"answer", size:48, align:CENTER}).pos(0,0,CENTER,CENTER,page.main_cont);
+      
+      n_coins_str=""+n_coins
+      page.coin_icon=frame.asset("coin.png").pos(-30,25,CENTER,BOTTOM,page.main_cont);
+      page.coin_count=new Label({color:purple, text:n_coins_str, size:30, align:LEFT}).pos(30,30,CENTER,BOTTOM,page.main_cont);
+      n_hints_str=""+user.n_hints
+      page.hint_icon=frame.asset("idea.png").clone().sca(0.75).pos(40,25,RIGHT,BOTTOM,page.main_cont);
+      page.hint_count=new Label({color:purple, text:n_hints_str, size:30, align:LEFT}).pos(25,30,RIGHT,BOTTOM,page.main_cont);
+      
+      page.keyboard = new Keyboard({
+        labels:page.answer, 
+        layout:"ARABIC",
+    }).pos(0,70,CENTER,BOTTOM,page)
+
+      page.keyboard.on("keydown", function(e) {
+        letter=e.letter
+         zog(e.letter);
+         zog(e)
+         //e.target.alpha=0
+         page.check_answer(letter)
+      });
+
+
+    //   page.wrapper= new Wrapper({
+    //         spacingH: 20,
+    //         spacingV: 20
+    //     });
+
+    //   page.options_cont = new Container(stageW*0.8, stageH*0.3).pos(0, stageH*0.5, CENTER, TOP, page.main_cont);
+    // var options_win = new Window({
+    //     width: stageW * 0.8,
+    //     height: 220,
+    //     interactive: true,
+    //     padding: 10,
+    //     corner: 10,
+    //     scrollBarDrag: true,
+    //     backgroundColor: purple.darken(.5),
+    //     borderColor: purple
+    // }).pos(0, 50, CENTER, TOP, page.options_cont);
+    // objects=[]
+    // objects.push(frame.asset("idea.png").clone())
+    // // objects.push(frame.asset("idea.png").clone())
+    // page.wrapper.add(objects)
+    // options_win.add(page.wrapper)
+
+  page.game_timer = setInterval(page.run_timer, 1000);
+    quiz.duration=300
+    if (settings.duration!=null) quiz.duration=settings.duration*60;
+    quiz.remaining_time=quiz.duration
+
+        
+        //Setup accuracy tracking
+    quiz.accuracy=0
+    quiz.n_attempts=0
+    quiz.n_correct=0
+    accuracy_100=Math.round(100*quiz.accuracy)
+    page.accuracy.text=""+accuracy_100+"%"
+
+
+    //gen_word_questions()
+    gen_writing_questions()
+    page.deploy_question()
+
+
+
+
+    }
+    //page.deploy()
+    page.run_timer=function(obj1){
+    // function myTimer() {
+        quiz.remaining_time-=1
+        n_seconds=quiz.remaining_time%60
+        n_minutes=(quiz.remaining_time-n_seconds)/60
+        n_minutes_str=""+n_minutes
+        n_seconds_str=""+n_seconds
+        if (n_seconds_str.length==1) n_seconds_str="0"+n_seconds_str
+        timer_str=n_minutes_str+":"+n_seconds_str
+        page.timer.text=timer_str
+        if (quiz.remaining_time<=0) {
+            pages.go(after_game, "right");
+            console.log("where is this?")
+            game_ended2()
+//                accuracy_100=Math.round(100*quiz.accuracy)
+//                after_game.accuracy_label.text=""+accuracy_100+"%"
+            clearInterval(page.game_timer)
+        } 
+    }    
+
+    page.answer_is_correct=function(val){
+      console.log("answer is correct")
+      quiz.n_correct+=1
+      //obj1.backgroundColor=green
+      quiz.accuracy=quiz.n_correct/quiz.n_attempts
+      accuracy_100=Math.round(100*quiz.accuracy)
+      page.accuracy.text=""+accuracy_100+"%"
+      // console.log(obj1.id)
+      // frame.asset(obj1.id).play()
+
+
+      question.answered.push(val)
+      wait_interval=0.3
+      if (question.answered.length==question.correct.length) {
+              for (var i=1;i<question.answered.length+1;i++){
+                
+              coin_clone = page.coin_icon.clone().pos(0,40,CENTER,CENTER,page.main_cont);//.pos(page.main_cont)//.pos(stageX,stageY,LEFT,TOP,page.main_cont);
+              coin_clone.animate({
+                  wait:i*wait_interval, // increment wait time for each coin
+                  props:{x:page.coin_icon.x,y:page.coin_icon.y},
+                  time:.5,
+                  rewind:false,
+                  loop:false,
+                  call:function(){
+                    n_coins+=1
+                    update_coins()
+                      page.coin_count.text=""+n_coins
+                  }
+                  //loopCall:()=>{next_q()} // also call, rewindCall, and more
+              });
+
+
+              }
+              page.coin_icon.animate({
+                  wait:question.answered.length*wait_interval, // increment wait time for each coin
+                  props:{alpha:0.5},
+                  time:.5,
+                  rewind:true,
+                  loop:false,
+                  call:function(){
+                    page.next_q()
+                  }
+                  //loopCall:()=>{next_q()} // also call, rewindCall, and more
+              });
+              
+            } //end of word completion condition
+
+      // obj1.addTo(page)
+      //   obj1.animate({
+      //       wait:0, // wait one second before starting
+      //       props:{x:page.answer.x,y:page.answer.y},
+      //       time:.5,
+      //       rewind:false,
+      //       loop:false,
+      //       call:function(){
+      //           //page.coin_count.text=""+n_coins
+      //           page.answer.text+=obj1.value
+      //           stageX=page.answer.stageX
+      //           stageY=page.answer.stageY+5
+      //           remove_el(obj1)
+      //           wait_interval=0.3
+
+      
+      //       }
+      //       //loopCall:()=>{next_q()} // also call, rewindCall, and more
+      //   });
+    }
+
+    page.answer_is_wrong=function(val){
+      console.log("answer is wrong")
+      quiz.accuracy=quiz.n_correct/quiz.n_attempts
+      accuracy_100=Math.round(100*quiz.accuracy)
+      page.accuracy.text=""+accuracy_100+"%"
+      page.answer.text=page.answer.text.slice(0, -1); //remove last typed key
+
+
+    }
+
+    page.check_answer=function(selected_value){
+        if (quiz.n_attempts==null) quiz.n_attempts=0;
+        if (quiz.n_correct==null) quiz.n_correct=0;
+
+        quiz.n_attempts+=1
+        
+        // trg=evt.currentTarget
+        // selected_value=trg.value
+        answer_i=question.answered.length
+        expected_answer=question.correct[answer_i]
+        if (expected_answer==selected_value) page.answer_is_correct(selected_value)
+        else page.answer_is_wrong(selected_value)
+        // console.log("target:", trg)   
+        // page.answer_is_correct(trg)  
+        // console.log(question)
+        //alert("why?")
+    }
+
+    page.deploy_question=function(){
+      cur_q_obj=quiz.questions[quiz.i]
+      question={}
+      question.correct=cur_q_obj.correct
+      question.answered=[]
+      quiz_i_str=""+(quiz.i+1)+"- "
+
+      page.prompt.text=quiz_i_str +cur_q_obj.prompt //"What are the sounds of this word?"
+      page.item.text=cur_q_obj.item.label //"kelmah"
+      page.answer.text=""
+      page.english.text=cur_q_obj.english
+      remove_el(page.question_image)
+      fname=cur_q_obj.english.toLowerCase()+".png"
+      //page.question_image=frame.asset(fname).clone().sca(1.5).center(page.image_cont)
+      page.question_image=frame.asset(fname).clone()
+      page.question_image.height=100
+      page.question_image.center(page.image_cont)
+      console.log(page.question_image)
+      //page.question_image.heightOnly=100
+      //page.wrapper.removeAllChildren()
+      //options=["ka","li","ma","h","g","DHDHa"]
+      options=shuffle(copy(cur_q_obj.options))
+      const colors = [pink, blue, green, yellow];
+
+      options_objects=[]
+      for (const op of options){
+        let circle = new Circle(40, colors[0])
+        circle.label = new Label({text:op.label, size:30, color:"white"}).centerReg(circle);
+        circle.value=op.label
+        circle.id=op.id
+        circle.on("mousedown",page.check_answer) //page.check_answer
+
+        options_objects.push(circle)
+        //console.log(circle)
+      }
+      //page.wrapper.add(options_objects)
+      stage.update()
+
+    }
+    //page.deploy_question()
+
+    page.next_q=function(){
+      quiz.i+=1
+      page.deploy_question()
+      console.log("going to next question")
+    }
+
+
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);
