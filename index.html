@@ -204,6 +204,14 @@ function remove_el(el){
     el.parent.removeChild(el)
 }
 
+
+function go_deploy(page_obj, direction="right"){
+	page_obj.deploy() //must have a deploy function
+	pages.go(page_obj, direction);
+}
+
+
+
 all_letter_ids=["alif", "hamzah", "alif_hamzah", "alif_hamzah_maksoorah", "alif_maddah", "baa2", "taa2", "thaa2", "jeem", "7aa2", "khaa2", "daal", "dhaal", "raa2", "zaay", "seen", "sheen", "ssaad", "ddaad", "ttaa2", "dhaa2", "3ayn", "ghayn", "faa2", "qaaf", "kaaf", "laam", "meem", "noon", "haa2", "waaw", "yaa2", "taa2_marbootah", "hamzah_waaw", "hamzah_nabra", "alif_layyenah", "laam_alif"]    
     
 sound_ids_json_str='["aa","i","aa_layyenah","hamzah_2","hamzah_a","2a","2","2u","2i","2aa","2aa","b","ba","bb","bba","bi","bu","t","ta","ti","tta","tu","th","tha","thi","ththa","thu","j","ja","ji","jja","ju","7","77a","7a","7i","7u","kh","kha","khi","khkhi","khu","d","da","dd","dda","di","du","dh","dha","dhdha","dhi","dhu","r","ra","ri","rr","rra","ru","z","za","zu","zza","s","sa","si","su","sh","sha","shi","shsh","shu","ssaad_s","ssaad_ss","ssaad_sa","ssaad_si","ssaad_su","ddaad_d","ddaad_dda","ddaad_da","ddaad_di","ddaad_du","ttaa2_t","ttaa2_tta","ttaa2_ta","ttaa2_ti","dhaa2_dh","dhaa2_dhdh","dhaa2_dha","dhaa2_dhi","dhaa2_dhu","3","33a","3a","3i","3u","gh","gha","ghgha","ghi","ghu","f","fa","ffa","fi","fu","q","qa","qi","qqa","qqi","qu","k","ka","ki","kka","ku","l","la","li","ll","lla","lu","m","ma","mi","mm","mu","n","na","ni","nn","nna","nu","h","ha","hi","hu","oo","w","wa","wi","wwa","ee","y","ya","yu","yy","yya","yyi","h","waaw_2","waaw_2a","yaa2_2","yaa2_2i"]'
@@ -400,7 +408,11 @@ frame.on("ready", function() {
 
     var keyboard_practice = makeKeyboardPractice(stage)
     page_nav.keyboard_practice=keyboard_practice
+    //The hand writing page ///
+    var writing_menu = makeWritingMenu(stage);
+    page_nav.handwriting_practice=writing_menu //update page names and make them consistent
 
+    var writing_page = makeWriting(stage);
     
 
     
@@ -408,9 +420,7 @@ frame.on("ready", function() {
     var game = makeGame(stage);
     page_nav.game=game
     
-    //The hand writing page ///
-    var writing_menu = makeWritingMenu(stage);
-    var writing_page = makeWriting(stage);
+
     
     
     //The alphabet list page ///
@@ -564,16 +574,17 @@ frame.on("ready", function() {
         pages.go(game, "right");    
     })
 
-    main_menu_page.go2handwriting_game.on("mousedown", function () {
-        console.log("Handwriting game")
-        pages.go(writing_menu, "up");
-    })
+    // main_menu_page.go2handwriting_game.on("mousedown", function () {
+    //     console.log("Handwriting game")
+    //     pages.go(writing_menu, "up");
+    // })
 
-    main_menu_page.go2typing_game.on("mousedown", function () {
-        console.log("Typing game")
-        pages.go(keyboard_practice, "up");
+    // main_menu_page.go2typing_game.on("mousedown", function () {
+    //     console.log("Typing game")
+    //     pages.go(keyboard_practice, "up");
         
-    })
+    // })
+    
     main_menu_page.go2read_words_game.on("mousedown", function () {
     	
     	pages.go(read_words_page, "up");

@@ -90,17 +90,11 @@ function makeMainMenu(stage) {
     //     icon:pizzazz.makeIcon("play", white, 1.5)
     // })
     // .pos(0,90,CENTER,BOTTOM,page) 
-    handwriting_btn_label=new Label({color:yellow, text:"Handwriting \nPractice", size:25, align:CENTER})
-    page.go2handwriting_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:handwriting_btn_label,corner:20})
-    .pos(-stageW*0.25,stageH*0.2,CENTER,CENTER,page)   
-    
-    typing_btn_label=new Label({color:yellow, text:"Typing \nPractice", size:25, align:CENTER})
-    page.go2typing_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:typing_btn_label,corner:20})
-    .pos(stageW*0.25,stageH*0.2,CENTER,CENTER,page)       
+     
 
 
-    tutorials_label=new Label({color:yellow, text:"Tutorials", size:25, align:CENTER})
-    page.go2tutorials = new Button({width:stageW*0.5,height:60,backgroundColor:yellow.darken(0.6),rollBackgroundColor:orange,label:tutorials_label,corner:20})
+    tutorials_label=new Label({color:yellow, text:"Tutorials and Practice", size:25, align:CENTER})
+    page.go2tutorials = new Button({width:stageW*0.75,height:60,backgroundColor:yellow.darken(0.6),rollBackgroundColor:orange,label:tutorials_label,corner:20})
     .pos(0,100,CENTER,BOTTOM,page)   
 
 

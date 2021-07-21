@@ -32,7 +32,7 @@ function makeProfilePage(stage) {
 
 
 
-     page.deploy=function(q_obj){
+     page.deploy=function(){
       	remove_el(page.main_cont)
       	page.main_cont = new Container(stageW, stageH).addTo(page);
     	  page.username_textArea = new TextArea({height:60, size:25,  placeholder:"user name"}).pos(0, 120,CENTER,TOP, page);

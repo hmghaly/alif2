@@ -51,6 +51,18 @@ function makeTutorialsMenu(stage) {
         //console.log(evt.currentTarget.id)
         zgo("https://www.youtube.com/watch?v=ycLezw26Whk")
     });  
+
+    handwriting_btn_label=new Label({color:yellow, text:"Handwriting \nPractice", size:25, align:CENTER})
+    page.go2handwriting_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:handwriting_btn_label,corner:20})
+    .pos(-stageW*0.25,stageH*0.2,CENTER,CENTER,page)  
+    .on("mousedown", function () {pages.go(page_nav.handwriting_practice, "right");});
+
+    
+    typing_btn_label=new Label({color:yellow, text:"Typing \nPractice", size:25, align:CENTER})
+    page.go2typing_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:typing_btn_label,corner:20})
+    .pos(stageW*0.25,stageH*0.2,CENTER,CENTER,page)  
+    .on("mousedown", function () {pages.go(page_nav.keyboard_practice, "right");});
+
     //console.log(image2)
     stage.update();
 
