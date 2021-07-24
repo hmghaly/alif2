@@ -3,7 +3,7 @@ function makeSettings(stage) {
     
     var stageW = stage.width;
     var stageH = stage.height;
-    var page = new Page(stageW, stageH, green,yellow);
+    var page = new Page(stageW, stageH, theme.bg1,theme.bg2);
     page.i=0;
     STYLE = {font:"reuben", size:50};
 
@@ -15,15 +15,8 @@ function makeSettings(stage) {
 
     new Label({color:purple, text:"Settings", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
-    new Label({color:purple, text:"Game duration (minutes)", size:25,variant:true}).pos(0,130,CENTER,TOP,page);
-
-    // var stepper = new Stepper({continuous:true, stepperType:"number", min:1, max:9})
-    //     .pos(500, 155, page).sca(.5);
-    // stepper.on("change", function() {
-    //     pad.selectedIndex = stepper.selectedIndex;
-    //     stage.update();
-    // });
-    page.dur_stepper = new Stepper({continuous:true, stepperType:"number", min:1, max:9})
+    page.quiz_dur_label=new Label({color:purple, text:"Game duration (minutes)", size:25,variant:true}).pos(0,130,CENTER,TOP,page);
+    page.quiz_dur_stepper = new Stepper({continuous:true, stepperType:"number", min:1, max:9})
       .sca(.4)
        .pos(0,180,CENTER,TOP,page)
        .alp(0)
@@ -32,9 +25,20 @@ function makeSettings(stage) {
            wait:3
        });    
 
+    page.streak_dur_label=new Label({color:purple, text:"Daily Streak Goal (minutes)", size:25,variant:true}).pos(0,230,CENTER,TOP,page);
+    page.streak_dur_stepper = new Stepper({continuous:true, stepperType:"number", min:1, max:19})
+      .sca(.4)
+       .pos(0,280,CENTER,TOP,page)
+       .alp(0)
+       .animate({
+           props:{alpha:1},
+           wait:3
+       });    
+
+
    page.sound_toggle = new Toggle({label:"Sound", color:green.darken(.5), startToggled:true})
        .sca(.8)
-       .pos(0,250,CENTER,TOP,page)
+       .pos(0,350,CENTER,TOP,page)
        .alp(0)
        .animate({
            props:{alpha:1},
@@ -46,14 +50,20 @@ function makeSettings(stage) {
     .pos(0,50,CENTER,BOTTOM,page)   
     page.update_settings.on("mousedown", function () {
         console.log("updaing settings")
-        stepper_duration=page.dur_stepper.selectedIndex+1
-        selected_duration=Number(stepper_duration)
+        stepper_quiz_duration=page.quiz_dur_stepper.selectedIndex+1
+        selected_quiz_duration=Number(stepper_quiz_duration)
+        stepper_streak_duration=page.streak_dur_stepper.selectedIndex+1
+        selected_streak_duration=Number(stepper_streak_duration)
+
         sound_on=true
         if (page.sound_toggle.text=="off") sound_on=false;
         settings["sound_on"]=sound_on
-        settings["duration"]=selected_duration
+        settings["quiz_dur_min"]=selected_quiz_duration
+        settings["streak_dur_min"]=selected_streak_duration
+        update_settings()
         console.log(settings)
-        pages.go(page_nav.main_menu, "down");
+        go2menu()
+        //pages.go(page_nav.main_menu, "down");
     });
 
 

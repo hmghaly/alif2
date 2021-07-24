@@ -9,23 +9,77 @@ function makeMainMenu(stage) {
 
 
 
-    new Label({color:purple, text:"Main Menu", size:45,variant:true}).pos(0,30,CENTER,TOP,page);
+    
 
     page.deploy=function(q_obj){
         remove_el(page.main_cont)
         page.main_cont = new Container(stageW, stageH).addTo(page);
 
-        page.welcome_label= new Label({color:purple, text:"Welcome,\n"+user.username, size:25,variant:true}).pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
-        page.user_avatar=frame.asset(user.avatar).clone().sca(0.1).pos(-stageW*0.4,145,CENTER,TOP,page.main_cont);
+        page.title_label=new Label({color:purple, text:"ALIF LAAM", size:45,variant:true})//.pos(0,30,CENTER,TOP,page);
+        welcome_txt="Welcome, "+user.username
+        page.welcome_label= new Label({color:purple, text:welcome_txt, size:25,variant:true})//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
 
-        new Label({color:purple, text:"Streak Today:", size:25,variant:true}).pos(0,80,CENTER,TOP,page.main_cont);
-        page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page.main_cont);
+	    new Tile({
+	        obj:[page.title_label,page.welcome_label], 
+	        rows:2,
+	        spacingV:5, 
+	        unique:true,
+	        align:CENTER
+	    }).pos(0,25,CENTER,TOP,page.main_cont);
 
-        page.days_streak= new Label({color:purple, text:"Streak:\n7 days", size:25,variant:true}).pos(stageW*0.4,80,CENTER,TOP,page.main_cont);
+	    //get_nday_streak()
 
-        new_streak_val=update_streak(0)
-        new_streak_val_minutes= Math.floor( new_streak_val/60 );
-        page.streak_status_label.text=""+new_streak_val_minutes+"/10"      
+        //n_days_streak=5
+        n_days_streak=get_nday_streak()
+        x_days_streak_label_txt=""+n_days_streak+" day streak"
+        page.x_days_streak_label=new Label({color:purple, text:x_days_streak_label_txt, size:25,variant:true})
+
+        // n_min_goal=10
+        // n_min_completed=5
+        n_min_goal=settings.streak_dur_min
+        n_min_completed=streak[today()]
+        if (n_min_completed==null) n_min_completed=0
+        //x_min_today_label_txt=""+n_min_completed+ " minutes today\n"+n_min_goal+ " minutes daily goal"
+        x_min_today_label_txt=""+n_min_completed+ "/"+n_min_goal+ " minutes today"
+        page.x_min_today_label=new Label({color:purple, text:x_min_today_label_txt, size:25,variant:true})
+
+        
+
+	    new Tile({
+	        obj:[asset("trophy.png").sca(0.75), asset("clock.png").sca(0.75), page.x_days_streak_label,page.x_min_today_label], 
+	        rows:2,
+	        cols:2,
+	        spacingV:10, 
+	        spacingH:200, 
+	        unique:true,
+	        align:CENTER
+	    }).pos(0,100,CENTER,TOP,page.main_cont);
+
+	    page.user_avatar=frame.asset(user.avatar).clone().sca(0.1)
+	    page.profile_btn_label=new Label({color:purple, text:"Profile", size:25,variant:true})
+
+	    profile_tile=new Tile({
+	        obj:[page.user_avatar,page.profile_btn_label], 
+	        rows:2,
+	        spacingV:5, 
+	        unique:true,
+	        align:CENTER
+	    }).pos(5,0,RIGHT,TOP,page.main_cont)
+	    .on("mousedown", function () {go_deploy(page_nav.profile_page)})
+
+	    //go_deploy
+
+        
+        //page.user_avatar=frame.asset(user.avatar).clone().sca(0.1).pos(-stageW*0.4,145,CENTER,TOP,page.main_cont);
+
+        //new Label({color:purple, text:"Streak Today:", size:25,variant:true}).pos(0,80,CENTER,TOP,page.main_cont);
+        //page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page.main_cont);
+
+        //page.days_streak= new Label({color:purple, text:"Streak:\n7 days", size:25,variant:true}).pos(stageW*0.4,80,CENTER,TOP,page.main_cont);
+
+        //new_streak_val=update_streak(0)
+        //new_streak_val_minutes= Math.floor( new_streak_val/60 );
+        //page.streak_status_label.text=""+new_streak_val_minutes+"/10"      
 
     }
     page.deploy()
@@ -34,9 +88,9 @@ function makeMainMenu(stage) {
 
 
 
-    profile_btn_label=new Label({color:yellow, text:"Profile", size:25,variant:true})
-    page.go2profile = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:profile_btn_label,corner:20})
-    .pos(0,0,RIGHT,TOP,page)
+    // profile_btn_label=new Label({color:yellow, text:"Profile", size:25,variant:true})
+    // page.go2profile = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:profile_btn_label,corner:20})
+    // .pos(0,0,RIGHT,TOP,page)
 
     feedback_btn_label=new Label({color:yellow, text:"Feedback", size:25,variant:true})
     page.go2feedback = new Button({width:120,height:60,backgroundColor:orange.darken(0.5),rollBackgroundColor:orange,label:feedback_btn_label,corner:20})

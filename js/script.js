@@ -2,6 +2,11 @@ function $$(el_id){
     return document.getElementById(el_id)
 }
 
+function today(){
+    date_str=new Date().toLocaleDateString('en-GB')
+    return date_str
+}
+
 function img(src,onload=null,id=""){ //create img object
     new_img=new Image()
     

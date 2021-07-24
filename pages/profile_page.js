@@ -10,6 +10,7 @@ function makeProfilePage(stage) {
     back2menu_btn_label=new Label({color:yellow, text:"Menu", size:25,variant:true})
     page.go2menu = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:back2menu_btn_label,corner:20})
     .pos(0,0,LEFT,TOP,page)
+    .on("mousedown", go2menu)
 
 
     new Label({color:purple, text:"Profile", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
@@ -49,7 +50,7 @@ function makeProfilePage(stage) {
 	        pages.go(page_nav.shop_page, "right");
 	        page_nav.shop_page.deploy()
 	      })
-	     console.log("What??")
+	     //console.log("What??")
 		
 
 		upd_btn_label=new Label({color:yellow, text:"Update Profile", size:25,variant:true})
@@ -67,13 +68,16 @@ function makeProfilePage(stage) {
             return            
           }
           user.username=username_text
+          console.log("username_text",username_text,page.username_textArea,page.username_textArea.value,page.username_textArea.text)
           if (useremail_text!="" && useremail_text.indexOf("@")>0 && useremail_text.indexOf("@")>0){
             user.email=useremail_text
           }
           update_user()
           console.log(page.username_textArea.text)
-          pages.go(page_nav.main_menu, "right");
-          page_nav.main_menu.deploy()
+          console.log(user)
+          go2menu()
+          // pages.go(page_nav.main_menu, "right");
+          // page_nav.main_menu.deploy()
         }) 
             	
     	//console.log("this is the button", page.go2upd)

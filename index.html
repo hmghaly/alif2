@@ -150,14 +150,18 @@ function update_settings(){
     set_local_strorage(storage_name,"settings",settings)
 }
 
+
 //just to reset the progress history
 // progress_history=[]
 // set_local_strorage(storage_name,"progress_history",progress_history)
 
 var streak={}
 
+
 var streak=get_local_strorage(storage_name,"streak")
 if (streak==null || streak==undefined) streak={}
+if (streak.days==null || streak.days==undefined) streak.days={}
+
 
 function update_streak(val){
 	date_str=new Date().toLocaleDateString('en-GB')
@@ -166,6 +170,28 @@ function update_streak(val){
 	streak[date_str]=cur_streak_val+val
 	set_local_strorage(storage_name,"streak",streak)
 	return streak[date_str]
+}
+
+function get_nday_streak(){
+    //date_str=new Date().toLocaleDateString('en-GB')
+    //cur_date=date_str=new Date()
+    nday_streak=0
+    date_str=new Date().toLocaleDateString('en-GB')
+    if (streak.days[date_str]==true) nday_streak=1
+    for (var i=1;i<10000;i++){
+        day_before= new Date(Date.now() - i*86400000); 
+        day_before_str=day_before.toLocaleDateString('en-GB')
+        check_streak_day_before=streak.days[day_before_str]
+        if (check_streak_day_before==true) nday_streak+=1
+        else break
+        console.log(day_before_str, streak[day_before_str])
+    }
+    return nday_streak
+    // cur_streak_val=streak[date_str]
+    // if (cur_streak_val==null || cur_streak_val==undefined) cur_streak_val=0
+    // streak[date_str]=cur_streak_val+val
+    // set_local_strorage(storage_name,"streak",streak)
+    // return streak[date_str]
 }
 
     
@@ -208,6 +234,10 @@ function remove_el(el){
 function go_deploy(page_obj, direction="right"){
 	page_obj.deploy() //must have a deploy function
 	pages.go(page_obj, direction);
+}
+
+function go2menu(){
+    go_deploy(page_nav.main_menu)
 }
 
 
@@ -501,7 +531,8 @@ frame.on("ready", function() {
 
     menu_label=new Label({color:yellow, text:"Menu", size:25, align:CENTER})
     after_game.go2menu = new Button({width:stageW*.8,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
-    .pos(0,20,CENTER,BOTTOM,after_game)   
+    .pos(0,20,CENTER,BOTTOM,after_game)
+    .on("mousedown", go2menu)   
 
     //The progress dashboard page
     // var dashboard = new Page(stageW, stageH, yellow, green);
@@ -614,16 +645,16 @@ frame.on("ready", function() {
         pages.go(tutorials_menu, "up");
     })
 
-    main_menu_page.go2profile.on("mousedown", function () {
-        console.log("Go to Profile")
-        pages.go(profile_page, "up");
-    })
+    // main_menu_page.go2profile.on("mousedown", function () {
+    //     console.log("Go to Profile")
+    //     pages.go(profile_page, "up");
+    // })
     
     //============== Profile Page Navigation ===============
-    profile_page.go2menu.on("mousedown", function () {
-        console.log("Go to Main Menu")
-        pages.go(main_menu_page, "up");
-    })
+    // profile_page.go2menu.on("mousedown", function () {
+    //     console.log("Go to Main Menu")
+    //     pages.go(main_menu_page, "up");
+    // })
 
 
 
@@ -731,9 +762,9 @@ frame.on("ready", function() {
         pages.go(after_game, "down");
     });      
 
-    after_game.go2menu.on("mousedown", function () {
-        pages.go(main_menu_page, "down");
-    });   
+    // after_game.go2menu.on("mousedown", function () {
+    //     pages.go(main_menu_page, "down");
+    // });   
     
    
     
@@ -792,7 +823,8 @@ frame.on("ready", function() {
         game.timer.text="Timer"
         game_timer = setInterval(myTimer, 1000);
         quiz.duration=300
-        if (settings.duration!=null) quiz.duration=settings.duration*60;
+        if (settings.quiz_dur_min!=null) quiz.duration=settings.quiz_dur_min*60;
+        //if (settings.duration!=null) quiz.duration=settings.duration*60;
         quiz.remaining_time=quiz.duration
         function myTimer() {
             quiz.remaining_time-=1

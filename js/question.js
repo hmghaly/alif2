@@ -21,9 +21,25 @@ function game_ended2(){
     progress_history.push(history_obj)
     set_local_strorage(storage_name,"progress_history",progress_history)
 
-    new_streak_val=update_streak(quiz.duration)
-    new_streak_val_minutes= Math.floor( new_streak_val/60 );
-    page_nav.main_menu.streak_status_label.text=""+new_streak_val_minutes+"/10"
+    //updating streak
+    today_str=today()
+    today_streak=streak[today_str]
+    if (today_streak==null) today_streak=0
+    today_streak+=settings.quiz_dur_min
+    streak[today_str]=today_streak
+    if (today_streak>=settings.streak_dur_min) streak.days[today_str]=true
+    set_local_strorage(storage_name,"streak",streak)
+    
+
+    // new_streak_val=update_streak(quiz.duration)
+    // if (new_streak_val>=settings.streak_dur_min*60){
+    //     today_str=new Date().toLocaleDateString('en-GB')
+    //     streak.days[today_str]=true
+    //     set_local_strorage(storage_name,"streak",streak)
+    // }
+
+    //new_streak_val_minutes= Math.floor( new_streak_val/60 );
+    //page_nav.main_menu.streak_status_label.text=""+new_streak_val_minutes+"/10"
 
 }
 
