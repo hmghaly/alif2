@@ -15,6 +15,31 @@ function makeHighScorePage(stage) {
 
     new Label({color:purple, text:"High Scores", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
+    page.deploy=function(){
+        remove_el(page.main_cont)
+        page.main_cont = new Container(stageW, stageH).addTo(page);
+
+        var win = new Window({
+            width:stageW*0.9,
+            height:600,
+            interactive:true,
+            padding:10,
+            corner:10,
+            scrollBarDrag:true,
+            backgroundColor:purple.darken(.5),
+            borderColor:purple
+        }).pos(0,50,CENTER,CENTER,page.main_cont);
+
+        const wrapper = new Wrapper({
+            spacingH:20,
+            spacingV:20
+        });        
+        //win.removeAllChildren()
+        const objects = []; 
+        // wrapper.add(objects)
+        // win.add(wrapper).addTo(page);
+        }    
+
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);
 

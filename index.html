@@ -268,6 +268,12 @@ assets.push({id:"coin.png", src:"img/coin.png"})
 assets.push({id:"idea.png", src:"img/idea.png"})
 assets.push({id:"trophy.png", src:"img/trophy.png"})
 assets.push({id:"clock.png", src:"img/clock.png"})
+assets.push({id:"rocket.png", src:"img/rocket.png"})
+assets.push({id:"star.png", src:"img/star.png"})
+assets.push({id:"shopping.png", src:"img/shopping.png"})
+assets.push({id:"settings.png", src:"img/settings.png"})
+assets.push({id:"question.png", src:"img/question.png"})
+assets.push({id:"feedback.png", src:"img/feedback.png"})
 
 for (const avatar_obj of avatars){ //adding letter name sounds to assets
     avatars_dir="img/avatars/"
@@ -629,16 +635,16 @@ frame.on("ready", function() {
         pages.go(write_words_page, "up");
     })
 
-    main_menu_page.go2settings.on("mousedown", function () {
-        console.log("Go to settings")
-        pages.go(settings_page, "up");
-    })
+    // main_menu_page.go2settings.on("mousedown", function () {
+    //     console.log("Go to settings")
+    //     pages.go(settings_page, "up");
+    // })
 
-    main_menu_page.go2progress.on("mousedown", function () {
-        console.log("Go to Progress Dashboard")
-        progress_dashboard.display_progress_dashboard()
-        pages.go(progress_dashboard, "up");
-    })
+    // main_menu_page.go2progress.on("mousedown", function () {
+    //     console.log("Go to Progress Dashboard")
+    //     progress_dashboard.display_progress_dashboard()
+    //     pages.go(progress_dashboard, "up");
+    // })
 
     main_menu_page.go2tutorials.on("mousedown", function () {
         console.log("Go to Tutorials")

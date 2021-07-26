@@ -50,10 +50,10 @@ function makeMainMenu(stage) {
 	        rows:2,
 	        cols:2,
 	        spacingV:10, 
-	        spacingH:200, 
+	        spacingH:100, 
 	        unique:true,
 	        align:CENTER
-	    }).pos(0,100,CENTER,TOP,page.main_cont);
+	    }).pos(0,150,CENTER,TOP,page.main_cont);
 
 	    page.user_avatar=frame.asset(user.avatar).clone().sca(0.1)
 	    page.profile_btn_label=new Label({color:purple, text:"Profile", size:25,variant:true})
@@ -64,7 +64,7 @@ function makeMainMenu(stage) {
 	        spacingV:5, 
 	        unique:true,
 	        align:CENTER
-	    }).pos(5,0,RIGHT,TOP,page.main_cont)
+	    }).pos(10,10,RIGHT,TOP,page.main_cont)
 	    .on("mousedown", function () {go_deploy(page_nav.profile_page)})
 
 	    //go_deploy
@@ -92,39 +92,94 @@ function makeMainMenu(stage) {
     // page.go2profile = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:profile_btn_label,corner:20})
     // .pos(0,0,RIGHT,TOP,page)
 
-    feedback_btn_label=new Label({color:yellow, text:"Feedback", size:25,variant:true})
-    page.go2feedback = new Button({width:120,height:60,backgroundColor:orange.darken(0.5),rollBackgroundColor:orange,label:feedback_btn_label,corner:20})
-    .pos(0,0,LEFT,TOP,page)
-    page.go2feedback.on("mousedown", function () {
+    // feedback_btn_label=new Label({color:yellow, text:"Feedback", size:25,variant:true})
+    // page.go2feedback = new Button({width:120,height:60,backgroundColor:orange.darken(0.5),rollBackgroundColor:orange,label:feedback_btn_label,corner:20})
+    // .pos(0,0,LEFT,TOP,page)
+    // page.go2feedback.on("mousedown", function () {
+    //     console.log("feedback form")
+    //     $('#feedback_modal').modal('show');
+    //     //pages.go(page_nav.alpha_game, "down");
+    // });
+
+    feedback_label=new Label({color:purple, text:"Feedback", size:25, align:CENTER})
+    feedback_tile=new Tile({
+        obj:[asset("feedback.png").sca(0.8),feedback_label], rows:2, spacingV:0, unique:true,align:CENTER})
+    .pos(10,10,LEFT,TOP,page)
+    feedback_tile.on("mousedown", function () {
+        //go_deploy(page_nav.high_score_page); 
         console.log("feedback form")
-        $('#feedback_modal').modal('show');
-        //pages.go(page_nav.alpha_game, "down");
+        $('#feedback_modal').modal('show');        
     });
+
 
     
 
 
     alphabet_btn_label=new Label({color:yellow, text:"Alphabet Letters", size:25, align:CENTER})
     page.go2alphabet_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:alphabet_btn_label,corner:20})
-    .pos(-stageW*0.25,-stageH*0.2,CENTER,CENTER,page)   
+    .alp(0).animate({props:{alpha:1},wait:2});  
 
-    // page.go2alphabet.on("mousedown", function () {
-    //     console.log("go to alphabet")
-    //     pages.go(page_nav.alpha_game, "down");
-    // });
-
+    //.pos(-stageW*0.25,-stageH*0.2,CENTER,CENTER,page)   
 
     sound_btn_label=new Label({color:yellow, text:"Letter Sounds", size:25, align:CENTER})
     page.go2sound_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:sound_btn_label,corner:20})
-    .pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page)   
+    .alp(0).animate({props:{alpha:1},wait:3});  
+    //.pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page)   
     
     read_words_btn_label=new Label({color:yellow, text:"Read Words", size:25, align:CENTER})
     page.go2read_words_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:read_words_btn_label,corner:20})
-    .pos(-stageW*0.25,stageH*0,CENTER,CENTER,page)   
+    .alp(0).animate({props:{alpha:1},wait:4});  
+    //.pos(-stageW*0.25,stageH*0,CENTER,CENTER,page)   
     
     write_words_btn_label=new Label({color:yellow, text:"Write Words", size:25, align:CENTER})
     page.go2write_words_game = new Button({width:stageW*0.4,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:write_words_btn_label,corner:20})
-    .pos(stageW*0.25,stageH*0,CENTER,CENTER,page)       
+    .alp(0).animate({props:{alpha:1},wait:5});  
+    //.pos(stageW*0.25,stageH*0,CENTER,CENTER,page)    
+
+    game_buttons_tile=new Tile({
+            obj:[page.go2alphabet_game, page.go2sound_game, page.go2read_words_game,page.go2write_words_game], 
+            rows:2,
+            cols:2,
+            spacingV:50, 
+            spacingH:50, 
+            unique:true,
+            align:CENTER
+        }).center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+
+    settings_label=new Label({color:purple, text:"Settings", size:25, align:CENTER})
+    settings_tile=new Tile({
+        obj:[asset("settings.png").sca(0.75),settings_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    settings_tile.on("mousedown", function () {go_deploy(page_nav.settings); }); 
+
+    //.pos(stageW*0.25,stageH*0.25,CENTER,CENTER,page)
+    score_label=new Label({color:purple, text:"Score", size:25, align:CENTER})
+    score_tile=new Tile({
+        obj:[asset("star.png").sca(0.8),score_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    score_tile.on("mousedown", function () {go_deploy(page_nav.high_score_page); }); 
+
+
+    progress_label=new Label({color:purple, text:"Progress", size:25, align:CENTER})
+    progress_tile=new Tile({
+        obj:[asset("rocket.png").sca(0.8),progress_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    progress_tile.on("mousedown", function () { go_deploy(page_nav.progress_dashboard)}); //page_nav.progress_dashboard
+
+    shop_label=new Label({color:purple, text:"Shop", size:25, align:CENTER})
+    shop_tile=new Tile({obj:[asset("shopping.png").sca(0.8),shop_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    shop_tile.on("mousedown", function () { go_deploy(page_nav.shop_page)});
+
+    help_label=new Label({color:purple, text:"Help", size:25, align:CENTER})
+    help_tile=new Tile({obj:[asset("question.png").sca(0.8),help_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    help_tile.on("mousedown", function () { });
+
+    bottom_menu_tile=new Tile({
+            obj:[settings_tile,score_tile,progress_tile,shop_tile,help_tile], 
+            cols:5,
+            spacingH:50, 
+            unique:true,
+            align:CENTER
+        })//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    .pos(0,20,CENTER,BOTTOM,page)
+
 
     //new Label({color:black, text:"Click the play button below to listen to tutorial.\nClick the alphabet button for the list of all letters", size:25}).pos(0,150,CENTER,CENTER,page);
 
@@ -148,34 +203,34 @@ function makeMainMenu(stage) {
 
 
     tutorials_label=new Label({color:yellow, text:"Tutorials and Practice", size:25, align:CENTER})
-    page.go2tutorials = new Button({width:stageW*0.75,height:60,backgroundColor:yellow.darken(0.6),rollBackgroundColor:orange,label:tutorials_label,corner:20})
-    .pos(0,100,CENTER,BOTTOM,page)   
+    page.go2tutorials = new Button({width:stageW*0.75,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:tutorials_label,corner:20})
+    .pos(0,stageH*0.25,CENTER,CENTER,page)   
 
 
     
 
-    shop_label=new Label({color:yellow, text:"Shop", size:25, align:CENTER})
-    page.go2shop = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:shop_label,corner:20})
-    .pos(70,20,CENTER,BOTTOM,page) 
-    .on("mousedown", function () {
-        page_nav.shop_page.deploy()
-        pages.go(page_nav.shop_page, "right"); 
-    });
+    // shop_label=new Label({color:yellow, text:"Shop", size:25, align:CENTER})
+    // page.go2shop = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:shop_label,corner:20})
+    // .pos(70,20,CENTER,BOTTOM,page) 
+    // .on("mousedown", function () {
+    //     page_nav.shop_page.deploy()
+    //     pages.go(page_nav.shop_page, "right"); 
+    // });
 	
 
-    scores_label=new Label({color:yellow, text:"Scores", size:25, align:CENTER})
-    page.go2scores = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:scores_label,corner:20})
-    .pos(200,20,CENTER,BOTTOM,page)   
-    .on("mousedown", function () {pages.go(page_nav.high_score_page, "right"); });  
+    // scores_label=new Label({color:yellow, text:"Scores", size:25, align:CENTER})
+    // page.go2scores = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:scores_label,corner:20})
+    // .pos(200,20,CENTER,BOTTOM,page)   
+    // .on("mousedown", function () {pages.go(page_nav.high_score_page, "right"); });  
 
     
-    settings_label=new Label({color:yellow, text:"Settings", size:25, align:CENTER})
-    page.go2settings = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:settings_label,corner:20})
-    .pos(-70,20,CENTER,BOTTOM,page)   
+    // settings_label=new Label({color:yellow, text:"Settings", size:25, align:CENTER})
+    // page.go2settings = new Button({width:stageW*0.2,height:60,backgroundColor:red,rollBackgroundColor:orange,label:settings_label,corner:20})
+    // .pos(-70,20,CENTER,BOTTOM,page)   
 
-    progress_label=new Label({color:yellow, text:"Progress", size:25, align:CENTER})
-    page.go2progress = new Button({width:stageW*0.2,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:progress_label,corner:20})
-    .pos(-200,20,CENTER,BOTTOM,page) 
+    // progress_label=new Label({color:yellow, text:"Progress", size:25, align:CENTER})
+    // page.go2progress = new Button({width:stageW*0.2,height:60,backgroundColor:blue.darken(0.5),rollBackgroundColor:orange,label:progress_label,corner:20})
+    // .pos(-200,20,CENTER,BOTTOM,page) 
 
 
     

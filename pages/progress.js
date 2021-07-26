@@ -28,7 +28,7 @@ function makeProgressDashboard(stage) {
     // let circle1 = new Circle({min:20, max:40}, colors);
     // objects.push(circle1);
     // wrapper.add(objects)
-    page.display_progress_dashboard=function(){
+    page.deploy=function(){
         remove_el(page.main_cont)
         page.main_cont = new Container(stageW, stageH).addTo(page);
 

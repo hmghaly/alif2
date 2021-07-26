@@ -66,6 +66,8 @@ function makeSettings(stage) {
         //pages.go(page_nav.main_menu, "down");
     });
 
+        page.deploy=function(){}
+
 
    // page.sound_toggle = new Toggle({label:"Sound", color:green.darken(.5), startToggled:true})
    //     .sca(.8)
