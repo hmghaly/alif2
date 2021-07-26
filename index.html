@@ -240,6 +240,15 @@ function go2menu(){
     go_deploy(page_nav.main_menu)
 }
 
+function submit_feedback(){
+    feedback_obj=get_vals("feedback")
+    link="../get_message.py"
+    post_data(link,feedback_obj,function(obj1){
+    	console.log(obj1)
+    })     
+
+}
+
 
 
 all_letter_ids=["alif", "hamzah", "alif_hamzah", "alif_hamzah_maksoorah", "alif_maddah", "baa2", "taa2", "thaa2", "jeem", "7aa2", "khaa2", "daal", "dhaal", "raa2", "zaay", "seen", "sheen", "ssaad", "ddaad", "ttaa2", "dhaa2", "3ayn", "ghayn", "faa2", "qaaf", "kaaf", "laam", "meem", "noon", "haa2", "waaw", "yaa2", "taa2_marbootah", "hamzah_waaw", "hamzah_nabra", "alif_layyenah", "laam_alif"]    
@@ -966,10 +975,10 @@ frame.on("ready", function() {
         <!-- Modal body -->
         <div class="modal-body">
           Tell us any questions, suggestions, or problems.
-          <input type="text" id="feedback_name" name="feedback_name" class="form-control form-control mb-1" placeholder="your name">
-          <input type="text" id="feedback_email" name="feedback_email" class="form-control form-control mb-1" placeholder="your email">
-          <textarea class="form-control mb-1" rows="5" id="comment" placeholder="your feedback"></textarea>
-          <button type="button" class="btn btn-primary btn-block">Submit Feedback</button>
+          <input type="text" id="feedback_name" name="feedback_name" class="feedback form-control form-control mb-1" placeholder="your name">
+          <input type="text" id="feedback_email" name="feedback_email" class="feedback form-control form-control mb-1" placeholder="your email">
+          <textarea class="feedback form-control mb-1" rows="5" id="comment" placeholder="your feedback"></textarea>
+          <button type="button" class="btn btn-primary btn-block" onclick="submit_feedback()">Submit Feedback</button>
         </div>
         
 

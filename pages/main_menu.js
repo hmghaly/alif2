@@ -108,7 +108,9 @@ function makeMainMenu(stage) {
     feedback_tile.on("mousedown", function () {
         //go_deploy(page_nav.high_score_page); 
         console.log("feedback form")
-        $('#feedback_modal').modal('show');        
+        $('#feedback_modal').modal('show');   
+        //get_vals("feedback")
+        //post_data(link,obj2upload,callback_fn)     
     });
 
 
