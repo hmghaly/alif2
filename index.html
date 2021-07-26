@@ -242,6 +242,8 @@ function go2menu(){
 
 function submit_feedback(){
     feedback_obj=get_vals("feedback")
+    feedback_obj.app=app_name
+    console.log(feedback_obj)
     link="../get_message.py"
     post_data(link,feedback_obj,function(obj1){
     	console.log(obj1)
@@ -975,11 +977,13 @@ frame.on("ready", function() {
         <!-- Modal body -->
         <div class="modal-body">
           Tell us any questions, suggestions, or problems.
-          <input type="text" id="feedback_name" name="feedback_name" class="feedback form-control form-control mb-1" placeholder="your name">
-          <input type="text" id="feedback_email" name="feedback_email" class="feedback form-control form-control mb-1" placeholder="your email">
-          <textarea class="feedback form-control mb-1" rows="5" id="comment" placeholder="your feedback"></textarea>
+          <input type="text" id="msg_from_name" name="msg_from_name" class="feedback form-control form-control mb-1" placeholder="your name">
+          <input type="text" id="msg_from_email" name="msg_from_email" class="feedback form-control form-control mb-1" placeholder="your email">
+          <textarea class="feedback form-control mb-1" rows="5" id="msg_content" name="msg_content" placeholder="your feedback"></textarea>
           <button type="button" class="btn btn-primary btn-block" onclick="submit_feedback()">Submit Feedback</button>
         </div>
+
+ 
         
 
         
