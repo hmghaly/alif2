@@ -42,10 +42,10 @@ function makeHighScorePage(stage) {
         const colors = series(green.darken(0.5),blue.darken(0.5),pink.darken(0.5),orange.darken(0.5))
         //const letters = series("WRAPPER".split(""));
 
-        res='{"status":"success","prev_score":651,"success":true,"prev_rank":0,"rank":1,"score_status":"No New Score","message":"ok","highscore":false,"rank_status":"No New Rank","top_scores":[{"user_avatar":"002-girl-9.png","user_key":"km1ojcfh","app":"alif-laam","score":651,"time":1627353430.315025,"user_name":"hgh1","user_email":"hmghaly@gmail.com"},{"user_avatar":"user.png","user_key":"krmbza9f","app":"alif-laam","score":160,"time":1627406919.369873,"user_name":"test","user_email":"hm@gg.cc"}]}'
-        res_dict=JSON.parse(res)
-        top_scores=res_dict.top_scores
-        zog(top_scores)
+        // res='{"status":"success","prev_score":651,"success":true,"prev_rank":0,"rank":1,"score_status":"No New Score","message":"ok","highscore":false,"rank_status":"No New Rank","top_scores":[{"user_avatar":"002-girl-9.png","user_key":"km1ojcfh","app":"alif-laam","score":651,"time":1627353430.315025,"user_name":"hgh1","user_email":"hmghaly@gmail.com"},{"user_avatar":"user.png","user_key":"krmbza9f","app":"alif-laam","score":160,"time":1627406919.369873,"user_name":"test","user_email":"hm@gg.cc"}]}'
+        // res_dict=JSON.parse(res)
+        // top_scores=res_dict.top_scores
+        // zog(top_scores)
 
         //now getting the topscores from the server
 	    highscore_upload_obj={}
@@ -62,6 +62,7 @@ function makeHighScorePage(stage) {
 	    link="../get_score.py"
 	    post_data(link,highscore_upload_obj,function(obj1){
 	    	res_dict=obj1
+	    	top_scores=res_dict.top_scores
 	        console.log(obj1)
 	        console.log(JSON.stringify(obj1))
 	        zim.loop(top_scores, function (item,i) {
@@ -95,7 +96,7 @@ function makeHighScorePage(stage) {
 	        });
 	        wrapper.add(objects)
 	        win.add(wrapper).addTo(page);
-	        	        
+
 
 
 	    }) 
