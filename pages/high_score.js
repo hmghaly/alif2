@@ -13,7 +13,7 @@ function makeHighScorePage(stage) {
     .on("mousedown", function () {pages.go(page_nav.main_menu, "right"); });
 
 
-    new Label({color:purple, text:"High Scores", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
+    new Label({color:purple, text:"Highest Daily Scores", size:45,variant:true}).pos(0,70,CENTER,TOP,page);
 
     page.deploy=function(){
         remove_el(page.main_cont)
