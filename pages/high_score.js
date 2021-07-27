@@ -19,6 +19,9 @@ function makeHighScorePage(stage) {
         remove_el(page.main_cont)
         page.main_cont = new Container(stageW, stageH).addTo(page);
 
+        //response='{"status":"success","success":true,"rank":1",score_status":"New Personal High Score!","message":"ok","highscore":true,"rank_status":"Added Personal Rank!","top_scores":[{"user_avatar":"002-girl-9.png","user_key":"km1ojcfh","app":"alif-laam","score":651,"time":1627353430.315025,"user_name":"hgh1","user_email":"hmghaly@gmail.com"},{"user_avatar":"user.png","user_key":"krmbza9f","app":"alif-laam","score":160,"time":1627406919.369873,"user_name":"test","user_email":"hm@gg.cc"}]}'
+        //res='{"status":"success","prev_score":651,"success":true,"prev_rank":0,"rank":1,"raw":"{\"user_key\":\"km1ojcfh\",\"user_name\":\"hgh1\",\"user_email\":\"hmghaly@gmail.com\",\"user_avatar\":\"002-girl-9.png\",\"score\":452,\"app\":\"alif-laam\"}","score_status":"No New Score","message":"ok","highscore":false,"rank_status":"No New Rank","top_scores":[{"user_avatar":"002-girl-9.png","user_key":"km1ojcfh","app":"alif-laam","score":651,"time":1627353430.315025,"user_name":"hgh1","user_email":"hmghaly@gmail.com"},{"user_avatar":"user.png","user_key":"krmbza9f","app":"alif-laam","score":160,"time":1627406919.369873,"user_name":"test","user_email":"hm@gg.cc"}]}'
+
         var win = new Window({
             width:stageW*0.9,
             height:600,
@@ -37,47 +40,99 @@ function makeHighScorePage(stage) {
         //win.removeAllChildren()
         const objects = []; //[new Circle(20, red), new Rectangle(30,30,red).rot(20).sca(2).reg(30,150), new Rectangle(30,30,orange), new Rectangle(30,30,blue), new Rectangle(30,30,green), new Rectangle(30,30,purple)];
         const colors = series(green.darken(0.5),blue.darken(0.5),pink.darken(0.5),orange.darken(0.5))
-        const letters = series("WRAPPER".split(""));
-        zim.loop(progress_history, function (item,i) {
-            //let circle = new Circle({min:50, max:50}, colors);
-            let rect0 = new Rectangle(stageW*0.25,50,colors)
-            date_str=""
-            if (item.date!=null && item.date!=undefined) date_str=item.date.slice(4,15)
-            new Label({text:date_str, color:color, align:CENTER, size:25}).centerReg(rect0);
-            objects.push(rect0);
-            let rect1 = new Rectangle(stageW*0.15,50,colors)
-            accuracy_str=""
-            if (item.accuracy!=null && item.accuracy!=undefined) {
-                accuracy_percent_int=Math.ceil(item.accuracy*100)
-                accuracy_str="" +(accuracy_percent_int)+"%"
-            } 
-            new Label({text:accuracy_str, color:color, align:CENTER, size:25}).centerReg(rect1);
-            objects.push(rect1);
-            
-            let rect2 = new Rectangle(stageW*0.15,50,colors)
-            n_correct_str="Correct:\n"
-            if (item.n_correct!=null && item.n_correct!=undefined) {
-                n_correct_str+=item.n_correct
-            } 
-            new Label({text:n_correct_str, color:color, align:CENTER, size:25}).centerReg(rect2);
-            objects.push(rect2);
+        //const letters = series("WRAPPER".split(""));
 
-            let rect3 = new Rectangle(stageW*0.15,50,colors)
-            item_type_str=""
-            if (item.type!=null && item.type!=undefined) {
-                item_type_str+=item.type
-            } 
-            new Label({text:item_type_str, color:color, align:CENTER, size:25}).centerReg(rect3);
-            objects.push(rect3);
+        res='{"status":"success","prev_score":651,"success":true,"prev_rank":0,"rank":1,"score_status":"No New Score","message":"ok","highscore":false,"rank_status":"No New Rank","top_scores":[{"user_avatar":"002-girl-9.png","user_key":"km1ojcfh","app":"alif-laam","score":651,"time":1627353430.315025,"user_name":"hgh1","user_email":"hmghaly@gmail.com"},{"user_avatar":"user.png","user_key":"krmbza9f","app":"alif-laam","score":160,"time":1627406919.369873,"user_name":"test","user_email":"hm@gg.cc"}]}'
+        res_dict=JSON.parse(res)
+        top_scores=res_dict.top_scores
+        zog(top_scores)
 
-            //new Label({text:date_str, color:color, align:CENTER, size:25}).rot(rand(-10,10)).centerReg(rect0);
-            // circle.on("mousedown", function () {
-            //     alert("Hello!")
-            // });   
+        //now getting the topscores from the server
+	    highscore_upload_obj={}
+	    highscore_upload_obj["user_key"]=assigned_user_key
+	    highscore_upload_obj["user_name"]=user.username
+	    highscore_upload_obj["user_email"]=user.email
+	    highscore_upload_obj["user_avatar"]=user.avatar
+	    highscore_upload_obj["score"]=0
+	    highscore_upload_obj["app"]=game_name
+
+	    // console.log(highscore_upload_obj)
+	    // console.log(JSON.stringify(highscore_upload_obj))
+
+	    link="../get_score.py"
+	    post_data(link,highscore_upload_obj,function(obj1){
+	    	res_dict=obj1
+	        console.log(obj1)
+	        console.log(JSON.stringify(obj1))
+	        zim.loop(top_scores, function (item,i) {
+	        	user_name=item.user_name
+	        	user_score=item.score
+	        	user_avatar=item.user_avatar
+	        	user_key=item.user_key
+
+
+	            let rect0 = new Rectangle(stageW*0.85,50,purple)
+	            let circle = new Circle({min:20, max:20}, pink);
+	            rank_str=""+(i+1)
+	            username_label=new Label({color:yellow, text:rank_str, size:20,variant:true}).centerReg(circle)
+	            circle.pos(5,0,LEFT,CENTER,rect0);
+
+	            // let rect1 = new Rectangle(stageW*0.25,50,purple)
+	            // let rect2 = new Rectangle(stageW*0.25,50,purple)
+	            
+	        	cur_img=asset(item.user_avatar).clone()
+	        	cur_img.height=40;
+	        	cur_img.pos(50,0,LEFT,CENTER,rect0);//.centerReg(rect2);//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+	            objects.push(rect0);
+	         //    username_label=new Label({color:yellow, text:user_name, size:45,variant:true}).centerReg(rect0);//.pos(0,30,CENTER,TOP,page);
+	        	// score_label= new Label({color:yellow, text:user_score, size:25,variant:true}).centerReg(rect1);//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+	            username_label=new Label({color:yellow, text:user_name, size:45,variant:false}).pos(100,0,LEFT,CENTER,rect0);
+	        	score_label= new Label({color:yellow, text:user_score, size:25,variant:true}).pos(10,0,RIGHT,CENTER,rect0);//.centerReg(rect1);//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+
+
+	 
+	            
+	        });
+	        wrapper.add(objects)
+	        win.add(wrapper).addTo(page);
+	        	        
+
+
+	    }) 
+
+
+
+        // zim.loop(top_scores, function (item,i) {
+        // 	user_name=item.user_name
+        // 	user_score=item.score
+        // 	user_avatar=item.user_avatar
+        // 	user_key=item.user_key
+
+
+        //     let rect0 = new Rectangle(stageW*0.85,50,purple)
+        //     let circle = new Circle({min:20, max:20}, pink);
+        //     rank_str=""+(i+1)
+        //     username_label=new Label({color:yellow, text:rank_str, size:20,variant:true}).centerReg(circle)
+        //     circle.pos(5,0,LEFT,CENTER,rect0);
+
+        //     // let rect1 = new Rectangle(stageW*0.25,50,purple)
+        //     // let rect2 = new Rectangle(stageW*0.25,50,purple)
             
-        });
-        wrapper.add(objects)
-        win.add(wrapper).addTo(page);
+        // 	cur_img=asset(item.user_avatar).clone()
+        // 	cur_img.height=40;
+        // 	cur_img.pos(50,0,LEFT,CENTER,rect0);//.centerReg(rect2);//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+        //     objects.push(rect0);
+        //  //    username_label=new Label({color:yellow, text:user_name, size:45,variant:true}).centerReg(rect0);//.pos(0,30,CENTER,TOP,page);
+        // 	// score_label= new Label({color:yellow, text:user_score, size:25,variant:true}).centerReg(rect1);//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+        //     username_label=new Label({color:yellow, text:user_name, size:45,variant:false}).pos(100,0,LEFT,CENTER,rect0);
+        // 	score_label= new Label({color:yellow, text:user_score, size:25,variant:true}).pos(10,0,RIGHT,CENTER,rect0);//.centerReg(rect1);//.pos(-stageW*0.4,80,CENTER,TOP,page.main_cont);
+
+
+ 
+            
+        // });
+        // wrapper.add(objects)
+        // win.add(wrapper).addTo(page);
 
     }   
 
