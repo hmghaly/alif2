@@ -35,10 +35,51 @@ function makeHighScorePage(stage) {
             spacingV:20
         });        
         //win.removeAllChildren()
-        const objects = []; 
-        // wrapper.add(objects)
-        // win.add(wrapper).addTo(page);
-        }    
+        const objects = []; //[new Circle(20, red), new Rectangle(30,30,red).rot(20).sca(2).reg(30,150), new Rectangle(30,30,orange), new Rectangle(30,30,blue), new Rectangle(30,30,green), new Rectangle(30,30,purple)];
+        const colors = series(green.darken(0.5),blue.darken(0.5),pink.darken(0.5),orange.darken(0.5))
+        const letters = series("WRAPPER".split(""));
+        zim.loop(progress_history, function (item,i) {
+            //let circle = new Circle({min:50, max:50}, colors);
+            let rect0 = new Rectangle(stageW*0.25,50,colors)
+            date_str=""
+            if (item.date!=null && item.date!=undefined) date_str=item.date.slice(4,15)
+            new Label({text:date_str, color:color, align:CENTER, size:25}).centerReg(rect0);
+            objects.push(rect0);
+            let rect1 = new Rectangle(stageW*0.15,50,colors)
+            accuracy_str=""
+            if (item.accuracy!=null && item.accuracy!=undefined) {
+                accuracy_percent_int=Math.ceil(item.accuracy*100)
+                accuracy_str="" +(accuracy_percent_int)+"%"
+            } 
+            new Label({text:accuracy_str, color:color, align:CENTER, size:25}).centerReg(rect1);
+            objects.push(rect1);
+            
+            let rect2 = new Rectangle(stageW*0.15,50,colors)
+            n_correct_str="Correct:\n"
+            if (item.n_correct!=null && item.n_correct!=undefined) {
+                n_correct_str+=item.n_correct
+            } 
+            new Label({text:n_correct_str, color:color, align:CENTER, size:25}).centerReg(rect2);
+            objects.push(rect2);
+
+            let rect3 = new Rectangle(stageW*0.15,50,colors)
+            item_type_str=""
+            if (item.type!=null && item.type!=undefined) {
+                item_type_str+=item.type
+            } 
+            new Label({text:item_type_str, color:color, align:CENTER, size:25}).centerReg(rect3);
+            objects.push(rect3);
+
+            //new Label({text:date_str, color:color, align:CENTER, size:25}).rot(rand(-10,10)).centerReg(rect0);
+            // circle.on("mousedown", function () {
+            //     alert("Hello!")
+            // });   
+            
+        });
+        wrapper.add(objects)
+        win.add(wrapper).addTo(page);
+
+    }   
 
 //     new Label({color:purple, text:"minutes to complete daily streak:", size:25,variant:true}).pos(0,120,CENTER,TOP,page);
 //     page.streak_status_label= new Label({color:purple, text:"0/10", size:25,variant:true}).pos(0,145,CENTER,TOP,page);

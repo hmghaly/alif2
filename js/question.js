@@ -54,6 +54,7 @@ function game_ended2(){
     link="../get_score.py"
     post_data(link,highscore_upload_obj,function(obj1){
         console.log(obj1)
+        console.log(JSON.stringify(obj1))
     })      
 
 
