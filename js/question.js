@@ -5,13 +5,15 @@ function game_ended2(){
     after_game.completion_label.text="Completed: "+quiz.n_correct+" questions"   
     accuracy_100=Math.round(100*quiz.accuracy)
     after_game.accuracy_label.text="Accuracy: "+accuracy_100+"%"   
-    score=Math.round(10*quiz.n_correct*quiz.accuracy) 
-    after_game.score_label.text="Score: "+score 
+    multiplier=quiz.score_multiplier
+    if (multiplier==null || multiplier==undefined) multiplier=10
+    cur_score=Math.round(multiplier*quiz.n_correct*quiz.accuracy) 
+    after_game.score_label.text="Score: "+cur_score 
     console.log("game ended!!!!")
     history_obj={}
     history_obj["n_correct"]=quiz.n_correct
     history_obj["accuracy"]=quiz.accuracy
-    history_obj["score"]=score
+    history_obj["score"]=cur_score
     history_obj["duration"]=quiz.duration
     history_obj["type"]=quiz.type
     history_obj["date"]=Date()
@@ -29,7 +31,37 @@ function game_ended2(){
     streak[today_str]=today_streak
     if (today_streak>=settings.streak_dur_min) streak.days[today_str]=true
     set_local_strorage(storage_name,"streak",streak)
-    
+
+    //updating high score
+    today_score=daily_score[today_str]
+    if (today_score==null || isNaN(today_score)) today_score=0
+    today_score+=cur_score
+    daily_score[today_str]=today_score
+    //if (today_streak>=settings.streak_dur_min) streak.days[today_str]=true
+    set_local_strorage(storage_name,"daily_score",daily_score)
+
+    highscore_upload_obj={}
+    highscore_upload_obj["user_key"]=assigned_user_key
+    highscore_upload_obj["user_name"]=user.username
+    highscore_upload_obj["user_email"]=user.email
+    highscore_upload_obj["user_avatar"]=user.avatar
+    highscore_upload_obj["score"]=today_score
+    highscore_upload_obj["app"]=game_name
+
+    console.log(highscore_upload_obj)
+    console.log(JSON.stringify(highscore_upload_obj))
+
+    link="../get_score.py"
+    post_data(link,highscore_upload_obj,function(obj1){
+        console.log(obj1)
+    })      
+
+
+//     assigned_user_key
+// user.username
+// user.email
+// user.avatar
+// daily_score
 
     // new_streak_val=update_streak(quiz.duration)
     // if (new_streak_val>=settings.streak_dur_min*60){

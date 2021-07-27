@@ -78,6 +78,8 @@ function makeReadWords(stage) {
 
 	page.game_timer = setInterval(page.run_timer, 1000);
     quiz.duration=300
+    quiz.score_multiplier=5
+    
     //if (settings.duration!=null) quiz.duration=settings.duration*60;
     if (settings.quiz_dur_min!=null) quiz.duration=settings.quiz_dur_min*60;
     quiz.remaining_time=quiz.duration
