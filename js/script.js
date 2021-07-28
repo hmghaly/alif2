@@ -140,7 +140,10 @@ function post_data(link,obj2upload,callback_fn){
       .then(function(data){
         //console.log(data)
         callback_fn(data)
-      })    
+      })  
+      // .catch(error => {
+      //     console.error('Error:', error);
+      //   });  
 }
 
 function check_email_str(email_str){

@@ -26,6 +26,17 @@ function makeTutorialsMenu(stage) {
 //     page.go2profile = new Button({width:120,height:60,backgroundColor:red,rollBackgroundColor:orange,label:profile_btn_label,corner:20})
 //     .pos(0,0,RIGHT,TOP,page)
 
+    main_tutorial_btn_label=new Label({color:yellow, text:"Alphabet and Sound Tutorial", size:25, align:CENTER})
+    page.go2alphabet_tutorial = new Button({width:stageW*0.8,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:main_tutorial_btn_label,corner:20})
+    .pos(0,120,CENTER,TOP,page)  
+    .on("mousedown", function (evt) {
+        $('#tutorial_modal').modal('show'); 
+        // console.log("Youtube2")
+        // //console.log(evt.currentTarget.id)
+        // zgo("https://www.youtube.com/watch?v=ycLezw26Whk")
+    });  
+
+
     alphabet_btn_label=new Label({color:yellow, text:"Alphabet Tutorials", size:25, align:CENTER})
     page.go2alphabet_tutorial = new Button({width:stageW*0.5,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:alphabet_btn_label,corner:20})
     .pos(-stageW*0.2,-stageH*0.2,CENTER,CENTER,page)   

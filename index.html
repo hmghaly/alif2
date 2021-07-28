@@ -958,6 +958,20 @@ frame.on("ready", function() {
       .then(function(data){
         console.log(data.split("\r\n"))
       }) 
+
+    tutorial_fname="txt/tutorial.txt"
+    fetch(tutorial_fname)
+      .then(function(res){ return res.text(); })
+      .then(function(data){
+        console.log(data.split("\r\n"))
+        joined=data.split("\r\n").join("<br>")
+        joined=joined.split("><br>").join(">")
+        $$("tutorial_div").innerHTML=joined
+        //$('#tutorial_modal').modal('show');   
+        //tutorial_modal
+        //
+      }) 
+
     
 })
     </script>
@@ -1002,7 +1016,29 @@ frame.on("ready", function() {
     </div>
   </div>
 
+<!-- Tutorial Modal -->
+<div class="modal fade" id="tutorial_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Arabic Letters and Sounds</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div id="tutorial_div" class="modal-body">
 
-<script src="cordova.js"></script>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End of Tutorial Modal -->
+
+<!-- <script src="cordova.js"></script> -->
 </body>
 </html>
