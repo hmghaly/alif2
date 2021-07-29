@@ -227,7 +227,8 @@ function deploy_modal_profile(){
 
 function select_avatar(evt){
 	trg=evt.currentTarget
-	document.querySelector(".selected").classList.remove("selected"); //unselecting the previously selected
+	previously_selected=document.querySelector(".selected")
+	if (previously_selected!=null) previously_selected.classList.remove("selected"); //unselecting the previously selected
 	trg.classList.add("selected");
 	user.avatar=trg.id
 }
