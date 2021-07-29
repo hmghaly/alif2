@@ -65,7 +65,12 @@ function makeMainMenu(stage) {
 	        unique:true,
 	        align:CENTER
 	    }).pos(10,10,RIGHT,TOP,page.main_cont)
-	    .on("mousedown", function () {go_deploy(page_nav.profile_page)})
+	    .on("mousedown", function () {
+            //go_deploy(page_nav.profile_page)
+            //$('#profile_modal').modal('show');
+            deploy_modal_profile()
+
+        })
 
 	    //go_deploy
 
@@ -206,9 +211,14 @@ function makeMainMenu(stage) {
 
     tutorials_label=new Label({color:yellow, text:"Tutorials and Practice", size:25, align:CENTER})
     page.go2tutorials = new Button({width:stageW*0.75,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:tutorials_label,corner:20})
-    .pos(0,stageH*0.25,CENTER,CENTER,page)   
+    .pos(0,stageH*0.2,CENTER,CENTER,page)   
 
-
+    about_label=new Label({color:yellow, text:"About", size:25, align:CENTER})
+    page.go2about = new Button({width:stageW*0.3,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:about_label,corner:20})
+    .pos(0,stageH*0.3,CENTER,CENTER,page) 
+    .on("mousedown",function(){
+        $('#about_modal').modal('show');  
+    })
     
 
     // shop_label=new Label({color:yellow, text:"Shop", size:25, align:CENTER})

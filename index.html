@@ -13,10 +13,10 @@
     </script>
 
 
-    <title>Alpha5 - ALIF Arabic Learning Platform</title>
+    <title>Alif Laam - Arabic Literacy - read and write in Arabic</title>
       <meta charset="UTF-8">
       <meta charset="utf-8" />
-      <meta name="description" content="Alif game - Arabic Learning is Fun - A web-based suite of apps to teach the foundation of Arabic reading, writing and listening. It teaches the names, shapes and sounds of the letters of the Arabic alphabet, in addition to the diacrticts (tashkeel/harakaat) and how to use Arabic keyboard and write letters and words and know the pronunciation of letters and words">
+      <meta name="description" content="Alif Laam - Arabic Literacy Game - part of ALIF apps:  Arabic Learning is Fun - A web-based suite of apps to teach the foundation of Arabic reading, writing and listening. It teaches the names, shapes and sounds of the letters of the Arabic alphabet, in addition to the diacrticts (tashkeel/harakaat) and how to use Arabic keyboard and write letters and words and know the pronunciation of letters and words">
       <meta name="keywords" content="Arabic alphabet letters reading writing listening games online web mobile androin ios fun app pronunciation diacritics tashkeel harakaat pronunciation">
     
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -31,6 +31,12 @@
 
 <!-- <script src="https://zimjs.org/cdn/1.3.2/createjs.js"></script>
 <script src="https://zimjs.org/cdn/cat/00/zim.js"></script> -->
+
+<style type="text/css">
+.selected{
+	background-color: green;
+}
+</style>
 
 <script src="js/createjs.js"></script>
 <script src="js/zim.js"></script>
@@ -197,6 +203,42 @@ function get_nday_streak(){
     // return streak[date_str]
 }
 
+
+function deploy_modal_profile(){
+	$$("profile_username").value=user.username
+	$$("profile_email").value=user.email
+	avatar_list_div=$$("avatar_list")
+	avatar_list_div.innerHTML=""
+	for (const av_fname of user.available_avatars){
+		console.log(av_fname)
+		src=asset(av_fname).id
+		cur_av_img=img(src,onload=null,id=av_fname)
+		cur_av_img.height=50
+		avatar_list_div.appendChild(cur_av_img)
+		cur_av_img.className="av_img"
+		cur_av_img.onclick=select_avatar
+		if (av_fname==user.avatar) cur_av_img.classList.add("selected");
+
+		//console.log(asset(item))
+	}
+	$('#profile_modal').modal('show');
+}
+
+function select_avatar(evt){
+	trg=evt.currentTarget
+	document.querySelector(".selected").classList.remove("selected"); //unselecting the previously selected
+	trg.classList.add("selected");
+	user.avatar=trg.id
+}
+
+function modal_update_profile(){
+	user.username=$$("profile_username").value
+	user.email=$$("profile_email").value
+	update_user()
+	alert("Updated Profile!")
+	go2menu()
+	$('.modal').modal('hide');	
+}
     
 // SCALING OPTIONS
 // scaling can have values as follows with full being the default
@@ -1038,6 +1080,80 @@ frame.on("ready", function() {
     </div>
   </div>
 <!-- End of Tutorial Modal -->
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profile_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Profile</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div id="profile_div" class="modal-body">
+        	  <div class="form-group">
+			    <label for="username">Choose user name:</label>
+			    <input type="email" class="profile form-control" placeholder="Enter username" id="profile_username" name="username">
+			  </div>
+			  <div class="form-group">
+			    <label for="email">Email address:</label>
+			    <input type="email" class="profile form-control" placeholder="Enter email" id="profile_email" name="email">
+			    <div id="email_verification">
+			    	<div id="email_status">Email Not Verified!</div>
+			    	<button class="btn btn-primary" id="btn_email_verify" onclick="verify_email()">Verify Email</button>
+			    </div>
+			  </div>
+			  <h3>Choose your avatar</h3>
+			  <p>Get more avatars from 
+			  	<button class="btn btn-primary" id="btn_go2shop" onclick="modal_go2shop()">item shop</button>
+			  </p>
+			  <div id="avatar_list" class="m-2"></div>
+			  <button class="btn btn-primary btn-block" onclick="modal_update_profile()">Update profile</button>
+
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End of Profile Modal -->
+
+
+<!-- About Modal -->
+<div class="modal fade" id="about_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">About</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div id="about_div" class="modal-body">
+        	<p><div id="version_n">Version: 1.0</div>  <div id="version_date">July 29, 2021</div></p>
+        	<p>Alif Laam is an app for Arabic Literacy: to easily read and write Arabic script. It is intended for both children and adults. Alif Laam is a part of ALIF apps (Arabic Learning is Fun), covering different aspects of learning Arabic.
+        	</p>
+        	<h3>Acknowledgments</h3>
+        	<p>This game was developed using zimjs framework. Many thanks to the developer of this framework, Dan (Dr. Abstract) for his continuous support and for adding essential elements of the framework that are needed as part of this app, such as the Arabic keyboard.</p>
+        	<p>Thanks to Salma Ghaly and Yaseen Ghaly for testing the game and providing valuable suggestions</p>
+
+        	<p><div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></p> 
+
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End of Tutorial Modal -->
+
 
 <!-- <script src="cordova.js"></script> -->
 </body>
