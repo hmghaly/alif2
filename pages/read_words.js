@@ -51,9 +51,10 @@ function makeReadWords(stage) {
       n_coins_str=""+n_coins
       page.coin_icon=frame.asset("coin.png").pos(-30,25,CENTER,BOTTOM,page.main_cont);
       page.coin_count=new Label({color:purple, text:n_coins_str, size:30, align:LEFT}).pos(30,30,CENTER,BOTTOM,page.main_cont);
-      n_hints_str=""+user.n_hints
-      page.hint_icon=frame.asset("idea.png").clone().sca(0.75).pos(40,25,RIGHT,BOTTOM,page.main_cont);
-      page.hint_count=new Label({color:purple, text:n_hints_str, size:30, align:LEFT}).pos(25,30,RIGHT,BOTTOM,page.main_cont);
+      // n_hints_str=""+user.n_hints
+      // page.hint_icon=frame.asset("idea.png").clone().sca(0.75).pos(40,25,RIGHT,BOTTOM,page.main_cont);
+      // page.hint_count=new Label({color:purple, text:n_hints_str, size:30, align:LEFT}).pos(25,30,RIGHT,BOTTOM,page.main_cont);
+      
       page.wrapper= new Wrapper({
             spacingH: 20,
             spacingV: 20

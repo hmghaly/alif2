@@ -380,7 +380,7 @@ function gen_writing_questions(){
         cur_q_type=shuffle(q_types)[0]
         tmp_q_obj.type=cur_q_type
         if (cur_q_type=="arword_letters"){
-            tmp_q_obj.prompt="Type the letters of this word?"
+            tmp_q_obj.prompt="Type the letters of this word"
             //tmp_q_obj.item={label:cur_obj.arabic, id:an_id} 
             tmp_q_obj.item={label:cur_obj.plain, id:an_id} 
             tmp_q_obj.english=cur_obj.english

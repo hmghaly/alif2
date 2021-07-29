@@ -131,6 +131,7 @@ if (user.available_avatars==null || user.available_avatars==undefined) user.avai
 if (user.avatar==null || user.avatar==undefined) user.avatar="user.png"
 if (user.username==null || user.username==undefined) user.username="guest"
 if (user.email==null || user.email==undefined) user.email=""
+if (user.email_verified==null || user.email_verified==undefined) user.email_verified=false
 if (user.badges==null || user.badges==undefined) user.badges=[]
 if (user.n_hints==null || user.n_hints==undefined) user.n_hints=0    
 
@@ -239,7 +240,17 @@ function modal_update_profile(){
 	go2menu()
 	$('.modal').modal('hide');	
 }
-    
+
+function modal_go2shop(){
+	$('.modal').modal('hide');
+	go_deploy(page_nav.shop_page) 
+}
+
+function verify_email(){
+	//sending the email to server
+	$$("email_status").innerHTML="An email has been sent to this email address, please check your email inbox."
+}
+
 // SCALING OPTIONS
 // scaling can have values as follows with full being the default
 // "fit"    sets canvas and stage to dimensions and scales to fit inside window size
