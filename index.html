@@ -303,6 +303,9 @@ function submit_feedback(){
     link="../get_message.py"
     post_data(link,feedback_obj,function(obj1){
     	console.log(obj1)
+    	alert("Feedback sent successfully!")
+    	$('.modal').modal('hide');
+
     })     
 
 }
