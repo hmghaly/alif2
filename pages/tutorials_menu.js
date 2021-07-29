@@ -28,7 +28,7 @@ function makeTutorialsMenu(stage) {
 
     main_tutorial_btn_label=new Label({color:yellow, text:"Alphabet and Sound Tutorial", size:25, align:CENTER})
     page.go2alphabet_tutorial = new Button({width:stageW*0.8,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:main_tutorial_btn_label,corner:20})
-    .pos(0,120,CENTER,TOP,page)  
+    .pos(0,150,CENTER,TOP,page)  
     .on("mousedown", function (evt) {
         $('#tutorial_modal').modal('show'); 
         // console.log("Youtube2")
@@ -37,31 +37,36 @@ function makeTutorialsMenu(stage) {
     });  
 
 
-    alphabet_btn_label=new Label({color:yellow, text:"Alphabet Tutorials", size:25, align:CENTER})
+    alphabet_btn_label=new Label({color:yellow, text:"Alphabet List", size:25, align:CENTER})
     page.go2alphabet_tutorial = new Button({width:stageW*0.5,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:alphabet_btn_label,corner:20})
-    .pos(-stageW*0.2,-stageH*0.2,CENTER,CENTER,page)   
+    .pos(0,250,CENTER,TOP,page)  
+    .on("mousedown", function (evt) {go_deploy(page_nav.alphabet_list)})
 
-    youtube_img=frame.asset("youtube.png")
-    image1 = youtube_img.clone()
-    image2 = youtube_img.clone()
-    image1.id="youtube_image1"
-    image2.id="youtube_image2"
-    image1.pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page).on("mousedown", function (evt) {
-        console.log("Youtube")
-        //console.log(evt.currentTarget.id)
-        zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
-    });  
-    //console.log(image1)
-
-    sound_btn_label=new Label({color:yellow, text:"Letter Sounds Tutorial", size:25, align:CENTER})
+    sound_btn_label=new Label({color:yellow, text:"Letter Sounds List", size:25, align:CENTER})
     page.go2sound_tutorial = new Button({width:stageW*0.5,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:sound_btn_label,corner:20})
-    .pos(-stageW*0.2,-stageH*0.1,CENTER,CENTER,page)  
+    .pos(0,350,CENTER,TOP,page)  
+    .on("mousedown", function (evt) {go_deploy(page_nav.sound_list)})
 
-    image2.pos(stageW*0.25,-stageH*0.1,CENTER,CENTER,page).on("mousedown", function (evt) {
-        console.log("Youtube2")
-        //console.log(evt.currentTarget.id)
-        zgo("https://www.youtube.com/watch?v=ycLezw26Whk")
-    });  
+    //sound_page
+    //alphabet 
+
+    // youtube_img=frame.asset("youtube.png")
+    // image1 = youtube_img.clone()
+    // image2 = youtube_img.clone()
+    // image1.id="youtube_image1"
+    // image2.id="youtube_image2"
+    // image1.pos(stageW*0.25,-stageH*0.2,CENTER,CENTER,page).on("mousedown", function (evt) {
+    //     console.log("Youtube")
+    //     //console.log(evt.currentTarget.id)
+    //     zgo("https://www.youtube.com/watch?v=DddX_IdZxOg")
+    // });  
+    // //console.log(image1)
+
+    // image2.pos(stageW*0.25,-stageH*0.1,CENTER,CENTER,page).on("mousedown", function (evt) {
+    //     console.log("Youtube2")
+    //     //console.log(evt.currentTarget.id)
+    //     zgo("https://www.youtube.com/watch?v=ycLezw26Whk")
+    // });  
 
     handwriting_btn_label=new Label({color:yellow, text:"Handwriting \nPractice", size:25, align:CENTER})
     page.go2handwriting_game = new Button({width:stageW*0.4,height:60,backgroundColor:yellow.darken(0.5),rollBackgroundColor:orange,label:handwriting_btn_label,corner:20})

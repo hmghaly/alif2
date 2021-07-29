@@ -1,6 +1,8 @@
-<h1>Overview</h1>
+<h1>Part 1 - Alphabet</h1>
+
 Arabic has 28 letters. Let’s learn their sounds, names and shapes. Notice that not all the sounds of Arabic letters can be written in the same letters used in English, so it's important to know what is used.
 
+<iframe width="400" height="300" src="https://www.youtube.com/embed/DddX_IdZxOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <h3>Sounds - why numbers?  </h3> 
 Some Arabic sounds have no equivalent English letters, so we use numbers that look like the letter with this sound, as you can see below.
@@ -39,10 +41,11 @@ The character hamzah is a glottal stop, like the sound in the middle of “uh-oh
 <tr><td>hamzah 3ala nabrah</td><td>ئ</td></tr>
 <tr><td>hamzah 3ala waaw</td><td>ؤ</td></tr>
 </table>
-ُExamples
+
+Examples
 <table border="1" class="table">
 <tr><td>Water</td><td>maa2</td><td>ماء</td></tr>
-<tr><td>Question</td>su2aal<td></td><td>سؤال</td></tr>
+<tr><td>Question</td><td>su2aal</td><td>سؤال</td></tr>
 <tr><td>Liquid</td><td>saa2il</td><td>سائل</td></tr>
 </table>
 
@@ -50,28 +53,29 @@ The character hamzah is a glottal stop, like the sound in the middle of “uh-oh
 <h3>Extended Letters - taa2 marbootah: ة </h3>
 The letter taa2 marbootah is a version of the letter taa2. It comes at the end of the word. It can be pronounced as either “h” or “t” depending on the context. 
 ة ـة
- Fish - samakah - سمكة 
+ 
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>Fish</td><td>samakah</td><td>سمكة</td></tr>
+<tr><td>Strength</td><td>quwwah</td><td>قوة</td></tr>
 </table>
 
 
 <h3>Extended Letters - alif forms: ا </h3>
 The letter alif can be combined with hamzah and maddah to change its sound
-alif = ا
-alif + hamzah = أ
-alif + hamzah maksoorah (has an “i” sound) = إ
-alif with maddah (long aa sound) = آ
- People - naas - ناس
- Mouse - fa2r - فأر
- Production - intaaj - إنتاج
- Machine -aalah - آلة
+
+ <table border="1" class="table">
+<tr><td>alif</td><td>ا</td></tr>
+<tr><td>alif + hamzah</td><td>أ</td></tr>
+<tr><td>alif + hamzah maksoorah (has an “i” sound)</td><td>إ</td></tr>
+<tr><td>alif with maddah (long aa sound)</td><td>آ</td></tr>
+</table>
+ 
+ Examples
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>People</td><td>naas</td><td>ناس</td></tr>
+<tr><td>Mouse</td><td>fa2r</td><td>فأر</td></tr>
+<tr><td>Production</td><td>intaaj</td><td>إنتاج</td></tr>
+<tr><td>Machine</td><td>2aalah</td><td>آلة</td></tr>
 </table>
 
 <h3>Extended Letters - laam alif: لا </h3>
@@ -114,8 +118,11 @@ Thorns - shawk - شوك
 <tr><td></td><td></td></tr>
 </table>
 
+<h1>Diacritics and Letter sounds</h1>
+Now let's learn the sounds of letters themselves, and how they sound when combined with diacritics.
 
-<h2>Diacritics and Letter sounds </h2>
+<iframe width="400" height="300" src="https://www.youtube.com/embed/ycLezw26Whk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Letter Sounds
 Each letter corresponds to a certain sound. For example, 
 baa2 ب = sound "b"

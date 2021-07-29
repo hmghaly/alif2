@@ -33,7 +33,7 @@ function makeAlphabet(stage) {
 		spacingV:20
 	});
     
-    page.deploy_list=function(){
+    page.deploy=function(){
         const objects = []; //[new Circle(20, red), new Rectangle(30,30,red).rot(20).sca(2).reg(30,150), new Rectangle(30,30,orange), new Rectangle(30,30,blue), new Rectangle(30,30,green), new Rectangle(30,30,purple)];
 //        for (const let0 of game_data.letter_ids){
 //            console.log(let0)

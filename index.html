@@ -535,11 +535,12 @@ frame.on("ready", function() {
     
     //The alphabet list page ///
     var alphabet = makeAlphabet(stage);
-    page_nav.alphabet=alphabet
+    page_nav.alphabet_list=alphabet
     //var alphabet2 =new Page(stageW, stageH, orange, blue);
     
     //The Sound list page ///
     var sound_page = makeSoundPage(stage);
+    page_nav.sound_list=sound_page
  
 
 
@@ -746,26 +747,26 @@ frame.on("ready", function() {
         pages.go(main_menu_page, "up");
     })
 
-    tutorials_menu.go2alphabet_tutorial.on("mousedown", function () {
-        console.log("Go to Alphabet Tutorial")
-        pages.go(alphabet_tutorial, "up");
-    })
+    // tutorials_menu.go2alphabet_tutorial.on("mousedown", function () {
+    //     console.log("Go to Alphabet Tutorial")
+    //     pages.go(alphabet_tutorial, "up");
+    // })
 
-    tutorials_menu.go2sound_tutorial.on("mousedown", function () {
-        console.log("Go to Sound Tutorial")
-        pages.go(sound_tutorial, "up");
-    })
+    // tutorials_menu.go2sound_tutorial.on("mousedown", function () {
+    //     console.log("Go to Sound Tutorial")
+    //     pages.go(sound_tutorial, "up");
+    // })
 
     //============== Alphabet Tutorials Navigation ===============
     alphabet_tutorial.go2menu.on("mousedown", function () {
         console.log("Go to Tutorials Menu")
         pages.go(tutorials_menu, "up");
     })
-    alphabet_tutorial.go2alphabet.on("mousedown", function () {
-        console.log("Go to Alphabet")
-        alphabet.deploy_list()
-        pages.go(alphabet, "up");
-    })
+    // alphabet_tutorial.go2alphabet.on("mousedown", function () {
+    //     console.log("Go to Alphabet")
+    //     alphabet.deploy_list()
+    //     pages.go(alphabet, "up");
+    // })
 
 
     //============== Alphabet Page Navigation ===============
@@ -781,11 +782,11 @@ frame.on("ready", function() {
         pages.go(tutorials_menu, "right");
     });      
     
-    sound_tutorial.go2sound_list.on("mousedown", function () {
-        sound_page.deploy_list()
-        pages.go(sound_page, "down");
-        //pages.go(sound_page, "down"); ////////////////////////////////
-    }); 
+    // sound_tutorial.go2sound_list.on("mousedown", function () {
+    //     sound_page.deploy_list()
+    //     pages.go(sound_page, "down");
+    //     //pages.go(sound_page, "down"); ////////////////////////////////
+    // }); 
     sound_page.go2tutorial.on("mousedown", function () {
         pages.go(sound_tutorial, "up");
     });    
@@ -1158,7 +1159,7 @@ frame.on("ready", function() {
         	</p>
         	<h3>Acknowledgments</h3>
         	<p>This game was developed using zimjs framework. Many thanks to the developer of this framework, Dan (Dr. Abstract) for his continuous support and for adding essential elements of the framework that are needed as part of this app, such as the Arabic keyboard.</p>
-        	<p>Thanks to Salma Ghaly and Yaseen Ghaly for testing the game and providing valuable suggestions</p>
+        	<p>Thanks to Salma Ghaly and Yaseen Ghaly for testing the game and providing valuable suggestions!</p>
 
         	<p><div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></p> 
 
