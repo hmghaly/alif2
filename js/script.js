@@ -129,6 +129,18 @@ function create_el(el_tag,el_parent,el_id,el_name,el_html){
     return el0
 }
 
+function create_table(parent_el,array1){
+    table_el=create_el_basic("table",parent_el)
+    for (const item0 of array1){
+        var row = table_el.insertRow(-1);
+        for (const sub_item of item0){
+            var cell0 = row.insertCell(-1);
+            cell0.innerHTML=sub_item
+        }
+    }
+    return table_el
+}
+
 function post_data(link,obj2upload,callback_fn){
     //we expect both uploaded data and received data to be of json format
     fetch(link,

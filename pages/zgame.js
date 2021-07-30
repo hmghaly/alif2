@@ -93,6 +93,7 @@ function makeGame(stage) {
             var cur_op_btn = new Button({width:150,height:140,backgroundColor:blue,rollBackgroundColor:orange,label:op_btn_label,corner:10})
             .center(op);
             cur_op_btn.id=cur_option_obj.id
+            cur_op_btn.text_str=option_txt
             cur_op_btn.on("mousedown",check_answer)
         })  
         
@@ -113,9 +114,14 @@ function makeGame(stage) {
     function check_answer(evt){
         if (quiz.n_attempts==null) quiz.n_attempts=0;
         if (quiz.n_correct==null) quiz.n_correct=0;
+        if (quiz.mistakes==null) quiz.mistakes=[];
         
         trg=evt.currentTarget
-        console.log(trg.id)
+        // console.log(trg.id)
+        // console.log(trg)
+        // console.log(trg.text)
+        // console.log(quiz.questions[quiz.i])
+        tmp_q_obj=quiz.questions[quiz.i]
         //console.log(frame.asset(trg.id))
         frame.asset(trg.id).play()
         quiz.n_attempts+=1
@@ -171,6 +177,14 @@ function makeGame(stage) {
             trg.removeAllEventListeners()
             console.log("wrong!")
             trg.backgroundColor=red
+            tmp_q_obj=quiz.questions[quiz.i]
+            mistake_obj={}
+            mistake_obj.prompt=tmp_q_obj.prompt
+            mistake_obj.item=tmp_q_obj.item.label
+            mistake_obj.answer=trg.text_str
+
+
+            quiz.mistakes.push(mistake_obj)
             
         }
         quiz.accuracy=quiz.n_correct/quiz.n_attempts

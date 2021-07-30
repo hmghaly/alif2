@@ -1,4 +1,21 @@
+function display_mistakes(){
+	$('#generic_modal').modal('show');
+	$$("generic_modal_title").innerHTML="Mistakes"
+	content_div=$$("generic_modal_content_div")
+	content_div.innerHTML=""
+	//mistakes_table=create_el_basic("table",content_div)
+	cur_array=[]
+	cur_array.push(["Question Prompt","Question About","Answer"])
+	for (const mst of quiz.mistakes) cur_array.push([mst.prompt,mst.item, mst.answer])
 
+	table1=create_table(content_div,cur_array)
+	table1.id="mistakes_table"
+	table1.border=1
+
+	
+
+	
+}
 
 function makeAfterGame(stage) {
     
@@ -44,7 +61,8 @@ function makeAfterGame(stage) {
 	    page.n_wrong_label=new Label({color:purple, text:"3", size:30, variant:true, align:CENTER})
 	    page.mistakes_label=new Label({color:yellow, text:"Mistakes", size:18, variant:true, align:CENTER})
 	    page.go2mistakes = new Button({width:100,height:30,backgroundColor:purple,rollBackgroundColor:orange,label:page.mistakes_label,corner:5})
-
+		page.go2mistakes.on("mousedown", display_mistakes);
+	    
 
   
 		completion_tile=new Tile({
