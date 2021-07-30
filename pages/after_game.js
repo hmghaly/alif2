@@ -62,9 +62,10 @@ function makeAfterGame(stage) {
 
 	    page.today_score_label=new Label({color:purple, text:"Today's Score", size:30, variant:true, align:CENTER})
 	    page.today_score_value_label=new Label({color:purple, text:"0", size:30, variant:true, align:CENTER})
-	    page.score_icon=asset("star.png").clone().sca(0.5)
+	    page.score_icon=asset("star.png").clone().sca(0.5).alp(0)
 	    page.high_score_label=new Label({color:yellow, text:"High Score!", size:30, variant:true, align:CENTER})
 	    page.go2highscore = new Button({width:250,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:page.high_score_label,corner:20})
+	    page.go2highscore.alp(0) //page.score_icon, page.go2highscore.alp(0) 
 
 		daily_score_tile=new Tile({
 		    obj:[page.today_score_label,page.today_score_value_label,page.go2highscore,page.score_icon], 
@@ -146,6 +147,10 @@ function makeAfterGame(stage) {
     post_data(link,highscore_upload_obj,function(obj1){
         console.log(obj1)
         console.log(JSON.stringify(obj1))
+        if (obj1.highscore==true){
+			page.score_icon.alp(1)
+			page.go2highscore.alp(1) 
+        }
     })    
 
 
