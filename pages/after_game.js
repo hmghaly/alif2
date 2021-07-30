@@ -66,6 +66,7 @@ function makeAfterGame(stage) {
 	    page.high_score_label=new Label({color:yellow, text:"High Score!", size:30, variant:true, align:CENTER})
 	    page.go2highscore = new Button({width:250,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:page.high_score_label,corner:20})
 	    page.go2highscore.alp(0) //page.score_icon, page.go2highscore.alp(0) 
+	    page.go2highscore.on("mousedown", function () {go_deploy(page_nav.high_score_page); }); 
 
 		daily_score_tile=new Tile({
 		    obj:[page.today_score_label,page.today_score_value_label,page.go2highscore,page.score_icon], 
