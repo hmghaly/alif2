@@ -71,7 +71,8 @@
 <script src="pages/shop_page.js"></script>      
 <script src="pages/high_score.js"></script>      
 <script src="pages/read_words.js"></script>     
-<script src="pages/write_words.js"></script>      
+<script src="pages/write_words.js"></script>   
+<script src="pages/after_game.js"></script>      
 <!-- <script src="pages/choose_avatar.js"></script>           -->
 
 
@@ -348,6 +349,8 @@ assets.push({id:"shopping.png", src:"img/shopping.png"})
 assets.push({id:"settings.png", src:"img/settings.png"})
 assets.push({id:"question.png", src:"img/question.png"})
 assets.push({id:"feedback.png", src:"img/feedback.png"})
+assets.push({id:"check.png", src:"img/check.png"})
+assets.push({id:"wrong.png", src:"img/wrong.png"})
 
 for (const avatar_obj of avatars){ //adding letter name sounds to assets
     avatars_dir="img/avatars/"
@@ -571,6 +574,9 @@ frame.on("ready", function() {
 
     var high_score_page = makeHighScorePage(stage)
     page_nav.high_score_page=high_score_page
+
+    var after_game = makeAfterGame(stage)
+    page_nav.after_game=after_game
     
     
     //The menu page
@@ -602,18 +608,27 @@ frame.on("ready", function() {
 //    .pos(60,20,RIGHT,BOTTOM,alphabet)   
 
     //The game ended page
-    after_game = new Page(stageW, stageH, yellow, blue);
-    //new Circle(200,dark).center(splash);
-    title_label=new Label({color:purple, text:"Game Ended", size:60, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,after_game);
-    after_game.completion_label=new Label({color:purple, text:"Completion", size:40, variant:true, align:CENTER}).pos(0,200,CENTER,TOP,after_game);
-    after_game.accuracy_label=new Label({color:purple, text:"Accuracy", size:40, variant:true, align:CENTER}).pos(0,300,CENTER,TOP,after_game);
-    after_game.score_label=new Label({color:purple, text:"Score", size:40, variant:true, align:CENTER}).pos(0,400,CENTER,TOP,after_game);
-    after_game.score_explanation_label=new Label({color:purple, text:"Score reflects both\nhow many questions answered\nand the answer accuracy", size:30, align:CENTER}).pos(0,500,CENTER,TOP,after_game);
+    // after_game = new Page(stageW, stageH, yellow, blue);
+    // //new Circle(200,dark).center(splash);
+    // title_label=new Label({color:purple, text:"Game Ended", size:60, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,after_game);
+    // after_game.completion_label=new Label({color:purple, text:"Completion", size:40, variant:true, align:CENTER}).pos(0,200,CENTER,TOP,after_game);
+    // after_game.accuracy_label=new Label({color:purple, text:"Accuracy", size:40, variant:true, align:CENTER}).pos(0,300,CENTER,TOP,after_game);
+    // after_game.score_label=new Label({color:purple, text:"Score", size:40, variant:true, align:CENTER}).pos(0,400,CENTER,TOP,after_game);
+    // after_game.score_explanation_label=new Label({color:purple, text:"Score reflects both\nhow many questions answered\nand the answer accuracy", size:30, align:CENTER}).pos(0,500,CENTER,TOP,after_game);
 
-    menu_label=new Label({color:yellow, text:"Menu", size:25, align:CENTER})
-    after_game.go2menu = new Button({width:stageW*.8,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
-    .pos(0,20,CENTER,BOTTOM,after_game)
-    .on("mousedown", go2menu)   
+    // menu_label=new Label({color:yellow, text:"Menu", size:25, align:CENTER})
+    // after_game.go2menu = new Button({width:stageW*.8,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
+    // .pos(0,20,CENTER,BOTTOM,after_game)
+    // .on("mousedown", go2menu)   
+
+	// daily_score_tile=new Tile({
+	//     obj:[page.user_avatar,page.profile_btn_label], 
+	//     rows:2,
+	//     spacingV:5, 
+	//     unique:true,
+	//     align:CENTER
+	// }).pos(10,10,RIGHT,TOP,page.main_cont)
+
 
     //The progress dashboard page
     // var dashboard = new Page(stageW, stageH, yellow, green);
@@ -919,9 +934,11 @@ frame.on("ready", function() {
             timer_str=n_minutes_str+":"+n_seconds_str
             game.timer.text=timer_str
             if (quiz.remaining_time<=0) {
-                pages.go(after_game, "right");
-                console.log("where is this?")
-                game_ended2() //question.js
+                //pages.go(after_game, "right");
+                //console.log("where is this?")
+                
+                go_deploy(page_nav.after_game)
+                //game_ended2() //question.js
 //                accuracy_100=Math.round(100*quiz.accuracy)
 //                after_game.accuracy_label.text=""+accuracy_100+"%"
                 clearInterval(game_timer)
@@ -1172,6 +1189,29 @@ frame.on("ready", function() {
     </div>
   </div>
 <!-- End of Tutorial Modal -->
+
+<!-- Generic Modal -->
+<div class="modal fade" id="generic_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal_title">Modal</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div id="modal_content_div" class="modal-body">
+
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End of Generic Modal -->
 
 
 <!-- <script src="cordova.js"></script> -->

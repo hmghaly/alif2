@@ -1,14 +1,17 @@
 
     
 
-function game_ended2(){
-    after_game.completion_label.text="Completed: "+quiz.n_correct+" questions"   
+function game_ended2_OLD(){
+      
     accuracy_100=Math.round(100*quiz.accuracy)
-    after_game.accuracy_label.text="Accuracy: "+accuracy_100+"%"   
+      
     multiplier=quiz.score_multiplier
     if (multiplier==null || multiplier==undefined) multiplier=10
     cur_score=Math.round(multiplier*quiz.n_correct*quiz.accuracy) 
-    after_game.score_label.text="Score: "+cur_score 
+    
+    page_nav.after_game.accuracy_label.text="Accuracy: "+accuracy_100+"%" 
+    page_nav.after_game.completion_label.text="Completed: "+quiz.n_correct+" questions" 
+    page_nav.after_game.score_label.text="Score: "+cur_score 
     console.log("game ended!!!!")
     history_obj={}
     history_obj["n_correct"]=quiz.n_correct
@@ -22,6 +25,8 @@ function game_ended2(){
 
     progress_history.push(history_obj)
     set_local_strorage(storage_name,"progress_history",progress_history)
+
+    //this is where we add the session upload
 
     //updating streak
     today_str=today()

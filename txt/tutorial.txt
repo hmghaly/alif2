@@ -81,26 +81,22 @@ The letter alif can be combined with hamzah and maddah to change its sound
 <h3>Extended Letters - laam alif: لا </h3>
 When the letter laam comes before alif, it forms a new character combination, called laam alif. This character combination can include the different forms of alif.
 ل + ا = لا
-لا
-لأ
-لآ
-لإ
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>لا</td><td>ل + ا</td></tr>
+<tr><td>لأ</td><td>ل + أ</td></tr>
+<tr><td>لإ</td><td>ل + إ</td></tr>
+<tr><td>لآ</td><td>ل + آ</td></tr>
 </table>
 
 <h3>Extended Letters - alif layyenah: ى </h3>
 When the letter alif comes at the end of the word, sometimes it is written as “alif layyenah”, a character that looks like yaa2 but without dots
 ى
 Examples:
-Hospital - mostashfaa - مستشفى
 
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>Hospital</td><td>mostashfaa</td><td>مستشفى</td></tr>
+<tr><td>Music</td><td>mooseeqaa</td><td>موسيقى</td></tr>
 </table>
 
 <h3>Letter Shapes </h3>
@@ -108,30 +104,27 @@ Letters take different shapes depending on their position within words. These sh
 The letter kaaf
 ك كـ ـكـ ـك
 Examples
-Dog - kalb - كلب
-Fish - samakah - سمكة
-King - malik - ملك
-Thorns - shawk - شوك
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>Dog</td><td>kalb</td><td>كلب</td></tr>
+<tr><td>Fish</td><td>samakah</td><td>سمكة</td></tr>
+<tr><td>King</td><td>malik</td><td>ملك</td></tr>
+<tr><td>Thorns</td><td>shawk</td><td>شوك</td></tr>
 </table>
+
 
 <h1>Diacritics and Letter sounds</h1>
 Now let's learn the sounds of letters themselves, and how they sound when combined with diacritics.
 
 <iframe width="400" height="300" src="https://www.youtube.com/embed/ycLezw26Whk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Letter Sounds
+<h3>Letter Sounds</h3>
 Each letter corresponds to a certain sound. For example, 
-baa2 ب = sound "b"
-taa2 ت = sound "t"
-meem م = sound "m"
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>baa2 ب</td><td>sound "b"</td></tr>
+<tr><td>taa2 ت</td><td>sound "t"</td></tr>
+<tr><td>meem م</td><td>sound "m"</td></tr>
 </table>
 
 In addition to the special sounds of Arabic explained above.
@@ -150,13 +143,11 @@ Check the list of sounds below of combining letters and diacritics.
 The diacritic fat7ah 
 ـَ
 corresponds to the sound "a". So for example if it comes at the letter baa2 (the sound "b"), the combined sound is "ba"
-ب = b
-ـَ = a
-بَ = ba
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>ب</td><td>b</td></tr>
+<tr><td>ـَ</td><td>a</td></tr>
+<tr><td>بَ</td><td>ba</td></tr>
 </table>
 
 <h3>Diacritics - kasrah</h3>
@@ -164,75 +155,60 @@ corresponds to the sound "a". So for example if it comes at the letter baa2 (the
 The diacritic kasrah 
 ـِ
 corresponds to the sound "i". So for example if it comes at the letter baa2 (the sound "b"), the combined sound is "bi"
-ب = b
-ـَ = i
-بِ = bi
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>ب</td><td>b</td></tr>
+<tr><td>ـِ</td><td>i</td></tr>
+<tr><td>بِ</td><td>bi</td></tr>
 </table>
 
 <h3>Diacritics - Dammah</h3>
 The diacritic Dammah 
 ـُ
 corresponds to the sound "u". So for example if it comes at the letter baa2 (the sound "b"), the combined sound is "bu"
-ب = b
-ـُ = u
-بُ = bu
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>ب</td><td>b</td></tr>
+<tr><td>ـُ</td><td>u</td></tr>
+<tr><td>بُ</td><td>bu</td></tr>
 </table>
 
 <h3>Diacritics - sukoon </h3>
 The diacritic sukoon 
 ـْ
 corresponds to the absence of vowels after the letter. So for example if it comes at the letter baa2 (the sound "b"), the combined sound is still "b"
-ب = b
-ـْ = -
-بْ = b
+
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>ب</td><td>b</td></tr>
+<tr><td>ـْ</td><td>-</td></tr>
+<tr><td>بْ</td><td>b</td></tr>
 </table>
 
 <h3>Diacritics - shaddah </h3>
 The diacritic shaddah 
 ـّ
 corresponds to the doubling of the sound of the letter. So for example if it comes at the letter baa2 (the sound "b"), the combined sound becomes "bb"
-ب = b
-ـّ = (doubling)
-بّ = bb
 
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>ب</td><td>b</td></tr>
+<tr><td>ـّ</td><td>(doubling)</td></tr>
+<tr><td>بّ</td><td>bb</td></tr>
 </table>
 
 shaddah can also be combined with either fat7ah, kasrah or Dammah, to both double the sound of the letter and add the corresponding vowel to it. For example
-ب = b
-ـّ = (doubling)
-ـَ = a
-بَّ = bba
 
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>ب</td><td>b</td></tr>
+<tr><td>ـّ</td><td>(doubling)</td></tr>
+<tr><td>ـَ</td><td>a</td></tr>
+<tr><td>بّ</td><td>bba</td></tr>
 </table>
 
 <h3>The diacritics of tanween </h3>
 Tanween is adding a vowel followed by the sound "n" at the end of the word for grammatical purposes. The types of tanween are:
-Tanween fat7ah ـً = an
-Tanween kasrah ـٍ = in
-Tanween Dammah ـٌ = un
 
 <table border="1" class="table">
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
-<tr><td></td><td></td></tr>
+<tr><td>Tanween fat7ah</td><td>-an</td><td>ـً</td></tr>
+<tr><td>Tanween kasrah</td><td>-in</td><td>ـٍ</td></tr>
+<tr><td>Tanween Dammah</td><td>-un</td><td> ـٌ </td></tr>
 </table>

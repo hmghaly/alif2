@@ -128,9 +128,10 @@ function makeWriteWords(stage) {
         timer_str=n_minutes_str+":"+n_seconds_str
         page.timer.text=timer_str
         if (quiz.remaining_time<=0) {
-            pages.go(after_game, "right");
-            console.log("where is this?")
-            game_ended2()
+            go_deploy(page_nav.after_game)
+            // pages.go(after_game, "right");
+            // console.log("where is this?")
+            // game_ended2()
 //                accuracy_100=Math.round(100*quiz.accuracy)
 //                after_game.accuracy_label.text=""+accuracy_100+"%"
             clearInterval(page.game_timer)
