@@ -6,7 +6,9 @@ function display_mistakes(){
 	//mistakes_table=create_el_basic("table",content_div)
 	cur_array=[]
 	cur_array.push(["Question Prompt","Question About","Answer"])
-	for (const mst of quiz.mistakes) cur_array.push([mst.prompt,mst.item, mst.answer])
+	list_mistakes=[]
+	if (quiz.mistakes!=null) list_mistakes=quiz.mistakes
+	for (const mst of list_mistakes) cur_array.push([mst.prompt,mst.item, mst.answer])
 
 	table1=create_table(content_div,cur_array)
 	table1.id="mistakes_table"
@@ -131,6 +133,17 @@ function makeAfterGame(stage) {
     set_local_strorage(storage_name,"progress_history",progress_history)
 
     //this is where we add the session upload
+    session_link="../get_session.py"
+    session_obj={}
+    session_obj["user_key"]=assigned_user_key
+    session_obj["app"]=game_name
+    session_obj["items"]=[history_obj]
+
+    post_data(session_link,session_obj,function(obj1){
+        console.log(obj1)
+        console.log(JSON.stringify(obj1))
+    }) 
+
 
     //updating streak
     today_str=today()
@@ -171,6 +184,8 @@ function makeAfterGame(stage) {
 			page.go2highscore.alp(1) 
         }
     })    
+
+  
 
 
 
