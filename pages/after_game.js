@@ -41,11 +41,24 @@ function makeAfterGame(stage) {
 	    //     align:CENTER
 	    // }).pos(0,25,CENTER,TOP,page.main_cont);
 	    menu_label=new Label({color:yellow, text:"Menu", size:25, align:CENTER})
-	    page.go2menu = new Button({width:stageW*.8,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
-	    .pos(0,20,CENTER,BOTTOM,page.main_cont)
+	    page.go2menu = new Button({width:stageW*.7,height:60,backgroundColor:purple,rollBackgroundColor:orange,label:menu_label,corner:20})
+	    .pos(0,80,CENTER,BOTTOM,page.main_cont)
 	    .on("mousedown", go2menu) 
 
-	    title_label=new Label({color:purple, text:"Game Ended", size:60, variant:true, align:CENTER}).pos(0,100,CENTER,TOP,page.main_cont);
+	    youtube_img=frame.asset("youtube.png").clone()
+	    youtube_img.height=40
+	    youtube_img.pos(50,10,CENTER,BOTTOM,page.main_cont)
+	    youtube_img.on("mousedown",function(){zgo("https://www.youtube.com/c/Champolu_game/videos")})
+	    
+	    facebook_img=frame.asset("facebook.png").clone()//.pos(10,10,CENTER,CENTER,page)//.center(page.main_cont)//.pos(-stageW*0.25,10,CENTER,BOTTOM,page.main_cont)
+	    facebook_img.height=40
+	    facebook_img.pos(-50,10,CENTER,BOTTOM,page.main_cont)
+	    facebook_img.on("mousedown",function(){zgo("https://www.facebook.com/archampolu")})
+	    // console.log("facebook")
+	    // console.log(facebook_img)
+
+
+	    title_label=new Label({color:purple, text:"Game Ended", size:60, variant:true, align:CENTER}).pos(0,50,CENTER,TOP,page.main_cont);
 	    //page.completion_label=new Label({color:purple, text:"Completion", size:40, variant:true, align:CENTER}).pos(0,200,CENTER,TOP,page.main_cont);
 	    page.accuracy_label=new Label({color:purple, text:"Accuracy", size:40, variant:true, align:CENTER}).pos(0,200,CENTER,TOP,page.main_cont);
 	    page.score_label=new Label({color:purple, text:"Score", size:40, variant:true, align:CENTER}).pos(0,400,CENTER,TOP,page.main_cont);
