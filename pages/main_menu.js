@@ -44,9 +44,10 @@ function makeMainMenu(stage) {
         page.x_min_today_label=new Label({color:purple, text:x_min_today_label_txt, size:25,variant:true})
 
         
-
+        page.clock_icon=asset("clock.png").sca(0.75)
+        page.trophy_icon=asset("trophy.png").sca(0.75) //page.trophy_icon -page.clock_icon
 	    new Tile({
-	        obj:[asset("trophy.png").sca(0.75), asset("clock.png").sca(0.75), page.x_days_streak_label,page.x_min_today_label], 
+	        obj:[page.trophy_icon, page.clock_icon, page.x_days_streak_label,page.x_min_today_label], 
 	        rows:2,
 	        cols:2,
 	        spacingV:10, 
@@ -58,7 +59,7 @@ function makeMainMenu(stage) {
 	    page.user_avatar=frame.asset(user.avatar).clone().sca(0.1)
 	    page.profile_btn_label=new Label({color:purple, text:"Profile", size:25,variant:true})
 
-	    profile_tile=new Tile({
+	    page.profile_tile=new Tile({
 	        obj:[page.user_avatar,page.profile_btn_label], 
 	        rows:2,
 	        spacingV:5, 
@@ -107,8 +108,9 @@ function makeMainMenu(stage) {
     // });
 
     feedback_label=new Label({color:purple, text:"Feedback", size:25, align:CENTER})
+    page.feedback_icon=asset("feedback.png").sca(0.8)
     feedback_tile=new Tile({
-        obj:[asset("feedback.png").sca(0.8),feedback_label], rows:2, spacingV:0, unique:true,align:CENTER})
+        obj:[page.feedback_icon,feedback_label], rows:2, spacingV:0, unique:true,align:CENTER})
     .pos(10,10,LEFT,TOP,page)
     feedback_tile.on("mousedown", function () {
         //go_deploy(page_nav.high_score_page); 
@@ -154,29 +156,104 @@ function makeMainMenu(stage) {
         }).center(page) //pos(0,100,CENTER,TOP,page.main_cont);
 
     settings_label=new Label({color:purple, text:"Settings", size:25, align:CENTER})
+    page.settings_icon=asset("settings.png").sca(0.75)
     settings_tile=new Tile({
-        obj:[asset("settings.png").sca(0.75),settings_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+        obj:[page.settings_icon,settings_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
     settings_tile.on("mousedown", function () {go_deploy(page_nav.settings); }); 
 
-    //.pos(stageW*0.25,stageH*0.25,CENTER,CENTER,page)
+    //.pos(stageW*0.25,stageH*0.25,CENTER,CENTER,page) //page.shop_icon, page.progress_icon, page.star_icon
     score_label=new Label({color:purple, text:"Score", size:25, align:CENTER})
+    page.star_icon=asset("star.png").sca(0.8)
     score_tile=new Tile({
-        obj:[asset("star.png").sca(0.8),score_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+        obj:[page.star_icon,score_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
     score_tile.on("mousedown", function () {go_deploy(page_nav.high_score_page); }); 
 
 
     progress_label=new Label({color:purple, text:"Progress", size:25, align:CENTER})
+    page.progress_icon=asset("rocket.png").sca(0.8)
     progress_tile=new Tile({
-        obj:[asset("rocket.png").sca(0.8),progress_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+        obj:[page.progress_icon,progress_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
     progress_tile.on("mousedown", function () { go_deploy(page_nav.progress_dashboard)}); //page_nav.progress_dashboard
 
     shop_label=new Label({color:purple, text:"Shop", size:25, align:CENTER})
-    shop_tile=new Tile({obj:[asset("shopping.png").sca(0.8),shop_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
+    page.shop_icon=asset("shopping.png").sca(0.8)
+    shop_tile=new Tile({obj:[page.shop_icon,shop_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
     shop_tile.on("mousedown", function () { go_deploy(page_nav.shop_page)});
 
     help_label=new Label({color:purple, text:"Help", size:25, align:CENTER})
     help_tile=new Tile({obj:[asset("question.png").sca(0.8),help_label], rows:2, spacingV:0, unique:true,align:CENTER})//.center(page) //pos(0,100,CENTER,TOP,page.main_cont);
-    help_tile.on("mousedown", function () { });
+    help_tile.on("mousedown", function () { 
+    	page.help_i=0
+    	page.help_items=[
+    		{item:page.go2tutorials,text:"Start By Looking into Tutorials",x:stageW/2-50,y:20},
+    		{item:page.go2alphabet_game,text:"Now do the alphabet quiz to learn names and shapes of letters",x:stageW/2,y:stageH/2},
+    		{item:page.go2sound_game,text:"and the letter sound quiz to learn the sounds of letters and diacritics",x:stageW/2,y:stageH/2},
+    		{item:page.go2read_words_game,text:"and then you can read words",x:stageW/2,y:stageH/2},
+    		{item:page.go2write_words_game,text:"and also write words by typing on the keyboard",x:stageW/2,y:stageH/2},
+    		{item:page.user_avatar,text:"Go to profile to choose username and avatar",x:stageW/2,y:stageH/2},
+    		{item:page.clock_icon,text:"how many minutes today to reach daily goal",x:stageW/2,y:stageH/2},
+    		{item:page.trophy_icon,text:"how many days streak of completing daily goal",x:stageW/2,y:stageH/2},
+    		{item:page.settings_icon,text:"Adjust settings for daily goal, quiz time, sound ... etc",x:stageW/2,y:stageH/2},
+    		{item:page.star_icon,text:"check high scores leaderboard",x:stageW/2,y:stageH/2},
+    		{item:page.progress_icon,text:"check your progress and accuracy",x:stageW/2,y:stageH/2},
+    		{item:page.shop_icon,text:"and you can buy items from the shop with the coins you get from correct answers",x:stageW/2,y:stageH/2},
+    		{item:page.feedback_icon,text:"send feedback to us",x:stageW/2,y:stageH/2}
+    	]
+    	//remove_el(page.main_cont) 
+    	//page.shop_icon, page.progress_icon, page.star_icon page.feedback_icon
+    	//page.trophy_icon -page.clock_icon
+    	//page.go2alphabet_game, page.go2sound_game, page.go2read_words_game, page.go2write_words_game
+        page.help_cont = new Container(stageW, stageH).addTo(page);
+        
+
+        //page.go2tutorials_clone=page.go2tutorials.clone().addTo(page.help_cont)
+        page.bg_rect = new Rectangle(stageW,stageH,black).alp(0.6).center(page.help_cont)
+        //page.msg_label=new Label({color:yellow, text:"Help", size:25, align:CENTER}).center(page.help_cont)
+	    page.msg_label2=new Label({color:yellow, text:"Help2", size:25, align:CENTER})
+	    page.help_btn = new Button({width:stageW*0.5,height:120,backgroundColor:green.darken(0.4),rollBackgroundColor:orange,label:page.msg_label2,corner:20})
+	    .pos(0,0,CENTER,TOP,page.help_cont) 
+
+        //page.msg_rect =new Button({width:stageW/2,height:100,backgroundColor:green.darken(0.3),rollBackgroundColor:orange,label:page.msg_label,corner:20}).pos(10,0,TOP,CENTER,page.help_cont)
+
+        page.bg_rect.on("mousedown", function (evt) { 
+        	trg=evt.currentTarget
+        	console.log(trg)
+        	//trg.parent.removeChild(trg)
+        	cur_parent=trg.parent
+        	page.help_cont.removeChild(page.tmp_clone)
+        	page.help_i+=1
+        	if (page.help_i>=page.help_items.length) {
+        		page.help_cont.removeAllChildren()
+        		return
+        	} 
+        	cur_help_item=page.help_items[page.help_i]
+
+        	page.tmp_clone=cur_help_item.item.clone().addTo(page.help_cont)
+        	tmp_parent=cur_help_item.item.parent
+        	tmp_parent2=tmp_parent.parent
+        	page.tmp_clone.x=cur_help_item.item.x+tmp_parent.x+tmp_parent2.x
+        	page.tmp_clone.y=cur_help_item.item.y+tmp_parent.y+tmp_parent2.y
+        	// page.msg_rect.x=cur_help_item.x
+        	// page.msg_rect.y=cur_help_item.y
+        	ml_text=multiline(cur_help_item.text,20)
+        	page.msg_label2.text=ml_text//cur_help_item.text
+        	page.msg_label2.center(page.help_btn)
+
+        	// console.log(cur_help_item.text,page.help_i)
+        	// console.log("original:", cur_help_item.item)
+        	// console.log("original parent:", cur_help_item.item.parent)
+        	// console.log("clone:", page.tmp_clone)
+        	//cur_parent.removeAllChildren()
+        })
+        cur_help_item=page.help_items[page.help_i]
+        page.tmp_clone=cur_help_item.item.clone().addTo(page.help_cont)
+    	// page.msg_rect.x=cur_help_item.x
+    	// page.msg_rect.y=cur_help_item.y
+    	ml_text=multiline(cur_help_item.text,20)
+    	page.msg_label2.text=ml_text//cur_help_item.text   
+    	page.msg_label2.center(page.help_btn)     
+
+    });
 
     bottom_menu_tile=new Tile({
             obj:[settings_tile,score_tile,progress_tile,shop_tile,help_tile], 
